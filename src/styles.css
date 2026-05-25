@@ -88,6 +88,13 @@
   --electric: oklch(0.82 0.09 78);        /* warm cream highlight */
   --danger: oklch(0.7 0.2 15);
 
+  /* Casino neon accents (decorative — Games page) */
+  --neon-pink: oklch(0.72 0.27 5);
+  --neon-cyan: oklch(0.85 0.18 200);
+  --neon-yellow: oklch(0.92 0.18 95);
+  --neon-purple: oklch(0.65 0.25 305);
+  --neon-green: oklch(0.82 0.22 145);
+
   --radius: 1rem;
 }
 
