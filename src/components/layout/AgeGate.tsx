@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ShieldAlert } from "lucide-react";
+import { Logo } from "@/components/Logo";
 
 const STORAGE_KEY = "webbers:age-confirmed";
 
@@ -28,18 +29,18 @@ export function AgeGate() {
         aria-labelledby="age-gate-decline-title"
         className="fixed inset-0 z-[100] grid place-items-center bg-ink p-6"
       >
-        <div className="max-w-md text-center">
+        <div className="max-w-md text-center animate-rise">
           <ShieldAlert
             className="mx-auto mb-6 size-10 text-danger"
             aria-hidden
           />
           <h2
             id="age-gate-decline-title"
-            className="font-display text-3xl text-foreground mb-4"
+            className="mb-4 font-display text-3xl text-foreground"
           >
-            Sorry — you must be 18 or over.
+            You must be 18 or over.
           </h2>
-          <p className="text-muted-foreground mb-8 leading-relaxed">
+          <p className="mb-8 leading-relaxed text-muted-foreground">
             Webbers Amusements is a licensed adult gaming centre. If you're
             worried about gambling — yours or someone else's — free,
             confidential support is available.
@@ -49,14 +50,12 @@ export function AgeGate() {
               href="https://www.begambleaware.org/"
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full bg-gold px-6 py-3 text-sm font-semibold text-ink hover:bg-gold-deep transition-colors"
+              className="rounded-full bg-brass px-6 py-3 text-sm font-semibold text-ink transition-colors hover:bg-brass-deep"
             >
               Visit BeGambleAware
             </a>
             <a
-              href="https://www.gamcare.org.uk/"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="tel:08088020133"
               className="text-sm text-muted-foreground underline underline-offset-4"
             >
               GamCare — 0808 8020 133
@@ -74,17 +73,16 @@ export function AgeGate() {
       aria-labelledby="age-gate-title"
       className="fixed inset-0 z-[100] grid place-items-center bg-ink/95 p-6 backdrop-blur-md"
     >
-      <div className="glass hairline-gold w-full max-w-lg rounded-2xl p-10 text-center animate-rise">
-        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-danger/30 bg-danger/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-danger">
-          <span className="size-1.5 rounded-full bg-danger" /> Strictly 18+
-        </div>
+      <div className="hairline-brass w-full max-w-lg rounded-2xl bg-surface p-10 text-center animate-rise">
+        <Logo size={32} sealOnly className="mx-auto mb-6" />
+        <p className="eyebrow">Webbers Amusements · Est. 1954</p>
         <h2
           id="age-gate-title"
-          className="font-display text-4xl leading-tight text-foreground mb-4"
+          className="mt-4 mb-4 font-display text-4xl leading-tight text-foreground"
         >
           Are you 18 or over?
         </h2>
-        <p className="text-muted-foreground mb-8 text-balance">
+        <p className="mb-8 text-balance text-muted-foreground">
           You must be 18 or over to enter the Webbers Amusements website. By
           continuing you confirm you meet our age requirement.
         </p>
@@ -92,19 +90,19 @@ export function AgeGate() {
           <button
             type="button"
             onClick={() => setDeclined(true)}
-            className="rounded-full border border-white/10 bg-white/5 px-8 py-3 text-sm font-semibold text-foreground hover:bg-white/10 transition-colors"
+            className="rounded-full border border-white/10 bg-white/5 px-8 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-white/10"
           >
             No, I'm under 18
           </button>
           <button
             type="button"
             onClick={confirm}
-            className="rounded-full bg-gold px-8 py-3 text-sm font-semibold text-ink hover:bg-gold-deep transition-colors"
+            className="rounded-full bg-brass px-8 py-3 text-sm font-semibold text-ink transition-colors hover:bg-brass-deep"
           >
             Yes, I'm 18 or over
           </button>
         </div>
-        <p className="mt-6 text-[10px] uppercase tracking-widest text-muted-foreground">
+        <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
           When the fun stops, stop · 0808 8020 133
         </p>
       </div>
