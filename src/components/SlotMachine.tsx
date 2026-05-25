@@ -293,7 +293,7 @@ export function SlotMachine({
         </p>
       </div>
 
-      {/* Reels + lever — lever overlays via absolute, so it doesn't change row height */}
+      {/* Reels + lever */}
       <div className="bg-black/85 p-3">
         <div className="mb-2 flex min-h-7 items-center justify-end">
           {!hasPulled && !spinning && (
