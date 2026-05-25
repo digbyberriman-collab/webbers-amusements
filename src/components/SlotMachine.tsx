@@ -293,46 +293,48 @@ export function SlotMachine({
         </p>
       </div>
 
-      {/* Reels + lever — lever overlays via absolute, so it doesn't change row height */}
-      <div className="relative bg-black/85 p-3">
-        <div
-          role="group"
-          aria-label="Slot machine reels"
-          aria-live="polite"
-          aria-atomic="true"
-          className="grid grid-cols-3 gap-2 pr-12"
-        >
-          {DURATIONS.map((dur, i) => (
-            <Reel
-              key={i}
-              position={i + 1}
-              items={items}
-              target={target}
-              duration={dur}
-              spinning={spinning}
-              spinKey={spinKey}
-              onDone={onReelDone}
-            />
-          ))}
-        </div>
-        <div className="pointer-events-auto absolute right-3 top-3 h-24 w-9">
-          <Lever onPull={triggerSpin} disabled={spinning} />
-        </div>
-
-        {/* Pull-the-lever callout — visible until first interaction */}
-        {!hasPulled && !spinning && (
-          <div
-            aria-hidden
-            className="pointer-events-none absolute right-14 top-1/2 -translate-y-1/2 animate-pulse"
-          >
-            <div className="flex items-center gap-1.5 rounded-full border border-[color:var(--neon-yellow)]/70 bg-ink/90 px-2.5 py-1 shadow-[0_0_14px_var(--neon-yellow)]">
-              <span className="font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-[color:var(--neon-yellow)]">
-                Pull
-              </span>
-              <span className="text-[color:var(--neon-yellow)]">→</span>
+      {/* Reels + lever */}
+      <div className="bg-black/85 p-3">
+        <div className="mb-2 flex min-h-7 items-center justify-end">
+          {!hasPulled && !spinning && (
+            <div
+              aria-hidden
+              className="pointer-events-none animate-pulse"
+            >
+              <div className="flex items-center gap-1.5 rounded-full border border-[color:var(--neon-yellow)]/70 bg-ink/90 px-2.5 py-1 shadow-[0_0_14px_var(--neon-yellow)]">
+                <span className="font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-[color:var(--neon-yellow)]">
+                  Pull
+                </span>
+                <span className="text-[color:var(--neon-yellow)]">→</span>
+              </div>
             </div>
+          )}
+        </div>
+        <div className="flex items-start gap-2 sm:gap-3">
+          <div
+            role="group"
+            aria-label="Slot machine reels"
+            aria-live="polite"
+            aria-atomic="true"
+            className="grid min-w-0 flex-1 grid-cols-3 gap-2 sm:gap-3"
+          >
+            {DURATIONS.map((dur, i) => (
+              <Reel
+                key={i}
+                position={i + 1}
+                items={items}
+                target={target}
+                duration={dur}
+                spinning={spinning}
+                spinKey={spinKey}
+                onDone={onReelDone}
+              />
+            ))}
           </div>
-        )}
+          <div className="pointer-events-auto flex h-24 w-10 shrink-0 items-start justify-center sm:w-11">
+            <Lever onPull={triggerSpin} disabled={spinning} />
+          </div>
+        </div>
       </div>
 
       {/* Bottom bulbs */}
