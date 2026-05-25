@@ -77,8 +77,8 @@ export const siteConfig = {
   },
   venues: [
     {
-      slug: "chester",
-      name: "Webbers Chester",
+      slug: "chester-frodsham",
+      name: "Webbers Chester — Frodsham Street",
       city: "Chester",
       address: ["28A Frodsham Street"],
       postcode: "CH1 3JL",
@@ -87,6 +87,17 @@ export const siteConfig = {
       lng: -2.8893,
       hours: standardHours,
       primary: true,
+    },
+    {
+      slug: "chester-northgate",
+      name: "Webbers Chester — Northgate Street",
+      city: "Chester",
+      address: ["[CLIENT TO CONFIRM NUMBER] Northgate Street"],
+      postcode: "[CLIENT TO CONFIRM]",
+      phone: "01244 [CLIENT TO CONFIRM]",
+      lat: 53.1925,
+      lng: -2.8912,
+      hours: standardHours,
     },
     {
       slug: "rhyl",
