@@ -135,14 +135,16 @@ function Lever({
 
   return (
     <div
-      className="relative flex w-9 shrink-0 flex-col items-center"
-      style={{ height: `${96 + MAX}px` }}
+      className="relative flex h-24 w-9 shrink-0 flex-col items-center"
     >
-      <div className="absolute top-0 left-1/2 h-3.5 w-8 -translate-x-1/2 rounded-md bg-gradient-to-b from-zinc-500 to-zinc-800 shadow-inner ring-1 ring-black/40" />
+      {/* Mount block — bolted to top of reel cabinet */}
+      <div className="absolute -top-2 left-1/2 z-10 h-4 w-9 -translate-x-1/2 rounded-md bg-gradient-to-b from-zinc-400 to-zinc-800 shadow-inner ring-1 ring-black/50" />
+      {/* Rod — connects mount down to knob, grows with pull */}
       <div
-        className="absolute left-1/2 w-1.5 -translate-x-1/2 rounded-full bg-gradient-to-b from-zinc-200 via-zinc-400 to-zinc-600"
-        style={{ top: 12, height: `${10 + pull}px` }}
+        className="absolute left-1/2 z-0 w-1.5 -translate-x-1/2 rounded-full bg-gradient-to-b from-zinc-200 via-zinc-400 to-zinc-700 shadow"
+        style={{ top: 2, height: `${14 + pull}px` }}
       />
+      {/* Knob */}
       <button
         type="button"
         onPointerDown={(e) => {
@@ -163,9 +165,9 @@ function Lever({
         onPointerCancel={release}
         disabled={disabled}
         aria-label="Pull lever to spin reels"
-        className="absolute left-1/2 size-8 -translate-x-1/2 cursor-grab touch-none rounded-full active:cursor-grabbing disabled:cursor-not-allowed"
+        className="absolute left-1/2 z-20 size-8 -translate-x-1/2 cursor-grab touch-none rounded-full active:cursor-grabbing disabled:cursor-not-allowed"
         style={{
-          top: `${18 + pull}px`,
+          top: `${10 + pull}px`,
           background:
             "radial-gradient(circle at 30% 28%, #ff8a8a 0%, #d23030 45%, #6b0000 100%)",
           boxShadow:
