@@ -31,14 +31,15 @@ export function Header() {
       }`}
     >
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
-        <Link to="/" className="flex items-center gap-3" aria-label="Webbers — home">
-          <div className="grid size-9 place-items-center rounded-sm bg-gold">
-            <span className="font-display text-lg font-bold text-ink">W</span>
-          </div>
-          <span className="font-display text-xl tracking-tight text-foreground">
-            Webbers
+        <Link to="/" className="flex items-center gap-3" aria-label="Webbers Amusements — home">
+          <span className="font-display text-xl tracking-tight text-foreground sm:text-2xl">
+            Webbers <span className="italic">Amusements</span>
+          </span>
+          <span className="font-display text-2xl font-bold leading-none text-gold" aria-hidden>
+            WA
           </span>
         </Link>
+
 
         <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary">
           {nav.slice(1).map((item) => (
