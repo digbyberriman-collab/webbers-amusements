@@ -5,6 +5,8 @@ import slotsImg from "@/assets/game-slots.jpg";
 import rouletteImg from "@/assets/game-roulette.jpg";
 import jackpotImg from "@/assets/game-jackpot.jpg";
 import heritageImg from "@/assets/heritage.jpg";
+import floorWideImg from "@/assets/floor-wide.jpg";
+import leverImg from "@/assets/lever-pull.jpg";
 import { siteConfig } from "@/config/site";
 import { todaysHours } from "@/lib/hours";
 
