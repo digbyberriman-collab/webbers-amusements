@@ -46,6 +46,7 @@ function Reel({
   spinning,
   spinKey,
   onDone,
+  position,
 }: {
   items: SlotItem[];
   target: number;
@@ -53,10 +54,12 @@ function Reel({
   spinning: boolean;
   spinKey: number;
   onDone: () => void;
+  position: number;
 }) {
   const longList = Array.from({ length: COPIES }, () => items).flat();
   const restingIndex = (COPIES - 1) * items.length + target;
   const restingOffset = -restingIndex * ROW;
+  const current = items[target];
 
   const style: CSSProperties = {
     transform: `translateY(${restingOffset}px)`,
@@ -73,9 +76,19 @@ function Reel({
   (style as Record<string, string>)["--rest"] = `${restingOffset}px`;
 
   return (
-    <div className="slot-window relative h-24 overflow-hidden rounded-md ring-1 ring-white/15">
+    <div
+      role="img"
+      aria-label={
+        spinning
+          ? `Reel ${position} spinning`
+          : `Reel ${position} showing ${current?.label ?? "item"}`
+      }
+      aria-busy={spinning || undefined}
+      className="slot-window relative h-24 overflow-hidden rounded-md ring-1 ring-white/15"
+    >
       <div
         key={spinKey}
+        aria-hidden="true"
         className="flex flex-col"
         style={style}
         onAnimationEnd={() => spinning && onDone()}
@@ -93,7 +106,10 @@ function Reel({
         ))}
       </div>
       {/* Pay-line */}
-      <div className="pointer-events-none absolute inset-x-0 top-1/2 h-0.5 -translate-y-1/2 bg-[color:var(--neon-yellow)] shadow-[0_0_12px_var(--neon-yellow)]" />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-1/2 h-0.5 -translate-y-1/2 bg-[color:var(--neon-yellow)] shadow-[0_0_12px_var(--neon-yellow)]"
+      />
     </div>
   );
 }
@@ -167,9 +183,22 @@ function Lever({
         }}
         onPointerUp={release}
         onPointerCancel={release}
+        onKeyDown={(e) => {
+          if (disabled || animating) return;
+          if (e.key === "Enter" || e.key === " " || e.key === "ArrowDown") {
+            e.preventDefault();
+            triggerAnimatedPull();
+          }
+        }}
         disabled={disabled}
-        aria-label="Pull lever to spin reels"
-        className="absolute left-1/2 z-20 size-8 -translate-x-1/2 cursor-grab touch-none rounded-full active:cursor-grabbing disabled:cursor-not-allowed"
+        aria-label={
+          disabled
+            ? "Lever — reels spinning, please wait"
+            : "Pull lever to spin reels"
+        }
+        aria-keyshortcuts="Enter Space ArrowDown"
+        aria-disabled={disabled || undefined}
+        className="absolute left-1/2 z-20 size-8 -translate-x-1/2 cursor-grab touch-none rounded-full outline-none ring-offset-2 ring-offset-black focus-visible:ring-2 focus-visible:ring-[color:var(--neon-yellow)] active:cursor-grabbing disabled:cursor-not-allowed"
         style={{
           top: `${10 + pull}px`,
           background:
@@ -242,7 +271,16 @@ export function SlotMachine({
   const landed = items[target];
 
   return (
-    <div className="cabinet-frame relative mx-auto w-full max-w-md p-2.5">
+    <section
+      role="region"
+      aria-label={`${headerTitle} slot machine`}
+      className="cabinet-frame relative mx-auto w-full max-w-md p-2.5"
+    >
+      <p className="sr-only">
+        Interactive slot machine. Focus the lever, then press Enter, Space, or
+        the Down arrow to spin. The reels announce their result when they
+        stop.
+      </p>
       {/* Top bulbs */}
       <div className="px-1 py-1.5 text-[color:var(--neon-yellow)]">
         <BulbRow count={14} />
@@ -257,10 +295,17 @@ export function SlotMachine({
 
       {/* Reels + lever — lever overlays via absolute, so it doesn't change row height */}
       <div className="relative bg-black/85 p-3">
-        <div className="grid grid-cols-3 gap-2 pr-12">
+        <div
+          role="group"
+          aria-label="Slot machine reels"
+          aria-live="polite"
+          aria-atomic="true"
+          className="grid grid-cols-3 gap-2 pr-12"
+        >
           {DURATIONS.map((dur, i) => (
             <Reel
               key={i}
+              position={i + 1}
               items={items}
               target={target}
               duration={dur}
@@ -331,6 +376,6 @@ export function SlotMachine({
           </p>
         )}
       </div>
-    </div>
+    </section>
   );
 }
