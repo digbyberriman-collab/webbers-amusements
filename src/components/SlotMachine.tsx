@@ -376,6 +376,6 @@ export function SlotMachine({
           </p>
         )}
       </div>
-    </div>
+    </section>
   );
 }
