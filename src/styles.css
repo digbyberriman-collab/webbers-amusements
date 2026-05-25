@@ -181,6 +181,22 @@
 }
 .animate-scroll-cue { animation: scroll-cue 2s ease-in-out infinite; }
 
+/* Slot reel spin */
+@keyframes reel-spin {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+.reel-strip {
+  animation: reel-spin 0.9s linear infinite;
+  will-change: transform;
+}
+.reel-strip.slow { animation-duration: 1.6s; }
+.reel-strip.med { animation-duration: 1.2s; }
+.reel-mask {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 22%, black 78%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, black 22%, black 78%, transparent);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
