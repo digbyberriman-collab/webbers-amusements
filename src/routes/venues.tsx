@@ -50,7 +50,7 @@ function VenuesPage() {
     key: v.slug,
     symbol: venueSymbols[v.slug] ?? "🎰",
     label: venueShort[v.slug] ?? v.city,
-    description: `${v.name} · ${v.address.street}, ${v.address.city}`,
+    description: `${v.name} · ${v.address.join(", ")}, ${v.city}`,
   }));
 
   const [active, setActive] = useState(siteConfig.venues[0].slug);
