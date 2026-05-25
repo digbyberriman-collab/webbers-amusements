@@ -283,6 +283,36 @@ function HomePage() {
         </div>
       </section>
 
+      {/* LEVER PULL DETAIL */}
+      <section className="relative grid items-stretch overflow-hidden md:grid-cols-2">
+        <div className="relative min-h-[400px]">
+          <img
+            src={leverImg}
+            alt="A hand pulling a vintage slot machine lever"
+            loading="lazy"
+            className="absolute inset-0 size-full object-cover"
+            width={1280}
+            height={1600}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent to-ink md:bg-gradient-to-l" />
+        </div>
+        <div className="flex items-center bg-surface/40 px-6 py-24 md:px-16">
+          <div className="max-w-md space-y-6">
+            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-gold">
+              The pull
+            </p>
+            <h2 className="font-display text-4xl leading-tight text-foreground sm:text-5xl">
+              That one second before the reels stop.
+            </h2>
+            <p className="text-muted-foreground">
+              Modern gaming is digital, but the feeling is the same: a small
+              ritual, the anticipation of the spin, the rush of a win line.
+              We've built a room that honours it.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* HERITAGE */}
       <section className="px-6 py-28">
         <div className="mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2">
