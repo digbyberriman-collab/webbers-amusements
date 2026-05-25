@@ -225,7 +225,7 @@ export function SlotMachine({
       </div>
 
       {/* Reels + lever */}
-      <div className="flex items-stretch gap-3 bg-black/85 p-3">
+      <div className="flex items-start gap-3 bg-black/85 p-3">
         <div className="grid flex-1 grid-cols-3 gap-2">
           {DURATIONS.map((dur, i) => (
             <Reel
