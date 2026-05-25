@@ -183,9 +183,22 @@ function Lever({
         }}
         onPointerUp={release}
         onPointerCancel={release}
+        onKeyDown={(e) => {
+          if (disabled || animating) return;
+          if (e.key === "Enter" || e.key === " " || e.key === "ArrowDown") {
+            e.preventDefault();
+            triggerAnimatedPull();
+          }
+        }}
         disabled={disabled}
-        aria-label="Pull lever to spin reels"
-        className="absolute left-1/2 z-20 size-8 -translate-x-1/2 cursor-grab touch-none rounded-full active:cursor-grabbing disabled:cursor-not-allowed"
+        aria-label={
+          disabled
+            ? "Lever — reels spinning, please wait"
+            : "Pull lever to spin reels"
+        }
+        aria-keyshortcuts="Enter Space ArrowDown"
+        aria-disabled={disabled || undefined}
+        className="absolute left-1/2 z-20 size-8 -translate-x-1/2 cursor-grab touch-none rounded-full outline-none ring-offset-2 ring-offset-black focus-visible:ring-2 focus-visible:ring-[color:var(--neon-yellow)] active:cursor-grabbing disabled:cursor-not-allowed"
         style={{
           top: `${10 + pull}px`,
           background:
