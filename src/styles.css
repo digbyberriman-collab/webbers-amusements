@@ -37,9 +37,10 @@
   --color-electric: var(--electric);
   --color-danger: var(--danger);
 
-  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-display: "Bodoni Moda", "Fraunces", ui-serif, Georgia, serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
 
   --radius-sm: 0.375rem;
   --radius-md: 0.625rem;
@@ -49,44 +50,47 @@
 }
 
 :root {
-  /* Webbers palette — dark by default */
-  --ink: oklch(0.16 0.02 260);
-  --background: oklch(0.16 0.02 260);
-  --foreground: oklch(0.96 0.005 240);
+  /* Webbers palette — slate-navy signage with terracotta monogram */
+  --ink: oklch(0.28 0.025 235);
+  --background: oklch(0.28 0.025 235);
+  --foreground: oklch(0.95 0.012 85);  /* warm cream */
 
-  --surface: oklch(0.22 0.025 260);
-  --surface-2: oklch(0.27 0.03 260);
+  --surface: oklch(0.33 0.028 235);
+  --surface-2: oklch(0.38 0.03 235);
 
-  --card: oklch(0.22 0.025 260);
-  --card-foreground: oklch(0.96 0.005 240);
-  --popover: oklch(0.22 0.025 260);
-  --popover-foreground: oklch(0.96 0.005 240);
+  --card: oklch(0.33 0.028 235);
+  --card-foreground: oklch(0.95 0.012 85);
+  --popover: oklch(0.33 0.028 235);
+  --popover-foreground: oklch(0.95 0.012 85);
 
-  --primary: oklch(0.84 0.14 90);          /* gold */
-  --primary-foreground: oklch(0.16 0.02 260);
-  --secondary: oklch(0.27 0.03 260);
-  --secondary-foreground: oklch(0.96 0.005 240);
+  /* Primary accent = terracotta from the WA monogram */
+  --primary: oklch(0.6 0.13 36);
+  --primary-foreground: oklch(0.96 0.012 85);
+  --secondary: oklch(0.38 0.03 235);
+  --secondary-foreground: oklch(0.95 0.012 85);
 
-  --muted: oklch(0.27 0.03 260);
-  --muted-foreground: oklch(0.72 0.02 250);
+  --muted: oklch(0.38 0.03 235);
+  --muted-foreground: oklch(0.78 0.02 80);
 
-  --accent: oklch(0.27 0.03 260);
-  --accent-foreground: oklch(0.96 0.005 240);
+  --accent: oklch(0.38 0.03 235);
+  --accent-foreground: oklch(0.95 0.012 85);
 
   --destructive: oklch(0.68 0.2 18);
   --destructive-foreground: oklch(0.98 0 0);
 
-  --border: oklch(0.96 0.005 240 / 0.08);
-  --input: oklch(0.96 0.005 240 / 0.1);
-  --ring: oklch(0.84 0.14 90);
+  --border: oklch(0.95 0.012 85 / 0.1);
+  --input: oklch(0.95 0.012 85 / 0.12);
+  --ring: oklch(0.6 0.13 36);
 
-  --gold: oklch(0.84 0.14 90);
-  --gold-deep: oklch(0.72 0.13 85);
-  --electric: oklch(0.86 0.15 195);
+  /* Keep `gold` tokens as alias for terracotta so existing classes restyle in place */
+  --gold: oklch(0.62 0.14 36);            /* terracotta */
+  --gold-deep: oklch(0.52 0.13 32);       /* deep rust */
+  --electric: oklch(0.82 0.09 78);        /* warm cream highlight */
   --danger: oklch(0.7 0.2 15);
 
   --radius: 1rem;
 }
+
 
 @layer base {
   * {
