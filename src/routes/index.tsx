@@ -66,6 +66,7 @@ function HomePage() {
     symbol:
       g.type === "Jackpot" ? "💰" : g.type === "Roulette" ? "🎯" : g.type === "Classic" ? "🍒" : "🎰",
     label: g.name.split(" ")[0],
+    description: `${g.name} — ${g.type} cabinet. ${g.tagline ?? "Spin the lever again for another pick."}`,
   }));
   const [pickedGame, setPickedGame] = useState(heroSlots[0]?.key ?? "");
   const pickedGameData =
