@@ -64,13 +64,13 @@ const generations = [
     ordinal: "Second generation",
     name: "The next generation",
     period: "1970s — 2000s",
-    body: "Took the family into rides, family entertainment centres and permanent high-street arcades — anchoring the long-standing Rhyl and Caernarfon rooms and opening the first venue in Chester.",
+    body: "Took the family into rides, family entertainment centres and permanent high-street arcades — anchoring the long-standing Rhyl and Caernarfon arcades and opening the first venue in Chester.",
   },
   {
     ordinal: "Third generation",
     name: "The third generation today",
     period: "2010s — now",
-    body: "Modernised the estate into premium, fully-licensed Adult Gaming Centres. Five rooms across Chester, North Wales and Greater Manchester, running to the same family standards.",
+    body: "Modernised the estate into premium, fully-licensed Adult Gaming Centres. Five arcades across Chester, North Wales and Greater Manchester, running to the same family standards.",
   },
 ];
 
@@ -78,7 +78,7 @@ const values = [
   {
     icon: Heart,
     title: "Hospitality first",
-    body: "A Webbers room should feel calm, welcoming and well-staffed — never pushy. People come back because they feel looked after.",
+    body: "A Webbers arcade should feel calm, welcoming and well-staffed — never pushy. People come back because they feel looked after.",
   },
   {
     icon: Users,
@@ -153,13 +153,13 @@ function AboutPage() {
                 {siteConfig.brand.origin}, supplying the Woolworths counter and
                 the North Wales seaside trade. A decade later the family moved
                 onto the seafront fairgrounds — building rides, running penny
-                falls and looking after the rooms that local children grew up
+                falls and looking after the arcades that local children grew up
                 in.
               </p>
               <p>
                 Through the 1970s and 80s the family expanded into family
                 entertainment centres, and by the 1990s had opened permanent
-                rooms in Rhyl and Caernarfon. In the 2000s the business
+                arcades in Rhyl and Caernarfon. In the 2000s the business
                 crossed the border into Chester, bringing the same standards
                 to a cathedral city.
               </p>
@@ -341,10 +341,10 @@ function AboutPage() {
       <section className="border-t border-white/5 bg-ink px-6 py-[var(--section-y)] lg:px-10">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="font-display text-4xl leading-tight text-balance text-foreground sm:text-5xl">
-            Come and see a room for yourself.
+            Come and see a arcade for yourself.
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-muted-foreground">
-            Five rooms across Chester, North Wales and Greater Manchester —
+            Five arcades across Chester, North Wales and Greater Manchester —
             no booking, no pressure. We've kept a seat for you.
           </p>
           <div className="mt-10">

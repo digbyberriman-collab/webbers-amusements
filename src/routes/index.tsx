@@ -92,12 +92,12 @@ function HomePage() {
             <p className="eyebrow">A family business · Since 1954</p>
             <h1 className="mt-6 font-display text-5xl leading-[1.02] text-balance text-foreground sm:text-7xl lg:text-[5.5rem]">
               British entertainment heritage.{" "}
-              <span className="italic text-brass">Modern gaming rooms.</span>
+              <span className="italic text-brass">Modern gaming arcades.</span>
             </h1>
             <p className="mt-8 max-w-xl text-lg leading-relaxed text-foreground/85">
               From the seaside arcades of 1950s North Wales to five premium
               adult gaming centres today — a family business, three generations
-              on, running calm and welcoming rooms across Chester, North Wales
+              on, running calm and welcoming arcades across Chester, North Wales
               and Greater Manchester.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-4">
@@ -200,9 +200,9 @@ function HomePage() {
                 coast.
               </p>
               <p>
-                Three generations on, the rooms have changed — modern
+                Three generations on, the arcades have changed — modern
                 cabinets, premium hardware, fully licensed — but the way they
-                run hasn't. Calm spaces, looked-after rooms, a family name
+                run hasn't. Calm spaces, looked-after arcades, a family name
                 above the door.
               </p>
             </div>
@@ -223,7 +223,7 @@ function HomePage() {
       <section className="relative h-[75svh] min-h-[480px] overflow-hidden border-y border-white/5">
         <img
           src={floorWideImg}
-          alt="Inside a Webbers gaming room — low lighting, premium cabinets, calm atmosphere."
+          alt="Inside a Webbers gaming arcade — low lighting, premium cabinets, calm atmosphere."
           loading="lazy"
           className="img-cinematic absolute inset-0 size-full object-cover"
           width={1920}
@@ -235,7 +235,7 @@ function HomePage() {
           <div className="max-w-xl space-y-5 animate-rise">
             <p className="eyebrow">Step inside</p>
             <h2 className="font-display text-4xl leading-tight text-foreground sm:text-5xl">
-              Rooms designed for the spin.
+              Arcades designed for the spin.
             </h2>
             <p className="text-muted-foreground">
               Warm low light, plush carpet, and rows of the latest premium
@@ -372,12 +372,12 @@ function HomePage() {
               {
                 icon: MapPin,
                 title: "High-street locations",
-                body: "Five well-placed rooms across Chester, North Wales and Greater Manchester. Easy to find, easy to leave.",
+                body: "Five well-placed arcades across Chester, North Wales and Greater Manchester. Easy to find, easy to leave.",
               },
               {
                 icon: Heart,
-                title: "Looked-after rooms",
-                body: "Trained staff who'll show you the ropes, fix a tea and keep the room calm. Hospitality first.",
+                title: "Looked-after arcades",
+                body: "Trained staff who'll show you the ropes, fix a tea and keep the arcade calm. Hospitality first.",
               },
               {
                 icon: ShieldCheck,
@@ -411,11 +411,11 @@ function HomePage() {
             <div className="max-w-xl">
               <p className="eyebrow">Visit us</p>
               <h2 className="mt-4 font-display text-4xl leading-tight text-foreground sm:text-5xl">
-                Five rooms across the North-West.
+                Five arcades across the North-West.
               </h2>
               <p className="mt-4 text-muted-foreground">
                 Two in Chester, one each in Caernarfon, Rhyl and Walkden.
-                Every room runs to the same family standards.
+                Every arcade runs to the same family standards.
               </p>
             </div>
             <Link
@@ -490,7 +490,7 @@ function HomePage() {
               </div>
               <div className="mt-6">
                 <p className="text-sm text-muted-foreground">
-                  Our Frodsham Street room in Chester carries the full modern
+                  Our Frodsham Street arcade in Chester carries the full modern
                   floor and our longest-standing team.
                 </p>
                 <a
@@ -532,7 +532,7 @@ function HomePage() {
             <p className="text-muted-foreground">
               Modern gaming is a quieter ritual than it was in 1954, but the
               small moment before the spin is still the same. We've built
-              rooms that honour that.
+              arcades that honour that.
             </p>
           </div>
         </div>
@@ -598,7 +598,7 @@ function HomePage() {
             Step inside. We've kept a seat for you.
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-muted-foreground">
-            Visit any of our five rooms — no booking, no pressure. Our team
+            Visit any of our five arcades — no booking, no pressure. Our team
             will show you around and fix you a tea.
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-4">
