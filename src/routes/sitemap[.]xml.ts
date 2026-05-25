@@ -1,18 +1,33 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
+import { siteConfig } from "@/config/site";
 
 const BASE_URL = "";
 
-const entries = [
+interface SitemapEntry {
+  path: string;
+  changefreq: "weekly" | "monthly" | "yearly";
+  priority: string;
+}
+
+const baseEntries: SitemapEntry[] = [
   { path: "/", changefreq: "weekly", priority: "1.0" },
   { path: "/games", changefreq: "weekly", priority: "0.9" },
-  { path: "/venues", changefreq: "monthly", priority: "0.8" },
-  { path: "/about", changefreq: "monthly", priority: "0.6" },
+  { path: "/venues", changefreq: "monthly", priority: "0.9" },
+  { path: "/about", changefreq: "monthly", priority: "0.7" },
   { path: "/promotions", changefreq: "weekly", priority: "0.7" },
   { path: "/safer-gambling", changefreq: "monthly", priority: "0.7" },
   { path: "/contact", changefreq: "monthly", priority: "0.6" },
   { path: "/faq", changefreq: "monthly", priority: "0.5" },
 ];
+
+const venueEntries: SitemapEntry[] = siteConfig.venues.map((v) => ({
+  path: `/venues#${v.slug}`,
+  changefreq: "monthly",
+  priority: "0.85",
+}));
+
+const entries: SitemapEntry[] = [...baseEntries, ...venueEntries];
 
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
