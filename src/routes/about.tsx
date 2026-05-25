@@ -3,6 +3,7 @@ import { ArrowRight, Heart, ShieldCheck, Users } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { PageHero } from "@/components/PageHero";
 import founderImg from "@/assets/arthur-webber-senior.jpg";
+import dodgemsImg from "@/assets/webbers-dodgems-rhyl.jpg";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
