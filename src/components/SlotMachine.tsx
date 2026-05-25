@@ -273,10 +273,17 @@ export function SlotMachine({
 
       {/* Reels + lever — lever overlays via absolute, so it doesn't change row height */}
       <div className="relative bg-black/85 p-3">
-        <div className="grid grid-cols-3 gap-2 pr-12">
+        <div
+          role="group"
+          aria-label="Slot machine reels"
+          aria-live="polite"
+          aria-atomic="true"
+          className="grid grid-cols-3 gap-2 pr-12"
+        >
           {DURATIONS.map((dur, i) => (
             <Reel
               key={i}
+              position={i + 1}
               items={items}
               target={target}
               duration={dur}
