@@ -104,7 +104,7 @@ function Lever({
   const [pull, setPull] = useState(0);
   const startY = useRef<number | null>(null);
   const pulledRef = useRef(false);
-  const MAX = 110;
+  const MAX = 56;
 
   const release = () => {
     if (pulledRef.current && !disabled) onPull();
@@ -115,15 +115,15 @@ function Lever({
 
   return (
     <div
-      className="relative flex w-12 shrink-0 flex-col items-center justify-end"
-      style={{ height: `${24 + MAX + 36}px` }}
+      className="relative flex w-9 shrink-0 flex-col items-center"
+      style={{ height: `${96 + MAX}px` }}
     >
-      {/* Mount block */}
-      <div className="absolute bottom-0 left-1/2 h-5 w-10 -translate-x-1/2 rounded-md bg-gradient-to-b from-zinc-500 to-zinc-800 shadow-inner ring-1 ring-black/40" />
+      {/* Mount block at top — anchored to reel top */}
+      <div className="absolute top-0 left-1/2 h-3.5 w-8 -translate-x-1/2 rounded-md bg-gradient-to-b from-zinc-500 to-zinc-800 shadow-inner ring-1 ring-black/40" />
       {/* Rod */}
       <div
         className="absolute left-1/2 w-1.5 -translate-x-1/2 rounded-full bg-gradient-to-b from-zinc-200 via-zinc-400 to-zinc-600"
-        style={{ top: `${20 + pull}px`, bottom: 18 }}
+        style={{ top: 12, height: `${10 + pull}px` }}
       />
       {/* Knob */}
       <button
@@ -138,7 +138,7 @@ function Lever({
           if (startY.current === null || disabled) return;
           const dy = Math.max(0, Math.min(MAX, e.clientY - startY.current));
           setPull(dy);
-          if (dy >= MAX * 0.8) pulledRef.current = true;
+          if (dy >= MAX * 0.7) pulledRef.current = true;
         }}
         onPointerUp={release}
         onPointerCancel={release}
@@ -147,9 +147,9 @@ function Lever({
         }}
         disabled={disabled}
         aria-label="Pull lever to spin reels"
-        className="absolute left-1/2 size-10 -translate-x-1/2 cursor-grab touch-none rounded-full active:cursor-grabbing disabled:cursor-not-allowed"
+        className="absolute left-1/2 size-8 -translate-x-1/2 cursor-grab touch-none rounded-full active:cursor-grabbing disabled:cursor-not-allowed"
         style={{
-          top: `${pull}px`,
+          top: `${18 + pull}px`,
           background:
             "radial-gradient(circle at 30% 28%, #ff8a8a 0%, #d23030 45%, #6b0000 100%)",
           boxShadow:
@@ -157,9 +157,6 @@ function Lever({
           transition: pull === 0 ? "top 0.45s cubic-bezier(0.34,1.56,0.64,1)" : "none",
         }}
       />
-      <p className="absolute -bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-[color:var(--neon-yellow)]">
-        Pull
-      </p>
     </div>
   );
 }
