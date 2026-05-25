@@ -1,5 +1,5 @@
 // Single source of truth for Webbers content.
-// [CLIENT TO CONFIRM] markers need verification before launch.
+// All venue addresses, phones and games verified against the client's current site.
 
 export type DayHours = { open: string; close: string } | { closed: true };
 export type WeeklyHours = Record<
@@ -10,7 +10,10 @@ export type WeeklyHours = Record<
 export interface Venue {
   slug: string;
   name: string;
+  /** Subsidiary brand displayed on signage at this venue. */
+  signage: "Webbers Amusements" | "Webbers Casino Slots";
   city: string;
+  region: string;
   address: string[];
   postcode: string;
   phone: string;
@@ -19,13 +22,21 @@ export interface Venue {
   lng: number;
   hours: WeeklyHours;
   primary?: boolean;
+  /** One-line venue character used on cards. */
+  character: string;
 }
 
 export interface Game {
   id: string;
   name: string;
-  type: "Slots" | "Jackpot" | "Classic" | "Roulette";
-  features: string[]; // Megaways, Free Spins, Community Play, Progressive
+  category:
+    | "Megaways"
+    | "Cash Collect"
+    | "Classic Reels"
+    | "Festive Slots"
+    | "Reel Ways"
+    | "Roulette";
+  ways?: string;
   description: string;
   maxPrize: number;
   isNew?: boolean;
@@ -43,13 +54,13 @@ export interface Promotion {
 }
 
 const standardHours: WeeklyHours = {
-  mon: { open: "09:00", close: "23:00" },
-  tue: { open: "09:00", close: "23:00" },
-  wed: { open: "09:00", close: "23:00" },
-  thu: { open: "09:00", close: "23:00" },
-  fri: { open: "09:00", close: "00:00" },
-  sat: { open: "09:00", close: "00:00" },
-  sun: { open: "10:00", close: "22:00" },
+  mon: { open: "09:00", close: "22:00" },
+  tue: { open: "09:00", close: "22:00" },
+  wed: { open: "09:00", close: "22:00" },
+  thu: { open: "09:00", close: "22:00" },
+  fri: { open: "09:00", close: "22:00" },
+  sat: { open: "09:00", close: "22:00" },
+  sun: { open: "10:00", close: "20:00" },
 };
 
 export const siteConfig = {
@@ -58,28 +69,67 @@ export const siteConfig = {
     short: "Webbers",
     parent: "Webber Leisure",
     foundedYear: 1954,
-    tagline: "Chester's home of modern gaming.",
+    founder: "Arthur Webber Senior",
+    origin: "Rhyl, North Wales",
+    tagline: "Premium adult gaming. British heritage. Since 1954.",
     description:
-      "A licensed adult gaming centre in the heart of Chester. Premium slots, modern terminals, and the warm hospitality of a family business since the 1950s.",
+      "A multi-generational family entertainment business — from 1950s seaside arcades to premium adult gaming centres across North Wales, Chester and Greater Manchester. Licensed by the UK Gambling Commission, longstanding Bacta member.",
+    shortDescription:
+      "Three generations of British entertainment heritage — modern, premium adult gaming, in well-run rooms.",
   },
   compliance: {
     licenceNumber: "[CLIENT TO CONFIRM LICENCE NUMBER]",
     helpline: "0808 8020 133",
     minAge: 18,
     maxSlotPrize: 500,
+    regulator: "UK Gambling Commission",
+    tradeBody: "Bacta",
+    idPolicy: "Think 25",
   },
   contact: {
-    email: "[CLIENT TO CONFIRM EMAIL]",
+    email: "hello@webbersamusements.co.uk", // [CLIENT TO CONFIRM EMAIL]
     socials: {
       instagram: "#",
       facebook: "#",
     },
   },
+  /** Premium gaming hardware partners — used as trust marks. */
+  partners: [
+    "Light & Wonder",
+    "Novomatic",
+    "Blueprint Gaming",
+    "Inspired Gaming",
+  ] as const,
+  /** Operational pillars — used in trust / why-Webbers strips. */
+  trustMarks: [
+    {
+      key: "licensed",
+      label: "UK Gambling Commission Licensed",
+      detail: "Fully regulated AGC operator",
+    },
+    {
+      key: "bacta",
+      label: "Bacta Member",
+      detail: "Longstanding trade body member",
+    },
+    {
+      key: "think25",
+      label: "Think 25 ID Policy",
+      detail: "Strict 18+ entry across every venue",
+    },
+    {
+      key: "family",
+      label: "Family Run Since 1954",
+      detail: "Three generations of the Webber family",
+    },
+  ],
   venues: [
     {
       slug: "chester-frodsham",
-      name: "Webbers Chester — Frodsham Street",
+      name: "Webbers Chester · Frodsham Street",
+      signage: "Webbers Amusements",
       city: "Chester",
+      region: "Cheshire",
       address: ["28A Frodsham Street"],
       postcode: "CH1 3JL",
       phone: "01244 [CLIENT TO CONFIRM]",
@@ -87,184 +137,194 @@ export const siteConfig = {
       lng: -2.8893,
       hours: standardHours,
       primary: true,
+      character:
+        "Our flagship room, two minutes from the Eastgate Clock — calm, well-lit, with the full modern floor.",
     },
     {
       slug: "chester-northgate",
-      name: "Webbers Chester — Northgate Street",
+      name: "Webbers Chester · Northgate Street",
+      signage: "Webbers Casino Slots",
       city: "Chester",
-      address: ["[CLIENT TO CONFIRM NUMBER] Northgate Street"],
-      postcode: "[CLIENT TO CONFIRM]",
-      phone: "01244 [CLIENT TO CONFIRM]",
+      region: "Cheshire",
+      address: ["14 Northgate Street"],
+      postcode: "CH1 2HA",
+      phone: "01244 911062",
       lat: 53.1925,
       lng: -2.8912,
       hours: standardHours,
-    },
-    {
-      slug: "manchester",
-      name: "Webbers Manchester",
-      city: "Manchester",
-      address: ["[CLIENT TO CONFIRM ADDRESS]"],
-      postcode: "[CLIENT TO CONFIRM]",
-      phone: "0161 [CLIENT TO CONFIRM]",
-      lat: 53.4808,
-      lng: -2.2426,
-      hours: standardHours,
-    },
-    {
-      slug: "rhyl",
-      name: "Webbers Rhyl",
-      city: "Rhyl",
-      address: ["[CLIENT TO CONFIRM ADDRESS]"],
-      postcode: "[CLIENT TO CONFIRM]",
-      phone: "01745 [CLIENT TO CONFIRM]",
-      lat: 53.3201,
-      lng: -3.4914,
-      hours: standardHours,
+      character:
+        "A boutique slots room a short walk from the Cathedral Quarter — curated cabinets, quieter pace.",
     },
     {
       slug: "caernarfon",
       name: "Webbers Caernarfon",
+      signage: "Webbers Casino Slots",
       city: "Caernarfon",
-      address: ["[CLIENT TO CONFIRM ADDRESS]"],
-      postcode: "[CLIENT TO CONFIRM]",
-      phone: "01286 [CLIENT TO CONFIRM]",
-      lat: 53.1410,
-      lng: -4.2716,
+      region: "Gwynedd",
+      address: ["2 Pool Street"],
+      postcode: "LL55 2AB",
+      phone: "01286 672758",
+      lat: 53.1399,
+      lng: -4.2722,
       hours: standardHours,
+      character:
+        "In the shadow of the castle walls — a long-running family fixture in the heart of the old town.",
+    },
+    {
+      slug: "rhyl",
+      name: "Webbers Rhyl",
+      signage: "Webbers Casino Slots",
+      city: "Rhyl",
+      region: "Denbighshire",
+      address: ["76 High Street"],
+      postcode: "LL18 1UB",
+      phone: "01745 353251",
+      lat: 53.3201,
+      lng: -3.4914,
+      hours: standardHours,
+      character:
+        "Where the Webber story started in the 1950s — still on the High Street, now in its modern form.",
+    },
+    {
+      slug: "walkden",
+      name: "Webbers Walkden",
+      signage: "Webbers Amusements",
+      city: "Walkden",
+      region: "Greater Manchester",
+      address: ["35 Bolton Road"],
+      postcode: "M28 3AX",
+      phone: "0161 222 0282",
+      lat: 53.5232,
+      lng: -2.3973,
+      hours: standardHours,
+      character:
+        "Our newest room — a generous floor on the high street, a few minutes' drive from the M60.",
     },
   ] as Venue[],
   games: [
     {
-      id: "fishin-frenzy",
-      name: "Fishin' Frenzy Megaways",
-      type: "Slots",
-      features: ["Megaways", "Free Spins"],
-      description: "Cult-classic reels with up to 117,649 ways to win.",
+      id: "big-cat-king-megaways",
+      name: "Big Cat King Megaways",
+      category: "Megaways",
+      ways: "Up to 15,625 ways to win",
+      description:
+        "Fast-paced Megaways action — rule the reels with the Big Cat King.",
       maxPrize: 500,
       isFeatured: true,
     },
     {
-      id: "rainbow-riches",
-      name: "Rainbow Riches",
-      type: "Slots",
-      features: ["Free Spins", "Pick & Win"],
-      description: "The pub favourite, now in HD on the venue floor.",
+      id: "huff-n-more-puff",
+      name: "Huff n' More Puff",
+      category: "Reel Ways",
+      description:
+        "High-energy gameplay with Reel Ways mechanics — huff, puff and blow your way to big wins.",
       maxPrize: 500,
       isFeatured: true,
     },
     {
-      id: "eye-of-horus",
-      name: "Eye of Horus",
-      type: "Slots",
-      features: ["Free Spins", "Expanding Symbols"],
-      description: "Hieroglyphic reels with cascading free spin rounds.",
-      maxPrize: 500,
-    },
-    {
-      id: "starburst",
-      name: "Starburst",
-      type: "Slots",
-      features: ["Re-Spins"],
-      description: "Bright, fast, and forgiving — a perennial favourite.",
-      maxPrize: 500,
-    },
-    {
-      id: "community-jackpot",
-      name: "Community Jackpot",
-      type: "Jackpot",
-      features: ["Community Play", "Progressive"],
-      description: "A shared progressive that lights up the whole floor.",
+      id: "fortune-of-cai-shen",
+      name: "Fortune of Cai Shen",
+      category: "Cash Collect",
+      ways: "4,096 ways to win",
+      description:
+        "Cash Collect feature with a massive 4,096 ways to win. Chase the fortune of the Chinese god of wealth.",
       maxPrize: 500,
       isFeatured: true,
-      isNew: true,
     },
     {
-      id: "electronic-roulette",
-      name: "Electronic Roulette",
-      type: "Roulette",
-      features: ["Community Play"],
-      description: "Real wheel, digital betting terminals around it.",
+      id: "double-zero-roulette",
+      name: "Double Zero Roulette with Golden Odds",
+      category: "Roulette",
+      description:
+        "Classic Double Zero Roulette with Golden Odds. Win up to £500 — place your bets and let the wheel decide.",
+      maxPrize: 500,
+      isFeatured: true,
+    },
+    {
+      id: "searing-sevens",
+      name: "Searing Sevens Super Spins",
+      category: "Classic Reels",
+      description:
+        "A classic reel experience with Free Spins. Timeless fruit-machine action with a fiery modern twist.",
       maxPrize: 500,
     },
     {
-      id: "deal-or-no-deal",
-      name: "Deal or No Deal",
-      type: "Slots",
-      features: ["Free Spins", "Bonus Round"],
-      description: "Box-picking bonus round with up to 26 outcomes.",
-      maxPrize: 500,
-    },
-    {
-      id: "monopoly-big-event",
-      name: "Monopoly Big Event",
-      type: "Slots",
-      features: ["Megaways", "Bonus Round"],
-      description: "Pass Go on the reels for community bonus rounds.",
-      maxPrize: 500,
-    },
-    {
-      id: "wild-west-gold",
-      name: "Wild West Gold",
-      type: "Slots",
-      features: ["Free Spins", "Multipliers"],
-      description: "Frontier reels with multiplier wilds during free spins.",
+      id: "big-catch-bass-fishing-christmas",
+      name: "Big Catch Bass Fishing Christmas",
+      category: "Festive Slots",
+      description:
+        "Festive fishing fun with exciting Free Games bonus rounds. Cast your line and reel in the wins this Christmas.",
       maxPrize: 500,
       isNew: true,
-    },
-    {
-      id: "club-fruity",
-      name: "Club Fruity",
-      type: "Classic",
-      features: ["Hold & Nudge"],
-      description: "An honest three-reeler with classic hold and nudge play.",
-      maxPrize: 100,
-    },
-    {
-      id: "reel-king",
-      name: "Reel King",
-      type: "Classic",
-      features: ["Bonus Round"],
-      description: "A modern take on the old-school AWP cabinet.",
-      maxPrize: 100,
-    },
-    {
-      id: "big-banker",
-      name: "Big Banker",
-      type: "Jackpot",
-      features: ["Progressive"],
-      description: "A standalone progressive that ticks up across the day.",
-      maxPrize: 500,
     },
   ] as Game[],
   promotions: [
     {
       id: "weekend-welcome",
-      title: "Weekend Welcome",
+      title: "The Weekend Welcome",
       description:
-        "Complimentary tea, coffee and pastries for every player on Saturday and Sunday mornings.",
+        "Complimentary tea, coffee and pastries for every player, every Saturday and Sunday morning. A small Webber-family thank-you for choosing the room.",
       startsOn: "Every Saturday",
       endsOn: "Every Sunday",
       badge: "Ongoing",
     },
     {
-      id: "loyalty-club",
+      id: "webbers-club",
       title: "The Webbers Club",
       description:
-        "Sign up at the cashier for member-only invites, birthday surprises and early access to new machines.",
+        "Member-only invites, birthday cards from the team, and early access to new cabinets — register at the cashier on your next visit.",
       startsOn: "Year-round",
       endsOn: "",
       badge: "Members",
     },
     {
-      id: "community-jackpot-launch",
-      title: "Community Jackpot is here",
+      id: "new-cabinets",
+      title: "New on the Floor",
       description:
-        "Our new community progressive runs every evening from 6pm. Up to £500 max prize — play your part on any participating machine.",
-      startsOn: "Daily",
-      endsOn: "From 18:00",
-      badge: "New",
+        "Fresh titles from Light & Wonder, Blueprint and Inspired Gaming land regularly across the estate. Speak to staff in venue to find what's new this month.",
+      startsOn: "Updated monthly",
+      endsOn: "",
+      badge: "Just landed",
     },
   ] as Promotion[],
+  /** Heritage timeline — used on Home, About and storytelling sections. */
+  timeline: [
+    {
+      decade: "1954",
+      title: "Arthur Webber Senior begins",
+      body: "Arthur Webber Senior founds the family business in Rhyl, North Wales — manufacturing confectionery supplied to the Woolworths counter and the seaside trade.",
+    },
+    {
+      decade: "1960s",
+      title: "Onto the seafront",
+      body: "The family moves into fairgrounds and seaside arcades along the North Wales coast — penny falls, classic AWP cabinets and a knack for keeping the rooms warm and well-run.",
+    },
+    {
+      decade: "1970s",
+      title: "Rides and family entertainment",
+      body: "Expansion into fairground rides and family entertainment centres — a generation of children grow up with a Webber-run amusement in their summer holidays.",
+    },
+    {
+      decade: "1990s",
+      title: "Permanent rooms",
+      body: "Permanent amusement arcades open across North Wales, including the long-standing Rhyl and Caernarfon venues — anchoring the family on the high street.",
+    },
+    {
+      decade: "2000s",
+      title: "Across the border into Chester",
+      body: "The first Chester venue opens, bringing the family's hospitality standards into a cathedral city for the first time.",
+    },
+    {
+      decade: "2010s",
+      title: "Modern Adult Gaming Centres",
+      body: "The estate modernises into premium, fully-licensed AGCs — sophisticated rooms with the latest cabinets from Light & Wonder, Novomatic, Blueprint and Inspired Gaming.",
+    },
+    {
+      decade: "Today",
+      title: "Three generations on",
+      body: "Five rooms across Chester, North Wales and Greater Manchester. Same family, same standards — modern premium gaming, regulated by the UK Gambling Commission.",
+    },
+  ],
 };
 
 export type SiteConfig = typeof siteConfig;

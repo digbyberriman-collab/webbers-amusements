@@ -1,9 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
-import { MapPin, Phone, Clock, ArrowRight } from "lucide-react";
-import { siteConfig } from "@/config/site";
+import {
+  ArrowRight,
+  Clock,
+  MapPin,
+  Phone,
+  Users,
+} from "lucide-react";
+import { siteConfig, type Venue } from "@/config/site";
+import { PageHero } from "@/components/PageHero";
 import { todaysHours, weeklyHoursTable } from "@/lib/hours";
-import { SlotMachine, type SlotItem } from "@/components/SlotMachine";
 
 export const Route = createFileRoute("/venues")({
   head: () => ({
@@ -12,218 +17,322 @@ export const Route = createFileRoute("/venues")({
       {
         name: "description",
         content:
-          "Pull the lever to find a Webbers Amusements venue — Chester (Frodsham & Northgate), Manchester, Rhyl and Caernarfon.",
+          "Five Webbers Amusements rooms — Chester (Frodsham Street and Northgate Street), Caernarfon, Rhyl and Walkden. Addresses, phone numbers, weekly opening hours and directions for every venue.",
       },
-      { property: "og:title", content: `Our Venues — ${siteConfig.brand.name}` },
+      {
+        property: "og:title",
+        content: `Our Venues — ${siteConfig.brand.name}`,
+      },
       {
         property: "og:description",
         content:
-          "Five Webbers Amusements venues across Chester, Manchester and North Wales.",
+          "Five premium adult gaming centres across Chester, North Wales and Greater Manchester. Family-run, licensed by the UK Gambling Commission.",
       },
       { property: "og:url", content: "/venues" },
     ],
     links: [{ rel: "canonical", href: "/venues" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": siteConfig.venues.map((v) => ({
+            "@type": "LocalBusiness",
+            "@id": `/venues#${v.slug}`,
+            name: v.name,
+            description: v.character,
+            telephone: v.phone,
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: v.address.join(", "),
+              addressLocality: v.city,
+              addressRegion: v.region,
+              postalCode: v.postcode,
+              addressCountry: "GB",
+            },
+            geo: {
+              "@type": "GeoCoordinates",
+              latitude: v.lat,
+              longitude: v.lng,
+            },
+            openingHoursSpecification: openingHoursSpec(v),
+            parentOrganization: {
+              "@type": "Organization",
+              name: siteConfig.brand.name,
+            },
+          })),
+        }),
+      },
+    ],
   }),
   component: VenuesPage,
 });
 
-// Bright, distinctive symbol per venue
-const venueSymbols: Record<string, string> = {
-  "chester-frodsham": "🎰",
-  "chester-northgate": "🏛️",
-  manchester: "🐝",
-  rhyl: "🌊",
-  caernarfon: "🏰",
+const dayNameMap: Record<string, string> = {
+  mon: "Monday",
+  tue: "Tuesday",
+  wed: "Wednesday",
+  thu: "Thursday",
+  fri: "Friday",
+  sat: "Saturday",
+  sun: "Sunday",
 };
 
-// Short label for the reel face
-const venueShort: Record<string, string> = {
-  "chester-frodsham": "Frodsham",
-  "chester-northgate": "Northgate",
-  manchester: "Manchester",
-  rhyl: "Rhyl",
-  caernarfon: "Caernarfon",
-};
+function openingHoursSpec(venue: Venue) {
+  return (Object.keys(dayNameMap) as Array<keyof typeof venue.hours>).map(
+    (k) => {
+      const h = venue.hours[k];
+      if ("closed" in h) {
+        return {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: dayNameMap[k],
+          opens: "00:00",
+          closes: "00:00",
+        };
+      }
+      return {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: dayNameMap[k],
+        opens: h.open,
+        closes: h.close,
+      };
+    },
+  );
+}
+
+function tabLabel(v: Venue) {
+  if (v.city !== "Chester") return v.city;
+  return v.slug === "chester-frodsham"
+    ? "Chester · Frodsham St"
+    : "Chester · Northgate St";
+}
+
+function mapEmbedUrl(v: Venue) {
+  const bbox = [
+    v.lng - 0.01,
+    v.lat - 0.005,
+    v.lng + 0.01,
+    v.lat + 0.005,
+  ]
+    .map((n) => n.toFixed(5))
+    .join("%2C");
+  return `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${v.lat}%2C${v.lng}`;
+}
 
 function VenuesPage() {
-  const items: SlotItem[] = siteConfig.venues.map((v) => ({
-    key: v.slug,
-    symbol: venueSymbols[v.slug] ?? "🎰",
-    label: venueShort[v.slug] ?? v.city,
-    description: `${v.name} · ${v.address.join(", ")}, ${v.city}`,
-  }));
-
-  const [active, setActive] = useState(siteConfig.venues[0].slug);
-  const activeVenue =
-    siteConfig.venues.find((v) => v.slug === active) ?? siteConfig.venues[0];
-  const h = todaysHours(activeVenue);
-
   return (
     <>
-      {/* HERO with functional slot machine */}
-      <section className="relative overflow-hidden border-b border-[color:var(--neon-pink)]/40 bg-ink px-6 pb-16 pt-32">
-        {/* Neon haze */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -left-32 top-10 h-[60vh] w-[60vh] rounded-full opacity-40 blur-3xl"
-          style={{
-            background:
-              "radial-gradient(circle, var(--neon-pink), transparent 70%)",
-          }}
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -right-32 bottom-0 h-[55vh] w-[55vh] rounded-full opacity-40 blur-3xl"
-          style={{
-            background:
-              "radial-gradient(circle, var(--neon-cyan), transparent 70%)",
-          }}
-        />
+      <PageHero
+        eyebrow="Find your room"
+        title={
+          <>
+            Five rooms.{" "}
+            <span className="italic text-brass">One family.</span>
+          </>
+        }
+        intro="Two in Chester, one each in Caernarfon, Rhyl and Walkden — a footprint that runs from the North Wales coast across to Greater Manchester. Same family, same standards."
+      />
 
-        <div className="relative mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-2">
-          <div className="space-y-6 animate-rise">
-            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--neon-yellow)]">
-              Five venues · One family
-            </p>
-            <h1 className="neon-text font-display text-5xl leading-[0.95] sm:text-6xl lg:text-7xl">
-              Pull to find <span className="italic">your Webbers</span>.
-            </h1>
-            <p className="max-w-md text-lg text-foreground/90">
-              Yank the lever on the cabinet. Wherever the reels land — that's
-              the room. Hit it again to keep spinning the floor.
-            </p>
-            <div className="flex flex-wrap gap-2 pt-2">
-              {siteConfig.venues.map((v) => (
-                <button
-                  key={v.slug}
-                  type="button"
-                  onClick={() => setActive(v.slug)}
-                  className={`rounded-full border px-3 py-1.5 text-xs font-bold uppercase tracking-widest transition-all ${
-                    v.slug === active
-                      ? "border-[color:var(--neon-yellow)] bg-[color:var(--neon-yellow)] text-ink shadow-[0_0_16px_var(--neon-yellow)]"
-                      : "border-white/15 text-muted-foreground hover:border-[color:var(--neon-cyan)] hover:text-[color:var(--neon-cyan)]"
-                  }`}
-                >
-                  {v.city === "Chester" ? `${v.city} · ${venueShort[v.slug]}` : v.city}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="relative">
-            <SlotMachine
-              items={items}
-              selectedKey={active}
-              onLand={(k) => setActive(k)}
-              headerTitle="Find a Venue"
-              idleHint={`Pull → ${venueShort[active] ?? activeVenue.city}`}
-            />
-          </div>
+      {/* ============================================================
+          STICKY VENUE TABS — anchor links to each section
+          ============================================================ */}
+      <nav
+        aria-label="Jump to a venue"
+        className="glass sticky top-16 z-30 border-y border-white/5"
+      >
+        <div className="mx-auto flex max-w-7xl gap-2 overflow-x-auto px-6 py-4 lg:px-10">
+          {siteConfig.venues.map((v) => (
+            <a
+              key={v.slug}
+              href={`#${v.slug}`}
+              className="shrink-0 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:border-brass hover:text-brass"
+            >
+              {tabLabel(v)}
+            </a>
+          ))}
         </div>
-      </section>
+      </nav>
 
-      {/* REVEALED VENUE PANEL */}
-      <section className="relative px-6 py-20">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-8 flex items-center gap-4">
-            <span className="jackpot font-display text-3xl">★</span>
+      {/* ============================================================
+          VENUE SECTIONS — alternating editorial layout
+          ============================================================ */}
+      <div className="divide-y divide-white/5">
+        {siteConfig.venues.map((venue, i) => (
+          <VenueSection key={venue.slug} venue={venue} mapLeft={i % 2 === 0} />
+        ))}
+      </div>
+
+      {/* ============================================================
+          GROUP BOOKINGS / VENUE HIRE
+          ============================================================ */}
+      <section className="border-t border-white/5 bg-surface/30 px-6 py-[var(--section-y)] lg:px-10">
+        <div className="mx-auto max-w-5xl">
+          <div className="grid items-center gap-10 rounded-2xl bg-ink p-10 ring-1 ring-white/5 lg:grid-cols-[auto_1fr_auto] lg:p-14">
+            <div className="grid size-14 place-items-center rounded-full bg-brass/10 text-brass">
+              <Users className="size-6" aria-hidden />
+            </div>
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--neon-pink)]">
-                Winner · You landed on
-              </p>
-              <h2 className="neon-text-cyan font-display text-3xl sm:text-4xl">
-                {activeVenue.name}
+              <p className="eyebrow">Group bookings &amp; venue hire</p>
+              <h2 className="mt-3 font-display text-3xl leading-tight text-foreground sm:text-4xl">
+                Bringing a group? Talk to us.
               </h2>
+              <p className="mt-4 max-w-2xl text-muted-foreground">
+                For stag and hen visits, corporate evenings, charity nights
+                and private bookings, we'll set the room up around you.
+                Available across all five venues.
+              </p>
             </div>
-          </div>
-
-          <div
-            key={activeVenue.slug}
-            className="cabinet-frame relative overflow-hidden rounded-2xl bg-black/60 p-1 animate-rise"
-          >
-            <div className="grid gap-px overflow-hidden rounded-xl bg-white/10 lg:grid-cols-5">
-              {/* Map */}
-              <div className="aspect-[4/3] lg:col-span-3 lg:aspect-auto">
-                <iframe
-                  key={activeVenue.slug}
-                  title={`Map of ${activeVenue.name}`}
-                  src={`https://www.openstreetmap.org/export/embed.html?bbox=${activeVenue.lng - 0.01}%2C${activeVenue.lat - 0.005}%2C${activeVenue.lng + 0.01}%2C${activeVenue.lat + 0.005}&layer=mapnik&marker=${activeVenue.lat}%2C${activeVenue.lng}`}
-                  className="size-full grayscale-[60%] invert-[0.92] hue-rotate-180 contrast-[0.9]"
-                  loading="lazy"
-                />
-              </div>
-              {/* Details */}
-              <div className="space-y-6 bg-ink p-8 lg:col-span-2">
-                <div className="flex items-center gap-2 text-xs">
-                  <span
-                    className={`size-2 rounded-full ${h.isOpen ? "animate-pulse bg-[color:var(--neon-green)] shadow-[0_0_10px_var(--neon-green)]" : "bg-muted-foreground"}`}
-                  />
-                  <span className="font-mono uppercase tracking-widest text-foreground/80">
-                    {h.isOpen ? "Open now" : "Closed"} · {h.text}
-                  </span>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <MapPin className="mt-1 size-4 shrink-0 text-[color:var(--neon-yellow)]" aria-hidden />
-                  <address className="not-italic text-sm text-foreground">
-                    {activeVenue.address.map((l) => (
-                      <p key={l}>{l}</p>
-                    ))}
-                    <p>
-                      {activeVenue.city}, {activeVenue.postcode}
-                    </p>
-                  </address>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <Phone className="mt-1 size-4 shrink-0 text-[color:var(--neon-yellow)]" aria-hidden />
-                  <a
-                    href={`tel:${activeVenue.phone.replace(/\s/g, "")}`}
-                    className="text-sm text-foreground hover:text-[color:var(--neon-cyan)]"
-                  >
-                    {activeVenue.phone}
-                  </a>
-                </div>
-
-                <div>
-                  <div className="mb-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[color:var(--neon-yellow)]">
-                    <Clock className="size-3.5" aria-hidden /> Weekly hours
-                  </div>
-                  <dl className="space-y-1.5 text-sm">
-                    {weeklyHoursTable(activeVenue).map((d) => (
-                      <div
-                        key={d.key}
-                        className="flex justify-between border-b border-white/5 py-1"
-                      >
-                        <dt className="text-muted-foreground">{d.label}</dt>
-                        <dd className="text-foreground">{d.text}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                </div>
-
-                <div className="flex flex-wrap gap-3 pt-2">
-                  <a
-                    href={`https://www.google.com/maps/search/?api=1&query=${activeVenue.lat},${activeVenue.lng}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="play-button inline-flex items-center gap-2 rounded-full px-6 py-3 text-xs font-black uppercase tracking-widest"
-                  >
-                    Get directions
-                    <ArrowRight className="size-3.5" aria-hidden />
-                  </a>
-                  <a
-                    href={`tel:${activeVenue.phone.replace(/\s/g, "")}`}
-                    className="inline-flex items-center gap-2 rounded-full border border-[color:var(--neon-cyan)]/50 px-6 py-3 text-xs font-bold uppercase tracking-widest text-[color:var(--neon-cyan)] hover:bg-[color:var(--neon-cyan)]/10"
-                  >
-                    Call the venue
-                  </a>
-                </div>
-              </div>
-            </div>
+            <a
+              href="/contact"
+              className="inline-flex items-center gap-2 rounded-full bg-brass px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-ink transition-colors hover:bg-brass-deep"
+            >
+              Get in touch
+              <ArrowRight className="size-3.5" aria-hidden />
+            </a>
           </div>
         </div>
       </section>
     </>
+  );
+}
+
+interface VenueSectionProps {
+  venue: Venue;
+  mapLeft: boolean;
+}
+
+function VenueSection({ venue, mapLeft }: VenueSectionProps) {
+  const hours = todaysHours(venue);
+  const week = weeklyHoursTable(venue);
+  const telHref = `tel:${venue.phone.replace(/\s/g, "")}`;
+  const directionsHref = `https://www.google.com/maps/search/?api=1&query=${venue.lat},${venue.lng}`;
+
+  return (
+    <section
+      id={venue.slug}
+      className="scroll-mt-24 px-6 py-[var(--section-y)] lg:px-10"
+    >
+      <div className="mx-auto grid max-w-7xl items-start gap-12 lg:grid-cols-5 lg:gap-16">
+        <div
+          className={`${
+            mapLeft ? "lg:order-1" : "lg:order-2"
+          } overflow-hidden rounded-2xl ring-1 ring-white/10 lg:col-span-3`}
+        >
+          <div className="aspect-[4/3] w-full bg-surface">
+            <iframe
+              title={`Map of ${venue.name}`}
+              src={mapEmbedUrl(venue)}
+              loading="lazy"
+              className="size-full grayscale-[60%] invert-[0.92] hue-rotate-180 contrast-[0.9]"
+            />
+          </div>
+        </div>
+
+        <div
+          className={`${
+            mapLeft ? "lg:order-2" : "lg:order-1"
+          } space-y-8 lg:col-span-2`}
+        >
+          <div>
+            <p className="eyebrow">
+              {venue.region} · {venue.signage}
+            </p>
+            <h2 className="mt-4 font-display text-4xl leading-tight text-foreground sm:text-5xl">
+              {venue.city}
+              {venue.city === "Chester" && (
+                <span className="mt-2 block font-display text-xl italic text-brass">
+                  {venue.slug === "chester-frodsham"
+                    ? "Frodsham Street"
+                    : "Northgate Street"}
+                </span>
+              )}
+            </h2>
+            <p className="mt-5 text-muted-foreground">{venue.character}</p>
+          </div>
+
+          <div className="flex items-center gap-2 text-xs">
+            <span
+              aria-hidden
+              className={`size-1.5 rounded-full ${
+                hours.isOpen ? "bg-sage" : "bg-muted-foreground/40"
+              }`}
+            />
+            <span className="font-mono uppercase tracking-[0.22em] text-foreground/80">
+              {hours.isOpen ? "Open now" : "Closed"} · {hours.text}
+            </span>
+          </div>
+
+          <div className="space-y-4">
+            <div className="flex items-start gap-3">
+              <MapPin
+                className="mt-0.5 size-4 shrink-0 text-brass"
+                aria-hidden
+              />
+              <address className="not-italic text-sm leading-relaxed text-foreground/90">
+                {venue.address.map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
+                <span className="block">
+                  {venue.city}, {venue.postcode}
+                </span>
+              </address>
+            </div>
+            <div className="flex items-start gap-3">
+              <Phone
+                className="mt-0.5 size-4 shrink-0 text-brass"
+                aria-hidden
+              />
+              <a
+                href={telHref}
+                className="link-underline text-sm text-foreground/90"
+              >
+                {venue.phone}
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <div className="mb-4 flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-brass">
+              <Clock className="size-3.5" aria-hidden />
+              Weekly hours
+            </div>
+            <dl className="divide-y divide-white/5 rounded-xl border border-white/10 bg-surface/40 px-5 py-2 text-sm">
+              {week.map((d) => (
+                <div
+                  key={d.key}
+                  className="flex items-center justify-between py-2.5"
+                >
+                  <dt className="text-muted-foreground">{d.label}</dt>
+                  <dd className="font-mono text-xs uppercase tracking-[0.18em] text-foreground/90">
+                    {d.text}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          <div className="flex flex-wrap gap-3 pt-2">
+            <a
+              href={directionsHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-brass px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-ink transition-colors hover:bg-brass-deep"
+            >
+              <MapPin className="size-3.5" aria-hidden />
+              Get directions
+            </a>
+            <a
+              href={telHref}
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground transition-colors hover:border-brass hover:text-brass"
+            >
+              <Phone className="size-3.5" aria-hidden />
+              Call venue
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }

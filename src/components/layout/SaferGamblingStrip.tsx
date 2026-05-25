@@ -5,33 +5,35 @@ export function SaferGamblingStrip() {
   return (
     <section
       aria-label="Safer gambling"
-      className="border-y border-white/5 bg-surface/40 py-8"
+      className="border-t border-white/5 bg-ink"
     >
-      <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 px-6 md:flex-row md:items-center">
-        <div className="flex items-center gap-5">
-          <span className="font-display text-3xl font-bold text-foreground">
-            18<span className="text-danger">+</span>
+      <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 px-6 py-10 md:flex-row md:items-center lg:px-10">
+        <div className="flex items-center gap-6">
+          <span
+            aria-hidden
+            className="grid size-12 place-items-center rounded-full border border-brass/40 font-display text-lg font-bold text-brass"
+          >
+            18+
           </span>
-          <div className="h-10 w-px bg-white/10" aria-hidden />
-          <div>
+          <div className="max-w-xl">
             <p className="font-display text-lg text-foreground">
-              Take time to think.
+              When the fun stops, stop.
             </p>
-            <p className="text-sm text-muted-foreground">
-              When the fun stops, stop. Help is free, 24/7 —{" "}
+            <p className="mt-1 text-sm text-muted-foreground">
+              Free, confidential support is available 24/7 —{" "}
               <a
                 href={`tel:${siteConfig.compliance.helpline.replace(/\s/g, "")}`}
-                className="text-gold underline-offset-4 hover:underline"
+                className="text-brass underline-offset-4 hover:underline"
               >
                 {siteConfig.compliance.helpline}
               </a>
-              .
+              . Speak to any member of our team in venue.
             </p>
           </div>
         </div>
         <Link
           to="/safer-gambling"
-          className="rounded-full border border-gold/30 px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-gold transition-colors hover:bg-gold/10"
+          className="rounded-full border border-brass/40 px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-brass transition-colors hover:bg-brass/10"
         >
           Safer gambling tools
         </Link>
