@@ -102,15 +102,35 @@ function Lever({
   disabled?: boolean;
 }) {
   const [pull, setPull] = useState(0);
+  const [animating, setAnimating] = useState(false);
   const startY = useRef<number | null>(null);
   const pulledRef = useRef(false);
+  const draggingRef = useRef(false);
   const MAX = 56;
 
+  const triggerAnimatedPull = () => {
+    if (disabled || animating) return;
+    setAnimating(true);
+    setPull(MAX);
+    onPull();
+    window.setTimeout(() => {
+      setPull(0);
+      window.setTimeout(() => setAnimating(false), 450);
+    }, 220);
+  };
+
   const release = () => {
-    if (pulledRef.current && !disabled) onPull();
-    setPull(0);
+    const wasDragging = draggingRef.current;
+    const didPull = pulledRef.current;
+    draggingRef.current = false;
     startY.current = null;
     pulledRef.current = false;
+    if (wasDragging) {
+      setPull(0);
+      if (didPull && !disabled) onPull();
+    } else {
+      triggerAnimatedPull();
+    }
   };
 
   return (
@@ -118,33 +138,29 @@ function Lever({
       className="relative flex w-9 shrink-0 flex-col items-center"
       style={{ height: `${96 + MAX}px` }}
     >
-      {/* Mount block at top — anchored to reel top */}
       <div className="absolute top-0 left-1/2 h-3.5 w-8 -translate-x-1/2 rounded-md bg-gradient-to-b from-zinc-500 to-zinc-800 shadow-inner ring-1 ring-black/40" />
-      {/* Rod */}
       <div
         className="absolute left-1/2 w-1.5 -translate-x-1/2 rounded-full bg-gradient-to-b from-zinc-200 via-zinc-400 to-zinc-600"
         style={{ top: 12, height: `${10 + pull}px` }}
       />
-      {/* Knob */}
       <button
         type="button"
         onPointerDown={(e) => {
-          if (disabled) return;
+          if (disabled || animating) return;
           startY.current = e.clientY;
           pulledRef.current = false;
+          draggingRef.current = false;
           (e.currentTarget as Element).setPointerCapture(e.pointerId);
         }}
         onPointerMove={(e) => {
           if (startY.current === null || disabled) return;
           const dy = Math.max(0, Math.min(MAX, e.clientY - startY.current));
+          if (dy > 4) draggingRef.current = true;
           setPull(dy);
           if (dy >= MAX * 0.7) pulledRef.current = true;
         }}
         onPointerUp={release}
         onPointerCancel={release}
-        onClick={() => {
-          if (!disabled && pull === 0 && !pulledRef.current) onPull();
-        }}
         disabled={disabled}
         aria-label="Pull lever to spin reels"
         className="absolute left-1/2 size-8 -translate-x-1/2 cursor-grab touch-none rounded-full active:cursor-grabbing disabled:cursor-not-allowed"
@@ -154,7 +170,12 @@ function Lever({
             "radial-gradient(circle at 30% 28%, #ff8a8a 0%, #d23030 45%, #6b0000 100%)",
           boxShadow:
             "0 0 18px var(--neon-pink), inset 0 -5px 10px rgba(0,0,0,0.55), inset 0 4px 8px rgba(255,255,255,0.25)",
-          transition: pull === 0 ? "top 0.45s cubic-bezier(0.34,1.56,0.64,1)" : "none",
+          transition:
+            pull === 0
+              ? "top 0.45s cubic-bezier(0.34,1.56,0.64,1)"
+              : animating
+                ? "top 0.22s ease-in"
+                : "none",
         }}
       />
     </div>
