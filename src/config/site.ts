@@ -100,6 +100,17 @@ export const siteConfig = {
       hours: standardHours,
     },
     {
+      slug: "manchester",
+      name: "Webbers Manchester",
+      city: "Manchester",
+      address: ["[CLIENT TO CONFIRM ADDRESS]"],
+      postcode: "[CLIENT TO CONFIRM]",
+      phone: "0161 [CLIENT TO CONFIRM]",
+      lat: 53.4808,
+      lng: -2.2426,
+      hours: standardHours,
+    },
+    {
       slug: "rhyl",
       name: "Webbers Rhyl",
       city: "Rhyl",
