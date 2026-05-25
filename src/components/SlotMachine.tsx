@@ -4,6 +4,8 @@ export interface SlotItem {
   key: string;
   symbol: string; // emoji / glyph
   label: string;  // short text under symbol
+  /** Optional one-line explanation shown when the reels land on this item. */
+  description?: string;
 }
 
 interface SlotMachineProps {
@@ -14,6 +16,8 @@ interface SlotMachineProps {
   cycleOnPull?: boolean;
   headerTitle?: string;
   idleHint?: string;
+  /** Label above the landed-item panel. */
+  resultLabel?: string;
 }
 
 const ROW = 96;
