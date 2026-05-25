@@ -195,11 +195,13 @@ export function SlotMachine({
   cycleOnPull = true,
   headerTitle = "Webbers",
   idleHint = "Pull the lever",
+  resultLabel = "You landed on",
 }: SlotMachineProps) {
   const findIdx = (k: string) => Math.max(0, items.findIndex((i) => i.key === k));
   const [target, setTarget] = useState(() => findIdx(selectedKey));
   const [spinning, setSpinning] = useState(false);
   const [spinKey, setSpinKey] = useState(0);
+  const [hasPulled, setHasPulled] = useState(false);
   const finishedRef = useRef(0);
   const pendingRef = useRef(target);
 
@@ -211,12 +213,12 @@ export function SlotMachine({
 
   const triggerSpin = () => {
     if (spinning || items.length === 0) return;
+    setHasPulled(true);
     const currentIdx = findIdx(selectedKey);
     let next: number;
     if (cycleOnPull) {
       next = (currentIdx + 1) % items.length;
     } else {
-      // random but not the same
       next = currentIdx;
       while (next === currentIdx && items.length > 1) {
         next = Math.floor(Math.random() * items.length);
@@ -236,6 +238,8 @@ export function SlotMachine({
       onLand(items[pendingRef.current].key);
     }
   };
+
+  const landed = items[target];
 
   return (
     <div className="cabinet-frame relative mx-auto w-full max-w-md p-2.5">
@@ -269,6 +273,21 @@ export function SlotMachine({
         <div className="pointer-events-auto absolute right-3 top-3 h-24 w-9">
           <Lever onPull={triggerSpin} disabled={spinning} />
         </div>
+
+        {/* Pull-the-lever callout — visible until first interaction */}
+        {!hasPulled && !spinning && (
+          <div
+            aria-hidden
+            className="pointer-events-none absolute right-14 top-1/2 -translate-y-1/2 animate-pulse"
+          >
+            <div className="flex items-center gap-1.5 rounded-full border border-[color:var(--neon-yellow)]/70 bg-ink/90 px-2.5 py-1 shadow-[0_0_14px_var(--neon-yellow)]">
+              <span className="font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-[color:var(--neon-yellow)]">
+                Pull
+              </span>
+              <span className="text-[color:var(--neon-yellow)]">→</span>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Bottom bulbs */}
@@ -277,10 +296,40 @@ export function SlotMachine({
       </div>
 
       {/* Status bar */}
-      <div className="rounded-b-xl bg-ink/90 px-4 py-3 text-center">
+      <div className="bg-ink/90 px-4 py-2.5 text-center">
         <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--neon-yellow)]">
-          {spinning ? "Spinning…" : idleHint}
+          {spinning
+            ? "Spinning…"
+            : hasPulled
+              ? "Reels stopped — pull again to re-spin"
+              : idleHint}
         </p>
+      </div>
+
+      {/* Result legend — explains the landed symbol */}
+      <div
+        key={`legend-${landed?.key ?? "none"}-${spinning ? "s" : "r"}`}
+        aria-live="polite"
+        className={`rounded-b-xl border-t border-[color:var(--neon-cyan)]/30 bg-gradient-to-b from-ink to-black/80 px-4 py-3 text-center ${
+          spinning ? "opacity-50" : "animate-fade-in"
+        }`}
+      >
+        <p className="font-mono text-[9px] uppercase tracking-[0.3em] text-foreground/55">
+          {resultLabel}
+        </p>
+        <div className="mt-1.5 flex items-center justify-center gap-2">
+          <span className="text-2xl leading-none" aria-hidden>
+            {landed?.symbol}
+          </span>
+          <span className="neon-text-pink font-display text-base font-bold tracking-[0.18em]">
+            {landed?.label?.toUpperCase()}
+          </span>
+        </div>
+        {landed?.description && (
+          <p className="mx-auto mt-1.5 max-w-[28ch] text-[11px] leading-snug text-foreground/75">
+            {landed.description}
+          </p>
+        )}
       </div>
     </div>
   );
