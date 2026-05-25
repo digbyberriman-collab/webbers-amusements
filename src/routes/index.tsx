@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { ArrowRight, MapPin, Clock, Sparkles, ShieldCheck, Heart, Compass } from "lucide-react";
 import heroImg from "@/assets/hero-lounge.jpg";
 import slotsImg from "@/assets/game-slots.jpg";
@@ -9,6 +10,7 @@ import floorWideImg from "@/assets/floor-wide.jpg";
 import leverImg from "@/assets/lever-pull.jpg";
 import { siteConfig } from "@/config/site";
 import { todaysHours } from "@/lib/hours";
+import { SlotMachine, type SlotItem } from "@/components/SlotMachine";
 
 export const Route = createFileRoute("/")({
   head: () => ({
