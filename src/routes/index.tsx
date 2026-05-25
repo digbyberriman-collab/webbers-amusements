@@ -1,26 +1,436 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight, MapPin, Clock, Sparkles, ShieldCheck, Heart, Compass } from "lucide-react";
+import heroImg from "@/assets/hero-lounge.jpg";
+import slotsImg from "@/assets/game-slots.jpg";
+import rouletteImg from "@/assets/game-roulette.jpg";
+import jackpotImg from "@/assets/game-jackpot.jpg";
+import heritageImg from "@/assets/heritage.jpg";
+import { siteConfig } from "@/config/site";
+import { todaysHours } from "@/lib/hours";
 
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: `${siteConfig.brand.name} — Chester's premium adult gaming centre` },
+      {
+        name: "description",
+        content:
+          "Webbers Amusements is Chester's modern adult gaming centre on Frodsham Street. Premium slots, electronic roulette and friendly service from a family business since 1954. 18+ only.",
+      },
+      { property: "og:title", content: `${siteConfig.brand.name} — ${siteConfig.brand.tagline}` },
+      { property: "og:description", content: siteConfig.brand.description },
+      { property: "og:url", content: "/" },
+      { property: "og:image", content: "/og-home.jpg" },
+    ],
+    links: [{ rel: "canonical", href: "/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          name: siteConfig.brand.name,
+          image: "/og-home.jpg",
+          telephone: siteConfig.venues[0].phone,
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: siteConfig.venues[0].address.join(", "),
+            addressLocality: siteConfig.venues[0].city,
+            postalCode: siteConfig.venues[0].postcode,
+            addressCountry: "GB",
+          },
+          geo: {
+            "@type": "GeoCoordinates",
+            latitude: siteConfig.venues[0].lat,
+            longitude: siteConfig.venues[0].lng,
+          },
+        }),
+      },
+    ],
+  }),
+  component: HomePage,
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
+function HomePage() {
+  const chester = siteConfig.venues[0];
+  const hours = todaysHours(chester);
+  const featured = siteConfig.games.filter((g) => g.isFeatured);
+  const featuredImgs = [jackpotImg, slotsImg, rouletteImg];
 
-function Index() {
-  return <PlaceholderIndex />;
+  return (
+    <>
+      {/* HERO */}
+      <section className="relative flex min-h-[100dvh] items-end overflow-hidden pb-24 pt-32">
+        <img
+          src={heroImg}
+          alt=""
+          aria-hidden
+          className="absolute inset-0 size-full object-cover opacity-55"
+          width={1920}
+          height={1080}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/10" />
+        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink to-transparent" />
+
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-6">
+          <div className="max-w-3xl space-y-8 animate-rise">
+            <div className="inline-flex items-center gap-2 rounded-full border border-danger/30 bg-danger/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-danger">
+              <span className="size-1.5 rounded-full bg-danger" />
+              Over 18s only · Licensed venue
+            </div>
+            <h1 className="font-display text-5xl leading-[0.95] text-balance text-foreground sm:text-7xl lg:text-[5.75rem]">
+              Chester's home of{" "}
+              <span className="italic text-gold">modern</span> gaming.
+            </h1>
+            <p className="max-w-xl text-lg leading-relaxed text-muted-foreground">
+              A welcoming adult gaming lounge on Frodsham Street. The latest
+              digital titles, classic favourites and the warm hospitality of a
+              family business since {siteConfig.brand.foundedYear}.
+            </p>
+            <div className="flex flex-wrap gap-3 pt-2">
+              <Link
+                to="/venues"
+                className="group inline-flex items-center gap-2 rounded-full bg-gold px-7 py-4 text-sm font-bold text-ink transition-all hover:scale-[1.02] hover:bg-gold-deep hover:shadow-[0_0_40px_-8px_rgba(232,197,71,0.5)]"
+              >
+                <MapPin className="size-4" aria-hidden />
+                Find us in Chester
+              </Link>
+              <Link
+                to="/games"
+                className="group inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-7 py-4 text-sm font-bold text-foreground backdrop-blur-sm transition-colors hover:bg-white/10"
+              >
+                See the games
+                <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden />
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-scroll-cue">
+          <div className="h-12 w-px bg-gradient-to-b from-gold/60 to-transparent" />
+        </div>
+      </section>
+
+      {/* INTRO STRIP */}
+      <section className="border-y border-white/5 bg-surface/30 py-20">
+        <div className="mx-auto max-w-4xl px-6 text-center">
+          <p className="font-display text-2xl leading-snug text-balance text-foreground sm:text-3xl">
+            We believe in <span className="italic text-gold">hospitality over hype</span>.
+            Since the 1950s, the Webber family has built warm, well-run rooms
+            where adults can play in confidence — and feel looked after.
+          </p>
+        </div>
+      </section>
+
+      {/* FEATURED GAMES */}
+      <section className="px-6 py-28">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-14 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-gold">
+                The Floor
+              </p>
+              <h2 className="mt-3 font-display text-4xl text-foreground sm:text-5xl">
+                Featured experiences
+              </h2>
+              <p className="mt-3 max-w-md text-muted-foreground">
+                A taste of what's on the floor right now — from progressive
+                jackpots to classic three-reelers.
+              </p>
+            </div>
+            <Link
+              to="/games"
+              className="group inline-flex items-center gap-2 border-b border-gold/30 pb-1 text-sm font-semibold text-gold transition-colors hover:border-gold"
+            >
+              View full game library
+              <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden />
+            </Link>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-3">
+            {featured.slice(0, 3).map((game, i) => (
+              <article
+                key={game.id}
+                className="group relative overflow-hidden rounded-2xl bg-surface ring-1 ring-white/5 glow-hover"
+              >
+                <div className="relative aspect-[4/5] overflow-hidden">
+                  <img
+                    src={featuredImgs[i]}
+                    alt={game.name}
+                    loading="lazy"
+                    className="size-full object-cover opacity-70 transition-all duration-700 group-hover:scale-105 group-hover:opacity-90"
+                    width={1024}
+                    height={1280}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/60 to-transparent" />
+                  <div className="absolute left-5 top-5 flex gap-2">
+                    {game.isNew && (
+                      <span className="rounded-full bg-electric/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-electric">
+                        New
+                      </span>
+                    )}
+                    <span className="rounded-full bg-white/5 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-foreground backdrop-blur-sm">
+                      {game.type}
+                    </span>
+                  </div>
+                </div>
+                <div className="space-y-3 p-7">
+                  <h3 className="font-display text-2xl text-foreground">
+                    {game.name}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {game.description}
+                  </p>
+                  <div className="flex items-center justify-between pt-2">
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-gold">
+                      Max prize £{game.maxPrize}
+                    </span>
+                    <span className="text-xs text-muted-foreground">
+                      {game.features.join(" · ")}
+                    </span>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <p className="mt-10 text-center text-xs uppercase tracking-widest text-muted-foreground">
+            Maximum slot prize £{siteConfig.compliance.maxSlotPrize} · Strictly
+            18+ · Play within your limits
+          </p>
+        </div>
+      </section>
+
+      {/* WHY WEBBERS */}
+      <section className="border-t border-white/5 bg-surface/30 px-6 py-28">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-14 max-w-2xl">
+            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-gold">
+              Why Webbers
+            </p>
+            <h2 className="mt-3 font-display text-4xl text-foreground sm:text-5xl">
+              Modern gaming, the way it should feel.
+            </h2>
+          </div>
+          <div className="grid gap-px overflow-hidden rounded-2xl bg-white/5 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                icon: Sparkles,
+                title: "The latest titles",
+                body: "Megaways, community jackpots and the newest digital reels — fresh on the floor.",
+              },
+              {
+                icon: Compass,
+                title: "City-centre location",
+                body: "A few minutes' walk from Chester's Eastgate Clock. Easy to find, easy to leave.",
+              },
+              {
+                icon: Heart,
+                title: "Friendly team",
+                body: "Trained staff who'll show you the ropes, fix a tea and keep the room calm.",
+              },
+              {
+                icon: ShieldCheck,
+                title: "Safe & responsible",
+                body: "Licensed, age-checked and built around tools to help you stay in control.",
+              },
+            ].map(({ icon: Icon, title, body }) => (
+              <div
+                key={title}
+                className="bg-ink p-8 transition-colors hover:bg-surface"
+              >
+                <Icon className="mb-6 size-6 text-gold" aria-hidden />
+                <h3 className="font-display text-xl text-foreground">
+                  {title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  {body}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* HERITAGE */}
+      <section className="px-6 py-28">
+        <div className="mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2">
+          <div className="relative">
+            <div className="overflow-hidden rounded-2xl ring-1 ring-white/10">
+              <img
+                src={heritageImg}
+                alt="A 1950s British amusement arcade — fruit machines and pinball."
+                loading="lazy"
+                className="aspect-[5/6] w-full object-cover sepia"
+                width={1280}
+                height={1280}
+              />
+            </div>
+            <div className="absolute -bottom-6 -right-6 hidden rounded-2xl bg-gold p-6 text-ink shadow-2xl sm:block">
+              <p className="font-display text-5xl font-bold leading-none">
+                {new Date().getFullYear() - siteConfig.brand.foundedYear}
+              </p>
+              <p className="mt-1 text-[10px] font-bold uppercase tracking-widest">
+                Years on
+                <br />
+                the high street
+              </p>
+            </div>
+          </div>
+          <div className="space-y-8">
+            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-gold">
+              Heritage
+            </p>
+            <h2 className="font-display text-4xl leading-tight text-foreground text-balance sm:text-5xl">
+              A family name on the British seafront since the 1950s.
+            </h2>
+            <div className="space-y-5 text-muted-foreground">
+              <p>
+                Webber Leisure started in the fairgrounds and seaside arcades of
+                post-war Britain — a family business with grease on its hands
+                and a knack for building machines people actually wanted to
+                play.
+              </p>
+              <p>
+                Three generations on, Webbers Amusements is the modern face of
+                that story: a sophisticated, well-run room in the heart of
+                Chester, with sister venues in Rhyl and Caernarfon.
+              </p>
+            </div>
+            <Link
+              to="/about"
+              className="group inline-flex items-center gap-2 border-b border-gold/40 pb-1 text-sm font-semibold text-gold hover:border-gold"
+            >
+              Read our full story
+              <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* VENUE SNAPSHOT */}
+      <section className="border-y border-white/5 bg-surface/30 px-6 py-28">
+        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-5">
+          <div className="lg:col-span-2 space-y-8">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-gold">
+                Visit us
+              </p>
+              <h2 className="mt-3 font-display text-4xl text-foreground sm:text-5xl">
+                On Frodsham Street.
+              </h2>
+            </div>
+            <div className="space-y-5 text-foreground">
+              <div className="flex items-start gap-4">
+                <MapPin className="mt-1 size-5 shrink-0 text-gold" aria-hidden />
+                <div>
+                  {chester.address.map((line) => (
+                    <p key={line}>{line}</p>
+                  ))}
+                  <p>
+                    {chester.city}, {chester.postcode}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <Clock className="mt-1 size-5 shrink-0 text-gold" aria-hidden />
+                <div>
+                  <p className="font-semibold">
+                    {hours.isOpen ? (
+                      <>
+                        <span className="text-gold">Open now</span> ·{" "}
+                        {hours.text}
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-muted-foreground">Closed</span> ·
+                        Today {hours.text}
+                      </>
+                    )}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {hours.label} hours · seven days a week
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${chester.lat},${chester.lng}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full bg-gold px-6 py-3 text-sm font-bold text-ink hover:bg-gold-deep"
+              >
+                Get directions
+              </a>
+              <a
+                href={`tel:${chester.phone.replace(/\s/g, "")}`}
+                className="rounded-full border border-white/10 px-6 py-3 text-sm font-bold text-foreground hover:bg-white/5"
+              >
+                Call the venue
+              </a>
+            </div>
+          </div>
+          <div className="lg:col-span-3">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl ring-1 ring-white/10">
+              <iframe
+                title="Map of Webbers Amusements, Chester"
+                src={`https://www.openstreetmap.org/export/embed.html?bbox=${chester.lng - 0.01}%2C${chester.lat - 0.005}%2C${chester.lng + 0.01}%2C${chester.lat + 0.005}&layer=mapnik&marker=${chester.lat}%2C${chester.lng}`}
+                className="size-full grayscale-[60%] invert-[0.92] hue-rotate-180 contrast-[0.9]"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PROMOTIONS TEASER */}
+      <section className="px-6 py-28">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-14 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-gold">
+                What's on
+              </p>
+              <h2 className="mt-3 font-display text-4xl text-foreground sm:text-5xl">
+                Happening this season
+              </h2>
+            </div>
+            <Link
+              to="/promotions"
+              className="group inline-flex items-center gap-2 border-b border-gold/30 pb-1 text-sm font-semibold text-gold"
+            >
+              All promotions
+              <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden />
+            </Link>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2">
+            {siteConfig.promotions.slice(0, 2).map((promo) => (
+              <article
+                key={promo.id}
+                className="group rounded-2xl bg-surface p-8 ring-1 ring-white/5 glow-hover"
+              >
+                <div className="mb-6 flex items-center justify-between">
+                  <span className="rounded-full bg-gold/10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-gold">
+                    {promo.badge}
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    {promo.startsOn}
+                    {promo.endsOn ? ` — ${promo.endsOn}` : ""}
+                  </span>
+                </div>
+                <h3 className="font-display text-3xl text-foreground">
+                  {promo.title}
+                </h3>
+                <p className="mt-4 text-muted-foreground">{promo.description}</p>
+                <p className="mt-6 text-[10px] uppercase tracking-widest text-muted-foreground">
+                  18+ · T&Cs apply
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  );
 }
