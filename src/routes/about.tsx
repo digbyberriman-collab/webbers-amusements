@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Heart, ShieldCheck, Users } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { PageHero } from "@/components/PageHero";
-import heritageImg from "@/assets/heritage.jpg";
+import founderImg from "@/assets/arthur-webber-senior.jpg";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
