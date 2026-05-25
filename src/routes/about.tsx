@@ -116,10 +116,10 @@ function AboutPage() {
           <div className="relative">
             <div className="overflow-hidden rounded-2xl ring-1 ring-white/10">
               <img
-                src={heritageImg}
-                alt="A 1950s British seaside amusement arcade — the world the Webber family came up in."
+                src={founderImg}
+                alt={`${siteConfig.brand.founder} — founder of the Webber family business, photographed in the mid-20th century.`}
                 loading="lazy"
-                className="img-cinematic aspect-[4/5] w-full object-cover sepia-[0.4]"
+                className="img-cinematic aspect-[4/5] w-full object-cover object-top"
                 width={1280}
                 height={1600}
               />
