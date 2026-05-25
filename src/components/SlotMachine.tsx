@@ -46,6 +46,7 @@ function Reel({
   spinning,
   spinKey,
   onDone,
+  position,
 }: {
   items: SlotItem[];
   target: number;
@@ -53,10 +54,12 @@ function Reel({
   spinning: boolean;
   spinKey: number;
   onDone: () => void;
+  position: number;
 }) {
   const longList = Array.from({ length: COPIES }, () => items).flat();
   const restingIndex = (COPIES - 1) * items.length + target;
   const restingOffset = -restingIndex * ROW;
+  const current = items[target];
 
   const style: CSSProperties = {
     transform: `translateY(${restingOffset}px)`,
@@ -73,9 +76,19 @@ function Reel({
   (style as Record<string, string>)["--rest"] = `${restingOffset}px`;
 
   return (
-    <div className="slot-window relative h-24 overflow-hidden rounded-md ring-1 ring-white/15">
+    <div
+      role="img"
+      aria-label={
+        spinning
+          ? `Reel ${position} spinning`
+          : `Reel ${position} showing ${current?.label ?? "item"}`
+      }
+      aria-busy={spinning || undefined}
+      className="slot-window relative h-24 overflow-hidden rounded-md ring-1 ring-white/15"
+    >
       <div
         key={spinKey}
+        aria-hidden="true"
         className="flex flex-col"
         style={style}
         onAnimationEnd={() => spinning && onDone()}
@@ -93,7 +106,10 @@ function Reel({
         ))}
       </div>
       {/* Pay-line */}
-      <div className="pointer-events-none absolute inset-x-0 top-1/2 h-0.5 -translate-y-1/2 bg-[color:var(--neon-yellow)] shadow-[0_0_12px_var(--neon-yellow)]" />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-1/2 h-0.5 -translate-y-1/2 bg-[color:var(--neon-yellow)] shadow-[0_0_12px_var(--neon-yellow)]"
+      />
     </div>
   );
 }
