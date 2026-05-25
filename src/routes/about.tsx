@@ -3,6 +3,7 @@ import { ArrowRight, Heart, ShieldCheck, Users } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { PageHero } from "@/components/PageHero";
 import founderImg from "@/assets/arthur-webber-senior.jpg";
+import dodgemsImg from "@/assets/webbers-dodgems-rhyl.jpg";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -173,6 +174,28 @@ function AboutPage() {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* ============================================================
+          HERITAGE PHOTO — Webbers Super Dodgems, Rhyl
+          ============================================================ */}
+      <section className="border-t border-white/5 bg-ink px-6 pb-[var(--section-y)] lg:px-10">
+        <figure className="mx-auto max-w-6xl">
+          <div className="overflow-hidden rounded-2xl ring-1 ring-white/10">
+            <img
+              src={dodgemsImg}
+              alt="The original Webbers Super Dodgems ride on the seafront in Rhyl, North Wales."
+              loading="lazy"
+              className="img-cinematic aspect-[4/3] w-full object-cover sm:aspect-[16/9]"
+              width={2000}
+              height={1125}
+            />
+          </div>
+          <figcaption className="mt-5 flex flex-col gap-1 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+            <span className="text-brass">Archive — Rhyl seafront</span>
+            <span>The original Webbers Super Dodgems</span>
+          </figcaption>
+        </figure>
       </section>
 
       {/* ============================================================
