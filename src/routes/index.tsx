@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { ArrowRight, MapPin, Clock, Sparkles, ShieldCheck, Heart, Compass } from "lucide-react";
 import heroImg from "@/assets/hero-lounge.jpg";
 import slotsImg from "@/assets/game-slots.jpg";
@@ -9,6 +10,7 @@ import floorWideImg from "@/assets/floor-wide.jpg";
 import leverImg from "@/assets/lever-pull.jpg";
 import { siteConfig } from "@/config/site";
 import { todaysHours } from "@/lib/hours";
+import { SlotMachine, type SlotItem } from "@/components/SlotMachine";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -59,32 +61,58 @@ function HomePage() {
   const featured = siteConfig.games.filter((g) => g.isFeatured);
   const featuredImgs = [jackpotImg, slotsImg, rouletteImg];
 
+  const heroSlots: SlotItem[] = siteConfig.games.slice(0, 8).map((g) => ({
+    key: g.id,
+    symbol:
+      g.type === "Jackpot" ? "💰" : g.type === "Roulette" ? "🎯" : g.type === "Classic" ? "🍒" : "🎰",
+    label: g.name.split(" ")[0],
+  }));
+  const [pickedGame, setPickedGame] = useState(heroSlots[0]?.key ?? "");
+  const pickedGameData =
+    siteConfig.games.find((g) => g.id === pickedGame) ?? siteConfig.games[0];
+
   return (
     <>
-      {/* HERO */}
-      <section className="relative flex min-h-[100dvh] items-end overflow-hidden pb-24 pt-32">
+      {/* HERO — neon slot lounge */}
+      <section className="relative flex min-h-[100dvh] items-center overflow-hidden pb-20 pt-32">
         <img
           src={heroImg}
           alt=""
           aria-hidden
-          className="absolute inset-0 size-full object-cover opacity-55"
+          className="absolute inset-0 size-full object-cover opacity-35"
           width={1920}
           height={1080}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/40" />
         <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink to-transparent" />
+        {/* Neon haze */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -left-32 top-1/4 h-[60vh] w-[60vh] rounded-full opacity-40 blur-3xl"
+          style={{
+            background:
+              "radial-gradient(circle, var(--neon-pink), transparent 70%)",
+          }}
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-20 bottom-0 h-[60vh] w-[60vh] rounded-full opacity-40 blur-3xl"
+          style={{
+            background:
+              "radial-gradient(circle, var(--neon-cyan), transparent 70%)",
+          }}
+        />
 
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-6">
-          <div className="max-w-3xl space-y-8 animate-rise">
-            <div className="inline-flex items-center gap-2 rounded-full border border-danger/30 bg-danger/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-danger">
-              <span className="size-1.5 rounded-full bg-danger" />
+        <div className="relative z-10 mx-auto grid w-full max-w-7xl gap-14 px-6 lg:grid-cols-2 lg:items-center">
+          <div className="space-y-7 animate-rise">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--neon-pink)]/40 bg-[color:var(--neon-pink)]/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-[color:var(--neon-pink)] shadow-[0_0_18px_var(--neon-pink)]/40">
+              <span className="size-1.5 rounded-full bg-[color:var(--neon-pink)]" />
               Over 18s only · Licensed venue
             </div>
-            <h1 className="font-display text-5xl leading-[0.95] text-balance text-foreground sm:text-7xl lg:text-[5.75rem]">
-              Chester's home of{" "}
-              <span className="italic text-gold">modern</span> gaming.
+            <h1 className="neon-text font-display text-5xl leading-[0.95] text-balance sm:text-7xl lg:text-[5.5rem]">
+              Chester's home of <span className="italic">modern</span> gaming.
             </h1>
-            <p className="max-w-xl text-lg leading-relaxed text-muted-foreground">
+            <p className="max-w-xl text-lg leading-relaxed text-foreground/85">
               A welcoming adult gaming lounge on Frodsham Street. The latest
               digital titles, classic favourites and the warm hospitality of a
               family business since {siteConfig.brand.foundedYear}.
@@ -92,24 +120,46 @@ function HomePage() {
             <div className="flex flex-wrap gap-3 pt-2">
               <Link
                 to="/venues"
-                className="group inline-flex items-center gap-2 rounded-full bg-gold px-7 py-4 text-sm font-bold text-ink transition-all hover:scale-[1.02] hover:bg-gold-deep hover:shadow-[0_0_40px_-8px_rgba(232,197,71,0.5)]"
+                className="play-button inline-flex items-center gap-2 rounded-full px-7 py-4 text-xs font-black uppercase tracking-widest"
               >
                 <MapPin className="size-4" aria-hidden />
-                Find us in Chester
+                Find your Webbers
               </Link>
               <Link
                 to="/games"
-                className="group inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-7 py-4 text-sm font-bold text-foreground backdrop-blur-sm transition-colors hover:bg-white/10"
+                className="group inline-flex items-center gap-2 rounded-full border border-[color:var(--neon-cyan)]/50 bg-white/5 px-7 py-4 text-xs font-bold uppercase tracking-widest text-[color:var(--neon-cyan)] backdrop-blur-sm transition-colors hover:bg-[color:var(--neon-cyan)]/10"
               >
                 See the games
                 <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden />
               </Link>
             </div>
           </div>
-        </div>
 
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-scroll-cue">
-          <div className="h-12 w-px bg-gradient-to-b from-gold/60 to-transparent" />
+          {/* Functional slot machine */}
+          <div className="space-y-4">
+            <SlotMachine
+              items={heroSlots}
+              selectedKey={pickedGame}
+              onLand={setPickedGame}
+              cycleOnPull={false}
+              headerTitle="Tonight's pick"
+              idleHint="Pull to spin the floor"
+            />
+            <div
+              key={pickedGameData.id}
+              className="mx-auto max-w-md rounded-xl border border-[color:var(--neon-cyan)]/30 bg-ink/80 p-4 text-center backdrop-blur-sm animate-rise"
+            >
+              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--neon-yellow)]">
+                You landed on
+              </p>
+              <p className="neon-text-cyan mt-1 font-display text-2xl">
+                {pickedGameData.name}
+              </p>
+              <p className="mt-1 text-xs text-foreground/70">
+                {pickedGameData.description}
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
