@@ -124,8 +124,37 @@ function HomePage() {
         </div>
       </section>
 
+      {/* CINEMATIC FLOOR BANNER */}
+      <section className="relative h-[70svh] min-h-[460px] overflow-hidden">
+        <img
+          src={floorWideImg}
+          alt="The Webbers gaming floor at dusk"
+          loading="lazy"
+          className="absolute inset-0 size-full object-cover"
+          width={1920}
+          height={1080}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/40 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink to-transparent" />
+        <div className="relative z-10 mx-auto flex h-full max-w-7xl items-end px-6 pb-16">
+          <div className="max-w-xl space-y-4">
+            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-gold">
+              Step inside
+            </p>
+            <h2 className="font-display text-4xl text-foreground sm:text-5xl">
+              A room designed for the spin.
+            </h2>
+            <p className="text-muted-foreground">
+              Plush carpet, warm low light and rows of the latest cabinets —
+              all under one roof on Frodsham Street.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* FEATURED GAMES */}
       <section className="px-6 py-28">
+
         <div className="mx-auto max-w-7xl">
           <div className="mb-14 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
             <div>
