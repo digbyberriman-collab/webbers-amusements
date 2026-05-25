@@ -204,6 +204,125 @@
   mask-image: linear-gradient(to bottom, transparent, black 22%, black 78%, transparent);
 }
 
+/* ===== Casino / arcade theatrics (Games page) ===== */
+
+/* Marquee chase lights — a row of bulbs that cycles brightness */
+@keyframes bulb-chase {
+  0%, 100% { opacity: 0.25; box-shadow: 0 0 4px currentColor; }
+  50% { opacity: 1; box-shadow: 0 0 16px currentColor, 0 0 32px currentColor; }
+}
+.bulb {
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  background: currentColor;
+  animation: bulb-chase 1.2s ease-in-out infinite;
+}
+
+/* Neon flicker text */
+@keyframes neon-flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    text-shadow:
+      0 0 4px currentColor,
+      0 0 11px currentColor,
+      0 0 19px currentColor,
+      0 0 40px var(--neon-pink),
+      0 0 80px var(--neon-pink);
+    opacity: 1;
+  }
+  20%, 24%, 55% { text-shadow: none; opacity: 0.85; }
+}
+.neon-text {
+  color: var(--neon-yellow);
+  animation: neon-flicker 4s infinite;
+}
+.neon-text-pink { color: var(--neon-pink); }
+.neon-text-cyan { color: var(--neon-cyan); }
+
+/* Pulsing rainbow border (cabinet frame) */
+@keyframes rainbow-border {
+  0%   { box-shadow: 0 0 0 2px var(--neon-pink), 0 0 30px var(--neon-pink), inset 0 0 30px color-mix(in oklab, var(--neon-pink) 30%, transparent); }
+  25%  { box-shadow: 0 0 0 2px var(--neon-cyan), 0 0 30px var(--neon-cyan), inset 0 0 30px color-mix(in oklab, var(--neon-cyan) 30%, transparent); }
+  50%  { box-shadow: 0 0 0 2px var(--neon-yellow), 0 0 30px var(--neon-yellow), inset 0 0 30px color-mix(in oklab, var(--neon-yellow) 30%, transparent); }
+  75%  { box-shadow: 0 0 0 2px var(--neon-purple), 0 0 30px var(--neon-purple), inset 0 0 30px color-mix(in oklab, var(--neon-purple) 30%, transparent); }
+  100% { box-shadow: 0 0 0 2px var(--neon-pink), 0 0 30px var(--neon-pink), inset 0 0 30px color-mix(in oklab, var(--neon-pink) 30%, transparent); }
+}
+.cabinet-frame {
+  animation: rainbow-border 6s linear infinite;
+  border-radius: 1.5rem;
+}
+
+/* Jackpot prize shimmer */
+@keyframes jackpot-pulse {
+  0%, 100% {
+    text-shadow: 0 0 12px var(--neon-yellow), 0 0 30px var(--neon-yellow);
+    transform: scale(1);
+  }
+  50% {
+    text-shadow: 0 0 24px var(--neon-yellow), 0 0 60px var(--neon-pink), 0 0 80px var(--neon-pink);
+    transform: scale(1.03);
+  }
+}
+.jackpot {
+  color: var(--neon-yellow);
+  animation: jackpot-pulse 1.5s ease-in-out infinite;
+}
+
+/* PLAY button — illuminated arcade button */
+@keyframes play-pulse {
+  0%, 100% { box-shadow: 0 0 0 4px color-mix(in oklab, var(--neon-yellow) 40%, transparent), 0 0 30px var(--neon-yellow), inset 0 -6px 12px rgba(0,0,0,0.4); }
+  50% { box-shadow: 0 0 0 8px color-mix(in oklab, var(--neon-yellow) 20%, transparent), 0 0 60px var(--neon-yellow), inset 0 -6px 12px rgba(0,0,0,0.4); }
+}
+.play-button {
+  background: radial-gradient(circle at 30% 30%, var(--neon-yellow), oklch(0.7 0.2 50));
+  color: oklch(0.2 0.05 30);
+  animation: play-pulse 1.4s ease-in-out infinite;
+}
+
+/* Spotlight sweep over hero image */
+@keyframes spotlight {
+  0% { transform: translateX(-100%) skewX(-12deg); }
+  100% { transform: translateX(200%) skewX(-12deg); }
+}
+.spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 40%, rgba(255,255,255,0.18) 50%, transparent 60%);
+  animation: spotlight 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Coin shower */
+@keyframes coin-fall {
+  0% { transform: translateY(-20vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateY(120vh) rotate(720deg); opacity: 0; }
+}
+.coin {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 30% 30%, var(--neon-yellow), var(--gold-deep));
+  box-shadow: 0 0 8px var(--neon-yellow);
+  animation: coin-fall linear infinite;
+}
+
+/* Reel symbol glow */
+.reel-sym-pink { color: var(--neon-pink); text-shadow: 0 0 12px var(--neon-pink); }
+.reel-sym-cyan { color: var(--neon-cyan); text-shadow: 0 0 12px var(--neon-cyan); }
+.reel-sym-yellow { color: var(--neon-yellow); text-shadow: 0 0 12px var(--neon-yellow); }
+.reel-sym-green { color: var(--neon-green); text-shadow: 0 0 12px var(--neon-green); }
+.reel-sym-purple { color: var(--neon-purple); text-shadow: 0 0 12px var(--neon-purple); }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .bulb, .cabinet-frame, .neon-text, .jackpot, .play-button, .spotlight::after, .coin, .reel-strip {
+    animation: none !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
