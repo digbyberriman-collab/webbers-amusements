@@ -271,7 +271,16 @@ export function SlotMachine({
   const landed = items[target];
 
   return (
-    <div className="cabinet-frame relative mx-auto w-full max-w-md p-2.5">
+    <section
+      role="region"
+      aria-label={`${headerTitle} slot machine`}
+      className="cabinet-frame relative mx-auto w-full max-w-md p-2.5"
+    >
+      <p className="sr-only">
+        Interactive slot machine. Focus the lever, then press Enter, Space, or
+        the Down arrow to spin. The reels announce their result when they
+        stop.
+      </p>
       {/* Top bulbs */}
       <div className="px-1 py-1.5 text-[color:var(--neon-yellow)]">
         <BulbRow count={14} />
