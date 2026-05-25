@@ -242,14 +242,14 @@ export function SlotMachine({
 
       {/* Marquee header */}
       <div className="rounded-t-xl bg-gradient-to-b from-ink to-surface px-4 py-3 text-center">
-        <p className="neon-text font-display text-lg font-bold tracking-[0.35em]">
+        <p className="neon-text font-display text-base font-bold tracking-[0.3em] sm:text-lg sm:tracking-[0.35em]">
           ★ {headerTitle.toUpperCase()} ★
         </p>
       </div>
 
-      {/* Reels + lever */}
-      <div className="flex items-start gap-3 bg-black/85 p-3">
-        <div className="grid flex-1 grid-cols-3 gap-2">
+      {/* Reels + lever — lever overlays via absolute, so it doesn't change row height */}
+      <div className="relative bg-black/85 p-3">
+        <div className="grid grid-cols-3 gap-2 pr-12">
           {DURATIONS.map((dur, i) => (
             <Reel
               key={i}
@@ -262,7 +262,9 @@ export function SlotMachine({
             />
           ))}
         </div>
-        <Lever onPull={triggerSpin} disabled={spinning} />
+        <div className="pointer-events-auto absolute right-3 top-3 h-24 w-9">
+          <Lever onPull={triggerSpin} disabled={spinning} />
+        </div>
       </div>
 
       {/* Bottom bulbs */}
