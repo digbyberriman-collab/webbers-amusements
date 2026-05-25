@@ -133,7 +133,7 @@ function SaferGamblingPage() {
                 Every Webbers staff member is trained in customer interaction,
                 age verification and the safer-gambling tools available on the
                 floor. That training is renewed regularly — it isn't a tick-box
-                induction, it's a working part of how the rooms run.
+                induction, it's a working part of how the arcades run.
               </p>
               <p>
                 If we notice signs that a customer's play might be drifting

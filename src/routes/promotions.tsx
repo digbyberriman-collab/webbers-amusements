@@ -89,7 +89,7 @@ function PromotionsPage() {
               The best offers aren't on a poster.
             </h2>
             <p className="text-muted-foreground">
-              The team in each room know what's just landed, who's a member,
+              The team in each arcade know what's just landed, who's a member,
               and when the next cabinet is on its way. Drop in, say hello,
               and ask at the cashier — that's where the good stuff lives.
             </p>

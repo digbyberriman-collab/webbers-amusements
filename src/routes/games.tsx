@@ -92,7 +92,7 @@ function GamesPage() {
         }
         intro="A curated floor, not a crowded one. Every cabinet is chosen from the four most respected names in modern gaming hardware — and looked after by a team who knows how each one runs."
         image={floorWideImg}
-        imageAlt="A wide view of a Webbers gaming room — premium cabinets in warm low light."
+        imageAlt="A wide view of a Webbers gaming arcade — premium cabinets in warm low light."
       />
 
       {/* ============================================================
@@ -103,7 +103,7 @@ function GamesPage() {
           <p className="eyebrow text-center">Premium gaming partners</p>
           <p className="mx-auto mt-3 max-w-2xl text-center text-sm text-muted-foreground">
             Every machine on the floor comes from one of these four houses —
-            the people who build the cabinets you'll find in the best rooms
+            the people who build the cabinets you'll find in the best arcades
             in the country.
           </p>
           <div className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-white/5 sm:grid-cols-4">
@@ -244,7 +244,7 @@ function GamesPage() {
           </div>
           <div className="space-y-6 lg:col-span-8">
             <p className="font-display text-3xl leading-snug text-balance text-foreground sm:text-4xl">
-              A good gaming room is curated, not crowded. We'd rather run a
+              A good gaming arcade is curated, not crowded. We'd rather run a
               tight, beautifully-maintained floor than a wall of machines
               nobody plays.
             </p>
@@ -257,7 +257,7 @@ function GamesPage() {
               roulette terminals for an evening with a slower rhythm.
             </p>
             <p className="text-muted-foreground">
-              Three generations of Webbers have run rooms long enough to know
+              Three generations of Webbers have run arcades long enough to know
               the difference between a floor that's busy and one that's good.
               This one's the second.
             </p>
@@ -284,7 +284,7 @@ function GamesPage() {
         <div className="mx-auto max-w-4xl text-center">
           <Sparkles className="mx-auto size-6 text-brass" aria-hidden />
           <h2 className="mt-6 font-display text-4xl leading-tight text-balance text-foreground sm:text-6xl">
-            See them spinning in the room.
+            See them spinning in the arcade.
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-muted-foreground">
             New titles land across the estate every few weeks. The only way

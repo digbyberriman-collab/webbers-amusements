@@ -17,7 +17,7 @@ export const Route = createFileRoute("/venues")({
       {
         name: "description",
         content:
-          "Five Webbers Amusements rooms — Chester (Frodsham Street and Northgate Street), Caernarfon, Rhyl and Walkden. Addresses, phone numbers, weekly opening hours and directions for every venue.",
+          "Five Webbers Amusements arcades — Chester (Frodsham Street and Northgate Street), Caernarfon, Rhyl and Walkden. Addresses, phone numbers, weekly opening hours and directions for every venue.",
       },
       {
         property: "og:title",
@@ -123,10 +123,10 @@ function VenuesPage() {
   return (
     <>
       <PageHero
-        eyebrow="Find your room"
+        eyebrow="Find your arcade"
         title={
           <>
-            Five rooms.{" "}
+            Five arcades.{" "}
             <span className="italic text-brass">One family.</span>
           </>
         }
@@ -178,7 +178,7 @@ function VenuesPage() {
               </h2>
               <p className="mt-4 max-w-2xl text-muted-foreground">
                 For stag and hen visits, corporate evenings, charity nights
-                and private bookings, we'll set the room up around you.
+                and private bookings, we'll set the arcade up around you.
                 Available across all five venues.
               </p>
             </div>
