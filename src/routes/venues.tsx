@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useHydrated } from "@tanstack/react-router";
 import {
   ArrowRight,
   Clock,
@@ -202,6 +202,7 @@ interface VenueSectionProps {
 }
 
 function VenueSection({ venue, mapLeft }: VenueSectionProps) {
+  const hydrated = useHydrated();
   const hours = todaysHours(venue);
   const week = weeklyHoursTable(venue);
   const telHref = `tel:${venue.phone.replace(/\s/g, "")}`;
@@ -254,11 +255,11 @@ function VenueSection({ venue, mapLeft }: VenueSectionProps) {
             <span
               aria-hidden
               className={`size-1.5 rounded-full ${
-                hours.isOpen ? "bg-sage" : "bg-muted-foreground/40"
+                hydrated && hours.isOpen ? "bg-sage" : "bg-muted-foreground/40"
               }`}
             />
             <span className="font-mono uppercase tracking-[0.22em] text-foreground/80">
-              {hours.isOpen ? "Open now" : "Closed"} · {hours.text}
+              {hydrated ? (hours.isOpen ? "Open now" : "Closed") : "Hours"} · {hours.text}
             </span>
           </div>
 
