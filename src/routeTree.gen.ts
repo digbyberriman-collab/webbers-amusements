@@ -66,9 +66,9 @@ const IndexRoute = IndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const VenuesSlugRoute = VenuesSlugRouteImport.update({
-  id: '/venues/$slug',
-  path: '/venues/$slug',
-  getParentRoute: () => rootRouteImport,
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => VenuesRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -80,7 +80,7 @@ export interface FileRoutesByFullPath {
   '/promotions': typeof PromotionsRoute
   '/safer-gambling': typeof SaferGamblingRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/venues': typeof VenuesRoute
+  '/venues': typeof VenuesRouteWithChildren
   '/venues/$slug': typeof VenuesSlugRoute
 }
 export interface FileRoutesByTo {
@@ -92,7 +92,7 @@ export interface FileRoutesByTo {
   '/promotions': typeof PromotionsRoute
   '/safer-gambling': typeof SaferGamblingRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/venues': typeof VenuesRoute
+  '/venues': typeof VenuesRouteWithChildren
   '/venues/$slug': typeof VenuesSlugRoute
 }
 export interface FileRoutesById {
@@ -105,7 +105,7 @@ export interface FileRoutesById {
   '/promotions': typeof PromotionsRoute
   '/safer-gambling': typeof SaferGamblingRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/venues': typeof VenuesRoute
+  '/venues': typeof VenuesRouteWithChildren
   '/venues/$slug': typeof VenuesSlugRoute
 }
 export interface FileRouteTypes {
@@ -156,8 +156,7 @@ export interface RootRouteChildren {
   PromotionsRoute: typeof PromotionsRoute
   SaferGamblingRoute: typeof SaferGamblingRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  VenuesRoute: typeof VenuesRoute
-  VenuesSlugRoute: typeof VenuesSlugRoute
+  VenuesRoute: typeof VenuesRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -167,13 +166,6 @@ declare module '@tanstack/react-router' {
       path: '/venues'
       fullPath: '/venues'
       preLoaderRoute: typeof VenuesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/venues/$slug': {
-      id: '/venues/$slug'
-      path: '/venues/$slug'
-      fullPath: '/venues/$slug'
-      preLoaderRoute: typeof VenuesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -232,8 +224,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/venues/$slug': {
+      id: '/venues/$slug'
+      path: '/$slug'
+      fullPath: '/venues/$slug'
+      preLoaderRoute: typeof VenuesSlugRouteImport
+      parentRoute: typeof VenuesRoute
+    }
   }
 }
+
+interface VenuesRouteChildren {
+  VenuesSlugRoute: typeof VenuesSlugRoute
+}
+
+const VenuesRouteChildren: VenuesRouteChildren = {
+  VenuesSlugRoute: VenuesSlugRoute,
+}
+
+const VenuesRouteWithChildren =
+  VenuesRoute._addFileChildren(VenuesRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -244,19 +254,8 @@ const rootRouteChildren: RootRouteChildren = {
   PromotionsRoute: PromotionsRoute,
   SaferGamblingRoute: SaferGamblingRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  VenuesRoute: VenuesRoute,
-  VenuesSlugRoute: VenuesSlugRoute,
+  VenuesRoute: VenuesRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

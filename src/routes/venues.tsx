@@ -202,6 +202,7 @@ interface VenueSectionProps {
 }
 
 function VenueSection({ venue, mapLeft }: VenueSectionProps) {
+  const hydrated = useHydrated();
   const hours = todaysHours(venue);
   const week = weeklyHoursTable(venue);
   const telHref = `tel:${venue.phone.replace(/\s/g, "")}`;
