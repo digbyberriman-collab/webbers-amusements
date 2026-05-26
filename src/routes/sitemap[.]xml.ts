@@ -22,9 +22,9 @@ const baseEntries: SitemapEntry[] = [
 ];
 
 const venueEntries: SitemapEntry[] = siteConfig.venues.map((v) => ({
-  path: `/venues#${v.slug}`,
+  path: `/venues/${v.slug}`,
   changefreq: "monthly",
-  priority: "0.85",
+  priority: "0.9",
 }));
 
 const entries: SitemapEntry[] = [...baseEntries, ...venueEntries];

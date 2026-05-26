@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight,
   Clock,
@@ -314,21 +314,32 @@ function VenueSection({ venue, mapLeft }: VenueSectionProps) {
           </div>
 
           <div className="flex flex-wrap gap-3 pt-2">
+            <Link
+              to="/venues/$slug"
+              params={{ slug: venue.slug }}
+              className="group inline-flex items-center gap-2 rounded-full bg-brass px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-ink transition-colors hover:bg-brass-deep"
+            >
+              View this venue
+              <ArrowRight
+                className="size-3.5 transition-transform group-hover:translate-x-1"
+                aria-hidden
+              />
+            </Link>
             <a
               href={directionsHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-brass px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-ink transition-colors hover:bg-brass-deep"
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground transition-colors hover:border-brass hover:text-brass"
             >
               <MapPin className="size-3.5" aria-hidden />
               Get directions
             </a>
             <a
               href={telHref}
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground transition-colors hover:border-brass hover:text-brass"
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:border-brass hover:text-brass"
             >
               <Phone className="size-3.5" aria-hidden />
-              Call venue
+              Call
             </a>
           </div>
         </div>

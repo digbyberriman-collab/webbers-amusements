@@ -1,11 +1,25 @@
 // Single source of truth for Webbers content.
 // All venue addresses, phones and games verified against the client's current site.
 
+import placeholderVenue from "@/assets/placeholder-venue.svg";
+
 export type DayHours = { open: string; close: string } | { closed: true };
 export type WeeklyHours = Record<
   "mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun",
   DayHours
 >;
+
+export interface VenuePhotos {
+  hero: string;
+  gallery: string[];
+}
+
+export interface TeamMember {
+  name: string;
+  role: string;
+  portrait: string;
+  bio?: string;
+}
 
 export interface Venue {
   slug: string;
@@ -24,6 +38,16 @@ export interface Venue {
   primary?: boolean;
   /** One-line venue character used on cards. */
   character: string;
+  /** Short evocative phrase used in the venue-page hero. */
+  tagline?: string;
+  /** Placeholder photo set — swap paths in this file when real photography arrives. */
+  photos: VenuePhotos;
+  /** Per-venue team. Names are placeholders until client supplies real data. */
+  team: TeamMember[];
+  /** Keys from siteConfig.facilities that this venue offers. */
+  facilities: string[];
+  parkingNotes?: string;
+  transportNotes?: string;
 }
 
 export interface Game {
@@ -53,6 +77,13 @@ export interface Promotion {
   badge?: string;
 }
 
+export interface Facility {
+  key: string;
+  label: string;
+  /** lucide-react icon name — looked up in the venue detail page. */
+  icon: string;
+}
+
 const standardHours: WeeklyHours = {
   mon: { open: "09:00", close: "22:00" },
   tue: { open: "09:00", close: "22:00" },
@@ -62,6 +93,38 @@ const standardHours: WeeklyHours = {
   sat: { open: "09:00", close: "22:00" },
   sun: { open: "10:00", close: "20:00" },
 };
+
+/** Shared photo placeholder. Replace per-venue paths in `venues[*].photos`
+ *  and `venues[*].team[*].portrait` when real imagery arrives. */
+const PLACEHOLDER = placeholderVenue;
+
+const placeholderPhotos: VenuePhotos = {
+  hero: PLACEHOLDER,
+  gallery: [PLACEHOLDER, PLACEHOLDER, PLACEHOLDER, PLACEHOLDER],
+};
+
+/** Three role slots used across every venue for layout consistency.
+ *  Names read [CLIENT TO CONFIRM] until the client supplies real data. */
+const placeholderTeam: TeamMember[] = [
+  {
+    name: "[CLIENT TO CONFIRM]",
+    role: "Venue Manager",
+    portrait: PLACEHOLDER,
+    bio: "Leads the room, runs the rota and looks after every regular by name.",
+  },
+  {
+    name: "[CLIENT TO CONFIRM]",
+    role: "Floor Host",
+    portrait: PLACEHOLDER,
+    bio: "First face most visitors meet — answers questions, fixes the tea and watches the room.",
+  },
+  {
+    name: "[CLIENT TO CONFIRM]",
+    role: "Cashier Lead",
+    portrait: PLACEHOLDER,
+    bio: "Handles cashier services, member sign-ups and safer-gambling conversations.",
+  },
+];
 
 export const siteConfig = {
   brand: {
@@ -123,6 +186,27 @@ export const siteConfig = {
       detail: "Three generations of the Webber family",
     },
   ],
+  /** Master facility checklist. Each venue ticks the keys it offers. */
+  facilities: [
+    { key: "wifi", label: "Free Wi-Fi", icon: "Wifi" },
+    {
+      key: "refreshments",
+      label: "Complimentary tea, coffee & soft drinks",
+      icon: "Coffee",
+    },
+    { key: "cashier", label: "Staffed cashier desk", icon: "BadgePoundSterling" },
+    { key: "atm", label: "ATM on site", icon: "Landmark" },
+    { key: "accessible", label: "Step-free entrance", icon: "Accessibility" },
+    { key: "hearing-loop", label: "Hearing loop available", icon: "Ear" },
+    { key: "members", label: "Webbers Club sign-up in venue", icon: "UserPlus" },
+    {
+      key: "safer-gambling",
+      label: "Safer-gambling tools available",
+      icon: "ShieldCheck",
+    },
+    { key: "parking", label: "Parking nearby", icon: "ParkingCircle" },
+    { key: "transport", label: "Public transport links", icon: "Bus" },
+  ] as Facility[],
   venues: [
     {
       slug: "chester-frodsham",
@@ -169,6 +253,22 @@ export const siteConfig = {
       hours: standardHours,
       character:
         "In the shadow of the castle walls — a long-running family fixture in the heart of the old town.",
+      tagline: "In the shadow of the castle walls.",
+      photos: placeholderPhotos,
+      team: placeholderTeam,
+      facilities: [
+        "wifi",
+        "refreshments",
+        "cashier",
+        "accessible",
+        "members",
+        "safer-gambling",
+        "parking",
+      ],
+      parkingNotes:
+        "Castle Square car park is a four-minute walk; additional Pay & Display parking available on adjacent streets. [CLIENT TO CONFIRM preferred recommendation.]",
+      transportNotes:
+        "Bus stops on Bridge Street, two minutes away. Caernarfon is served by frequent Bangor services.",
     },
     {
       slug: "rhyl",
@@ -184,6 +284,22 @@ export const siteConfig = {
       hours: standardHours,
       character:
         "Where the Webber story started in the 1950s — still on the High Street, now in its modern form.",
+      tagline: "Where the Webber story started, in 1954.",
+      photos: placeholderPhotos,
+      team: placeholderTeam,
+      facilities: [
+        "wifi",
+        "refreshments",
+        "cashier",
+        "accessible",
+        "members",
+        "safer-gambling",
+        "transport",
+      ],
+      parkingNotes:
+        "Several town-centre car parks within a few minutes' walk. [CLIENT TO CONFIRM preferred recommendation.]",
+      transportNotes:
+        "Rhyl rail station is a seven-minute walk; bus services stop on the High Street directly outside.",
     },
     {
       slug: "walkden",

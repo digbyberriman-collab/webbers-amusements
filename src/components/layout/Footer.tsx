@@ -76,8 +76,8 @@ export function Footer() {
                 {siteConfig.venues.map((v) => (
                   <li key={v.slug}>
                     <Link
-                      to="/venues"
-                      hash={v.slug}
+                      to="/venues/$slug"
+                      params={{ slug: v.slug }}
                       className="hover:text-brass"
                     >
                       {v.city}

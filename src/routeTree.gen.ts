@@ -18,6 +18,7 @@ import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as VenuesSlugRouteImport } from './routes/venues.$slug'
 
 const VenuesRoute = VenuesRouteImport.update({
   id: '/venues',
@@ -64,6 +65,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VenuesSlugRoute = VenuesSlugRouteImport.update({
+  id: '/venues/$slug',
+  path: '/venues/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -75,6 +81,7 @@ export interface FileRoutesByFullPath {
   '/safer-gambling': typeof SaferGamblingRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/venues': typeof VenuesRoute
+  '/venues/$slug': typeof VenuesSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -86,6 +93,7 @@ export interface FileRoutesByTo {
   '/safer-gambling': typeof SaferGamblingRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/venues': typeof VenuesRoute
+  '/venues/$slug': typeof VenuesSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -98,6 +106,7 @@ export interface FileRoutesById {
   '/safer-gambling': typeof SaferGamblingRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/venues': typeof VenuesRoute
+  '/venues/$slug': typeof VenuesSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -111,6 +120,7 @@ export interface FileRouteTypes {
     | '/safer-gambling'
     | '/sitemap.xml'
     | '/venues'
+    | '/venues/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -122,6 +132,7 @@ export interface FileRouteTypes {
     | '/safer-gambling'
     | '/sitemap.xml'
     | '/venues'
+    | '/venues/$slug'
   id:
     | '__root__'
     | '/'
@@ -133,6 +144,7 @@ export interface FileRouteTypes {
     | '/safer-gambling'
     | '/sitemap.xml'
     | '/venues'
+    | '/venues/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -145,6 +157,7 @@ export interface RootRouteChildren {
   SaferGamblingRoute: typeof SaferGamblingRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   VenuesRoute: typeof VenuesRoute
+  VenuesSlugRoute: typeof VenuesSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -154,6 +167,13 @@ declare module '@tanstack/react-router' {
       path: '/venues'
       fullPath: '/venues'
       preLoaderRoute: typeof VenuesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/venues/$slug': {
+      id: '/venues/$slug'
+      path: '/venues/$slug'
+      fullPath: '/venues/$slug'
+      preLoaderRoute: typeof VenuesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -225,6 +245,7 @@ const rootRouteChildren: RootRouteChildren = {
   SaferGamblingRoute: SaferGamblingRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   VenuesRoute: VenuesRoute,
+  VenuesSlugRoute: VenuesSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
