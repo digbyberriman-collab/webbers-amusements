@@ -95,11 +95,13 @@ function VenuesNavItem() {
         />
       </Link>
 
-      {/* Dropdown panel */}
+      {/* Dropdown panel — pt-3 on the outer wrapper is the visual gap
+          AND the hover bridge; using margin here would break the hover
+          chain because the cursor would briefly leave the container. */}
       <div
         role="menu"
         aria-label="Webbers venues"
-        className={`absolute left-1/2 top-full z-50 mt-3 w-80 -translate-x-1/2 transition-all duration-200 ${
+        className={`absolute left-1/2 top-full z-50 w-80 -translate-x-1/2 pt-3 transition-all duration-200 ${
           open
             ? "pointer-events-auto translate-y-0 opacity-100"
             : "pointer-events-none -translate-y-1 opacity-0"
