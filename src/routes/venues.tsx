@@ -255,11 +255,11 @@ function VenueSection({ venue, mapLeft }: VenueSectionProps) {
             <span
               aria-hidden
               className={`size-1.5 rounded-full ${
-                hours.isOpen ? "bg-sage" : "bg-muted-foreground/40"
+                hydrated && hours.isOpen ? "bg-sage" : "bg-muted-foreground/40"
               }`}
             />
             <span className="font-mono uppercase tracking-[0.22em] text-foreground/80">
-              {hours.isOpen ? "Open now" : "Closed"} · {hours.text}
+              {hydrated ? (hours.isOpen ? "Open now" : "Closed") : "Hours"} · {hours.text}
             </span>
           </div>
 
