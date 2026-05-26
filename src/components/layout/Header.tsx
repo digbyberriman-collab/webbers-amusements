@@ -1,18 +1,153 @@
 import { Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { Menu, X, MapPin } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ChevronDown, Menu, X, MapPin } from "lucide-react";
 import { Logo } from "@/components/Logo";
+import { siteConfig } from "@/config/site";
 
-const nav = [
+type NavItem =
+  | { to: string; label: string; venuesMenu?: undefined }
+  | { to: string; label: string; venuesMenu: true };
+
+const nav: readonly NavItem[] = [
   { to: "/", label: "Home" },
   { to: "/about", label: "Our Story" },
-  { to: "/venues", label: "Venues" },
+  { to: "/venues", label: "Venues", venuesMenu: true },
   { to: "/games", label: "Gaming Floor" },
   { to: "/promotions", label: "What's On" },
   { to: "/safer-gambling", label: "Safer Gambling" },
   { to: "/faq", label: "FAQ" },
   { to: "/contact", label: "Contact" },
 ] as const;
+
+function venueLabel(city: string, slug: string) {
+  if (city !== "Chester") return city;
+  return slug === "chester-frodsham"
+    ? "Chester · Frodsham St"
+    : "Chester · Northgate St";
+}
+
+function VenuesNavItem() {
+  const [open, setOpen] = useState(false);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const cancelClose = () => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+  };
+
+  const scheduleClose = () => {
+    cancelClose();
+    closeTimer.current = setTimeout(() => setOpen(false), 140);
+  };
+
+  // Close on Escape, restore focus to the trigger.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        const trigger = containerRef.current?.querySelector<HTMLElement>(
+          "[data-venues-trigger]",
+        );
+        trigger?.focus();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative"
+      onMouseEnter={() => {
+        cancelClose();
+        setOpen(true);
+      }}
+      onMouseLeave={scheduleClose}
+      onFocus={() => {
+        cancelClose();
+        setOpen(true);
+      }}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+          scheduleClose();
+        }
+      }}
+    >
+      <Link
+        to="/venues"
+        data-venues-trigger
+        aria-haspopup="menu"
+        aria-expanded={open}
+        className="link-underline inline-flex items-center gap-1 text-[13px] font-medium tracking-wide text-foreground/75 transition-colors hover:text-foreground"
+        activeProps={{ className: "text-brass" }}
+      >
+        Venues
+        <ChevronDown
+          className={`size-3 transition-transform duration-300 ${
+            open ? "rotate-180" : ""
+          }`}
+          aria-hidden
+        />
+      </Link>
+
+      {/* Dropdown panel */}
+      <div
+        role="menu"
+        aria-label="Webbers venues"
+        className={`absolute left-1/2 top-full z-50 mt-3 w-80 -translate-x-1/2 transition-all duration-200 ${
+          open
+            ? "pointer-events-auto translate-y-0 opacity-100"
+            : "pointer-events-none -translate-y-1 opacity-0"
+        }`}
+      >
+        <div className="glass hairline-brass overflow-hidden rounded-2xl border border-white/5 shadow-2xl">
+          <div className="border-b border-white/5 px-5 pb-2 pt-4">
+            <p className="eyebrow">Our five arcades</p>
+          </div>
+          <ul className="divide-y divide-white/5">
+            {siteConfig.venues.map((v) => (
+              <li key={v.slug}>
+                <Link
+                  to="/venues/$slug"
+                  params={{ slug: v.slug }}
+                  role="menuitem"
+                  className="group flex items-baseline justify-between gap-4 px-5 py-3 transition-colors hover:bg-surface"
+                >
+                  <div className="min-w-0">
+                    <p className="font-display text-base text-foreground transition-colors group-hover:text-brass">
+                      {venueLabel(v.city, v.slug)}
+                    </p>
+                    <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                      {v.region}
+                    </p>
+                  </div>
+                  <span
+                    aria-hidden
+                    className="text-brass opacity-0 transition-opacity group-hover:opacity-100"
+                  >
+                    →
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <Link
+            to="/venues"
+            role="menuitem"
+            className="block border-t border-white/5 px-5 py-3 text-center font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-brass transition-colors hover:bg-surface"
+          >
+            See all venues
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -75,17 +210,21 @@ export function Header() {
             aria-label="Primary"
             className="hidden items-center gap-8 lg:flex"
           >
-            {nav.slice(0, 6).map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                className="link-underline text-[13px] font-medium tracking-wide text-foreground/75 transition-colors hover:text-foreground"
-                activeProps={{ className: "text-brass" }}
-                activeOptions={{ exact: item.to === "/" }}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {nav.slice(0, 6).map((item) =>
+              item.venuesMenu ? (
+                <VenuesNavItem key={item.to} />
+              ) : (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  className="link-underline text-[13px] font-medium tracking-wide text-foreground/75 transition-colors hover:text-foreground"
+                  activeProps={{ className: "text-brass" }}
+                  activeOptions={{ exact: item.to === "/" }}
+                >
+                  {item.label}
+                </Link>
+              ),
+            )}
           </nav>
 
           {/* Right-side actions */}
@@ -155,21 +294,38 @@ export function Header() {
           <p className="eyebrow mb-4">Webbers Amusements · Est. 1954</p>
           <nav aria-label="Primary" className="space-y-1">
             {nav.map((item, i) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                onClick={() => setOpen(false)}
-                className="group flex items-baseline gap-6 border-b border-white/5 py-4 transition-colors hover:border-brass/40"
-                activeProps={{ className: "border-brass/40" }}
-                activeOptions={{ exact: item.to === "/" }}
-              >
-                <span className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="font-display text-3xl text-foreground transition-colors group-hover:text-brass sm:text-4xl">
-                  {item.label}
-                </span>
-              </Link>
+              <div key={item.to}>
+                <Link
+                  to={item.to}
+                  onClick={() => setOpen(false)}
+                  className="group flex items-baseline gap-6 border-b border-white/5 py-4 transition-colors hover:border-brass/40"
+                  activeProps={{ className: "border-brass/40" }}
+                  activeOptions={{ exact: item.to === "/" }}
+                >
+                  <span className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="font-display text-3xl text-foreground transition-colors group-hover:text-brass sm:text-4xl">
+                    {item.label}
+                  </span>
+                </Link>
+                {item.venuesMenu && (
+                  <ul className="ml-12 mt-2 space-y-1 border-l border-white/5 pl-4">
+                    {siteConfig.venues.map((v) => (
+                      <li key={v.slug}>
+                        <Link
+                          to="/venues/$slug"
+                          params={{ slug: v.slug }}
+                          onClick={() => setOpen(false)}
+                          className="block py-1.5 font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground transition-colors hover:text-brass"
+                        >
+                          {venueLabel(v.city, v.slug)}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             ))}
           </nav>
           <div className="mt-10 flex flex-wrap items-center gap-4">

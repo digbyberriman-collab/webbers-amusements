@@ -223,6 +223,23 @@ export const siteConfig = {
       primary: true,
       character:
         "Our flagship arcade, two minutes from the Eastgate Clock — calm, well-lit, with the full modern floor.",
+      tagline: "Two minutes from the Eastgate Clock.",
+      photos: placeholderPhotos,
+      team: placeholderTeam,
+      facilities: [
+        "wifi",
+        "refreshments",
+        "cashier",
+        "atm",
+        "accessible",
+        "members",
+        "safer-gambling",
+        "transport",
+      ],
+      parkingNotes:
+        "Several Chester city-centre car parks within a five-minute walk, including the Forum Shopping Centre car park and Pepper Street car park. [CLIENT TO CONFIRM nearest recommended.]",
+      transportNotes:
+        "Chester rail station is a short walk; frequent bus services stop on Foregate Street, two minutes away.",
     },
     {
       slug: "chester-northgate",
@@ -238,6 +255,22 @@ export const siteConfig = {
       hours: standardHours,
       character:
         "A boutique slots arcade a short walk from the Cathedral Quarter — curated cabinets, quieter pace.",
+      tagline: "The Cathedral Quarter's quietest slots arcade.",
+      photos: placeholderPhotos,
+      team: placeholderTeam,
+      facilities: [
+        "wifi",
+        "refreshments",
+        "cashier",
+        "accessible",
+        "members",
+        "safer-gambling",
+        "transport",
+      ],
+      parkingNotes:
+        "Forum Shopping Centre car park is a three-minute walk. On-street parking limited in the Cathedral Quarter — public car parks preferred.",
+      transportNotes:
+        "Chester rail station roughly eight minutes on foot; the Cathedral Quarter bus stops are nearby.",
     },
     {
       slug: "caernarfon",
@@ -315,6 +348,23 @@ export const siteConfig = {
       hours: standardHours,
       character:
         "Our newest arcade — a generous floor on the high street, a few minutes' drive from the M60.",
+      tagline: "A few minutes' drive from the M60.",
+      photos: placeholderPhotos,
+      team: placeholderTeam,
+      facilities: [
+        "wifi",
+        "refreshments",
+        "cashier",
+        "atm",
+        "accessible",
+        "members",
+        "safer-gambling",
+        "parking",
+      ],
+      parkingNotes:
+        "On-street parking on Bolton Road and adjacent side streets. [CLIENT TO CONFIRM dedicated customer parking, if any.]",
+      transportNotes:
+        "Walkden rail station is a four-minute walk; M60 Junction 14 is approximately four minutes by car.",
     },
   ] as Venue[],
   games: [
