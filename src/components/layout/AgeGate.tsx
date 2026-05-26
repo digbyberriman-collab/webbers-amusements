@@ -1,18 +1,53 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ShieldAlert } from "lucide-react";
 import { Logo } from "@/components/Logo";
 
 const STORAGE_KEY = "webbers:age-confirmed";
 
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
 export function AgeGate() {
   const [open, setOpen] = useState(false);
   const [declined, setDeclined] = useState(false);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     const confirmed = window.localStorage.getItem(STORAGE_KEY);
     if (!confirmed) setOpen(true);
   }, []);
+
+  // Focus trap — auto-focus the primary action and cycle Tab inside the dialog.
+  useEffect(() => {
+    if (!open) return;
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    const focusables = Array.from(
+      dialog.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
+    );
+    if (focusables.length === 0) return;
+
+    const primary = declined ? focusables[0] : focusables[focusables.length - 1];
+    primary.focus();
+
+    const handleKey = (event: KeyboardEvent) => {
+      if (event.key !== "Tab") return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    dialog.addEventListener("keydown", handleKey);
+    return () => dialog.removeEventListener("keydown", handleKey);
+  }, [open, declined]);
 
   if (!open) return null;
 
@@ -24,6 +59,7 @@ export function AgeGate() {
   if (declined) {
     return (
       <div
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="age-gate-decline-title"
@@ -68,6 +104,7 @@ export function AgeGate() {
 
   return (
     <div
+      ref={dialogRef}
       role="dialog"
       aria-modal="true"
       aria-labelledby="age-gate-title"

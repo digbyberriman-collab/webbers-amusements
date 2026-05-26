@@ -175,6 +175,13 @@ function ContactPage() {
                   Someone from the Webbers team will come back to you within a
                   couple of working days.
                 </p>
+                <button
+                  type="button"
+                  onClick={() => setSent(false)}
+                  className="mt-8 inline-flex items-center gap-2 rounded-full border border-white/15 px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground transition-colors hover:border-brass hover:text-brass"
+                >
+                  Send another message
+                </button>
               </div>
             ) : (
               <div className="space-y-6">

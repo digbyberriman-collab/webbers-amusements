@@ -48,12 +48,6 @@
   --color-sage: var(--sage);
   --color-danger: var(--danger);
 
-  /* Legacy aliases — old code still references `gold` / `electric`.
-     We re-point them at the new brass tokens so nothing breaks visually. */
-  --color-gold: var(--brass);
-  --color-gold-deep: var(--brass-deep);
-  --color-electric: var(--brass);
-
   --font-display: "Fraunces", "Bodoni Moda", ui-serif, Georgia, serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
