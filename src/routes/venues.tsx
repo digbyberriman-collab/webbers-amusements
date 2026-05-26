@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useHydrated } from "@tanstack/react-router";
 import {
   ArrowRight,
   Clock,
