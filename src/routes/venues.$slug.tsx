@@ -99,7 +99,7 @@ export const Route = createFileRoute("/venues/$slug")({
     )}, ${venue.city}, ${venue.postcode}. Open seven days a week. Strictly 18+.`;
 
     const facilityLabels = siteConfig.facilities
-      .filter((f) => venue.facilities.includes(f.key))
+      .filter((f) => venue.facilities?.includes(f.key))
       .map((f) => ({ "@type": "LocationFeatureSpecification", name: f.label, value: true }));
 
     return {
