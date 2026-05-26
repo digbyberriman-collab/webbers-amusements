@@ -70,7 +70,7 @@ const generations = [
     ordinal: "Third generation",
     name: "The third generation today",
     period: "2010s — now",
-    body: "Modernised the estate into premium, fully-licensed Adult Gaming Centres. Five arcades across Chester, North Wales and Greater Manchester, running to the same family standards.",
+    body: "Modernised the estate into premium, fully-licensed Adult Gaming Centres. Five venues across Chester, North Wales and Greater Manchester, running to the same family standards.",
   },
 ];
 
@@ -78,7 +78,7 @@ const values = [
   {
     icon: Heart,
     title: "Hospitality first",
-    body: "A Webbers arcade should feel calm, welcoming and well-staffed — never pushy. People come back because they feel looked after.",
+    body: "A Webbers Adult Gaming Centre should feel calm, welcoming and well-staffed — never pushy. People come back because they feel looked after.",
   },
   {
     icon: Users,
@@ -341,11 +341,11 @@ function AboutPage() {
       <section className="border-t border-white/5 bg-ink px-6 py-[var(--section-y)] lg:px-10">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="font-display text-4xl leading-tight text-balance text-foreground sm:text-5xl">
-            Come and see a arcade for yourself.
+            Come and see an Adult Gaming Centre for yourself.
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-muted-foreground">
-            Five arcades across Chester, North Wales and Greater Manchester —
-            no booking, no pressure. We've kept a seat for you.
+            Five Adult Gaming Centres across Chester, North Wales and Greater
+            Manchester — no booking, no pressure. We've kept a seat for you.
           </p>
           <div className="mt-10">
             <Link

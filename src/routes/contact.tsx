@@ -11,7 +11,7 @@ export const Route = createFileRoute("/contact")({
       {
         name: "description",
         content:
-          "Get in touch with Webbers Amusements — five venues across Chester, North Wales and Greater Manchester. Address, phone and a message form for every arcade.",
+          "Get in touch with Webbers Amusements — five Adult Gaming Centres across Chester, North Wales and Greater Manchester. Address, phone and a message form for every venue.",
       },
       { property: "og:title", content: `Contact — ${siteConfig.brand.name}` },
       {
@@ -94,7 +94,7 @@ function ContactPage() {
             </div>
 
             <div>
-              <p className="eyebrow">Every arcade</p>
+              <p className="eyebrow">Every venue</p>
               <h2 className="mt-3 font-display text-2xl leading-tight text-foreground">
                 Reach a specific venue
               </h2>

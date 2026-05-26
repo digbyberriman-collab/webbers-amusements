@@ -13,20 +13,20 @@ import { todaysHours, weeklyHoursTable } from "@/lib/hours";
 export const Route = createFileRoute("/venues")({
   head: () => ({
     meta: [
-      { title: `Our Venues — ${siteConfig.brand.name}` },
+      { title: `Venues — ${siteConfig.brand.name}` },
       {
         name: "description",
         content:
-          "Five Webbers Amusements arcades — Chester (Frodsham Street and Northgate Street), Caernarfon, Rhyl and Walkden. Addresses, phone numbers, weekly opening hours and directions for every venue.",
+          "Five Webbers Amusements Adult Gaming Centres — Chester (Frodsham Street and Northgate Street), Caernarfon, Rhyl and Walkden. Addresses, phone numbers, weekly opening hours and directions for every venue.",
       },
       {
         property: "og:title",
-        content: `Our Venues — ${siteConfig.brand.name}`,
+        content: `Venues — ${siteConfig.brand.name}`,
       },
       {
         property: "og:description",
         content:
-          "Five premium adult gaming centres across Chester, North Wales and Greater Manchester. Family-run, licensed by the UK Gambling Commission.",
+          "Five premium Adult Gaming Centres across Chester, North Wales and Greater Manchester. Family-run, licensed by the UK Gambling Commission.",
       },
       { property: "og:url", content: "/venues" },
     ],
@@ -123,10 +123,10 @@ function VenuesPage() {
   return (
     <>
       <PageHero
-        eyebrow="Find your arcade"
+        eyebrow="Find your venue"
         title={
           <>
-            Five arcades.{" "}
+            Five Adult Gaming Centres.{" "}
             <span className="italic text-brass">One family.</span>
           </>
         }
@@ -178,8 +178,8 @@ function VenuesPage() {
               </h2>
               <p className="mt-4 max-w-2xl text-muted-foreground">
                 For stag and hen visits, corporate evenings, charity nights
-                and private bookings, we'll set the arcade up around you.
-                Available across all five venues.
+                and private bookings, we'll set the venue up around you.
+                Available across all five locations.
               </p>
             </div>
             <a

@@ -6,7 +6,7 @@ import { PageHero } from "@/components/PageHero";
 export const Route = createFileRoute("/promotions")({
   head: () => ({
     meta: [
-      { title: `Promotions — ${siteConfig.brand.name}` },
+      { title: `What's On — ${siteConfig.brand.name}` },
       {
         name: "description",
         content:
@@ -14,7 +14,7 @@ export const Route = createFileRoute("/promotions")({
       },
       {
         property: "og:title",
-        content: `Promotions — ${siteConfig.brand.name}`,
+        content: `What's On — ${siteConfig.brand.name}`,
       },
       {
         property: "og:description",
@@ -89,7 +89,7 @@ function PromotionsPage() {
               The best offers aren't on a poster.
             </h2>
             <p className="text-muted-foreground">
-              The team in each arcade know what's just landed, who's a member,
+              The team in each venue know what's just landed, who's a member,
               and when the next cabinet is on its way. Drop in, say hello,
               and ask at the cashier — that's where the good stuff lives.
             </p>

@@ -136,9 +136,9 @@ export const siteConfig = {
     origin: "Rhyl, North Wales",
     tagline: "Premium adult gaming. British heritage. Since 1954.",
     description:
-      "A multi-generational family entertainment business — from 1950s seaside arcades to premium adult gaming centres across North Wales, Chester and Greater Manchester. Licensed by the UK Gambling Commission, longstanding Bacta member.",
+      "A multi-generational family entertainment business — from 1950s seaside arcades to premium Adult Gaming Centres across North Wales, Chester and Greater Manchester. Licensed by the UK Gambling Commission, longstanding Bacta member.",
     shortDescription:
-      "Three generations of British entertainment heritage — modern, premium adult gaming, in well-run arcades.",
+      "Three generations of British entertainment heritage — modern, premium adult gaming, in well-run Adult Gaming Centres.",
   },
   compliance: {
     licenceNumber: "[CLIENT TO CONFIRM LICENCE NUMBER]",
@@ -222,7 +222,7 @@ export const siteConfig = {
       hours: standardHours,
       primary: true,
       character:
-        "Our flagship arcade, two minutes from the Eastgate Clock — calm, well-lit, with the full modern floor.",
+        "Our flagship Adult Gaming Centre, two minutes from the Eastgate Clock — calm, well-lit, with the full modern floor.",
       tagline: "Two minutes from the Eastgate Clock.",
       photos: placeholderPhotos,
       team: placeholderTeam,
@@ -254,8 +254,8 @@ export const siteConfig = {
       lng: -2.8912,
       hours: standardHours,
       character:
-        "A boutique slots arcade a short walk from the Cathedral Quarter — curated cabinets, quieter pace.",
-      tagline: "The Cathedral Quarter's quietest slots arcade.",
+        "A boutique slots-led Adult Gaming Centre a short walk from the Cathedral Quarter — curated cabinets, quieter pace.",
+      tagline: "The Cathedral Quarter's quietest Adult Gaming Centre.",
       photos: placeholderPhotos,
       team: placeholderTeam,
       facilities: [
@@ -347,7 +347,7 @@ export const siteConfig = {
       lng: -2.3973,
       hours: standardHours,
       character:
-        "Our newest arcade — a generous floor on the high street, a few minutes' drive from the M60.",
+        "Our newest Adult Gaming Centre — a generous floor on the high street, a few minutes' drive from the M60.",
       tagline: "A few minutes' drive from the M60.",
       photos: placeholderPhotos,
       team: placeholderTeam,
@@ -429,7 +429,7 @@ export const siteConfig = {
       id: "weekend-welcome",
       title: "The Weekend Welcome",
       description:
-        "Complimentary tea, coffee and pastries for every player, every Saturday and Sunday morning. A small Webber-family thank-you for choosing the arcade.",
+        "Complimentary tea, coffee and pastries for every player, every Saturday and Sunday morning. A small Webber-family thank-you for choosing your local Webbers.",
       startsOn: "Every Saturday",
       endsOn: "Every Sunday",
       badge: "Ongoing",
@@ -483,12 +483,12 @@ export const siteConfig = {
     {
       decade: "2010s",
       title: "Modern Adult Gaming Centres",
-      body: "The estate modernises into premium, fully-licensed AGCs — sophisticated arcades with the latest cabinets from Light & Wonder, Novomatic, Blueprint and Inspired Gaming.",
+      body: "The estate modernises into premium, fully-licensed Adult Gaming Centres — sophisticated venues with the latest cabinets from Light & Wonder, Novomatic, Blueprint and Inspired Gaming.",
     },
     {
       decade: "Today",
       title: "Three generations on",
-      body: "Five arcades across Chester, North Wales and Greater Manchester. Same family, same standards — modern premium gaming, regulated by the UK Gambling Commission.",
+      body: "Five Adult Gaming Centres across Chester, North Wales and Greater Manchester. Same family, same standards — modern premium gaming, regulated by the UK Gambling Commission.",
     },
   ],
 };

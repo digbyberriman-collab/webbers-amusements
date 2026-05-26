@@ -107,7 +107,7 @@ function VenuesNavItem() {
       >
         <div className="glass hairline-brass overflow-hidden rounded-2xl border border-white/5 shadow-2xl">
           <div className="border-b border-white/5 px-5 pb-2 pt-4">
-            <p className="eyebrow">Our five arcades</p>
+            <p className="eyebrow">Our five Adult Gaming Centres</p>
           </div>
           <ul className="divide-y divide-white/5">
             {siteConfig.venues.map((v) => (
