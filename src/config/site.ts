@@ -138,7 +138,7 @@ export const siteConfig = {
     description:
       "A multi-generational family entertainment business — from 1950s seaside arcades to premium adult gaming centres across North Wales, Chester and Greater Manchester. Licensed by the UK Gambling Commission, longstanding Bacta member.",
     shortDescription:
-      "Three generations of British entertainment heritage — modern, premium adult gaming, in well-run rooms.",
+      "Three generations of British entertainment heritage — modern, premium adult gaming, in well-run arcades.",
   },
   compliance: {
     licenceNumber: "[CLIENT TO CONFIRM LICENCE NUMBER]",
@@ -222,24 +222,7 @@ export const siteConfig = {
       hours: standardHours,
       primary: true,
       character:
-        "Our flagship room, two minutes from the Eastgate Clock — calm, well-lit, with the full modern floor.",
-      tagline: "Two minutes from the Eastgate Clock.",
-      photos: placeholderPhotos,
-      team: placeholderTeam,
-      facilities: [
-        "wifi",
-        "refreshments",
-        "cashier",
-        "atm",
-        "accessible",
-        "members",
-        "safer-gambling",
-        "transport",
-      ],
-      parkingNotes:
-        "Several Chester city-centre car parks within a five-minute walk, including the Forum Shopping Centre car park and Pepper Street car park. [CLIENT TO CONFIRM nearest recommended.]",
-      transportNotes:
-        "Chester rail station is a short walk; frequent bus services stop on Foregate Street, two minutes away.",
+        "Our flagship arcade, two minutes from the Eastgate Clock — calm, well-lit, with the full modern floor.",
     },
     {
       slug: "chester-northgate",
@@ -254,23 +237,7 @@ export const siteConfig = {
       lng: -2.8912,
       hours: standardHours,
       character:
-        "A boutique slots room a short walk from the Cathedral Quarter — curated cabinets, quieter pace.",
-      tagline: "The Cathedral Quarter's quietest slots room.",
-      photos: placeholderPhotos,
-      team: placeholderTeam,
-      facilities: [
-        "wifi",
-        "refreshments",
-        "cashier",
-        "accessible",
-        "members",
-        "safer-gambling",
-        "transport",
-      ],
-      parkingNotes:
-        "Forum Shopping Centre car park is a three-minute walk. On-street parking limited in the Cathedral Quarter — public car parks preferred.",
-      transportNotes:
-        "Chester rail station roughly eight minutes on foot; the Cathedral Quarter bus stops are nearby.",
+        "A boutique slots arcade a short walk from the Cathedral Quarter — curated cabinets, quieter pace.",
     },
     {
       slug: "caernarfon",
@@ -347,24 +314,7 @@ export const siteConfig = {
       lng: -2.3973,
       hours: standardHours,
       character:
-        "Our newest room — a generous floor on the high street, a few minutes' drive from the M60.",
-      tagline: "A few minutes' drive from the M60.",
-      photos: placeholderPhotos,
-      team: placeholderTeam,
-      facilities: [
-        "wifi",
-        "refreshments",
-        "cashier",
-        "atm",
-        "accessible",
-        "members",
-        "safer-gambling",
-        "parking",
-      ],
-      parkingNotes:
-        "On-street parking on Bolton Road and adjacent side streets. [CLIENT TO CONFIRM dedicated customer parking, if any.]",
-      transportNotes:
-        "Walkden rail station is a four-minute walk; M60 Junction 14 is approximately four minutes by car.",
+        "Our newest arcade — a generous floor on the high street, a few minutes' drive from the M60.",
     },
   ] as Venue[],
   games: [
@@ -429,7 +379,7 @@ export const siteConfig = {
       id: "weekend-welcome",
       title: "The Weekend Welcome",
       description:
-        "Complimentary tea, coffee and pastries for every player, every Saturday and Sunday morning. A small Webber-family thank-you for choosing the room.",
+        "Complimentary tea, coffee and pastries for every player, every Saturday and Sunday morning. A small Webber-family thank-you for choosing the arcade.",
       startsOn: "Every Saturday",
       endsOn: "Every Sunday",
       badge: "Ongoing",
@@ -463,7 +413,7 @@ export const siteConfig = {
     {
       decade: "1960s",
       title: "Onto the seafront",
-      body: "The family moves into fairgrounds and seaside arcades along the North Wales coast — penny falls, classic AWP cabinets and a knack for keeping the rooms warm and well-run.",
+      body: "The family moves into fairgrounds and seaside arcades along the North Wales coast — penny falls, classic AWP cabinets and a knack for keeping the arcades warm and well-run.",
     },
     {
       decade: "1970s",
@@ -472,7 +422,7 @@ export const siteConfig = {
     },
     {
       decade: "1990s",
-      title: "Permanent rooms",
+      title: "Permanent arcades",
       body: "Permanent amusement arcades open across North Wales, including the long-standing Rhyl and Caernarfon venues — anchoring the family on the high street.",
     },
     {
@@ -483,12 +433,12 @@ export const siteConfig = {
     {
       decade: "2010s",
       title: "Modern Adult Gaming Centres",
-      body: "The estate modernises into premium, fully-licensed AGCs — sophisticated rooms with the latest cabinets from Light & Wonder, Novomatic, Blueprint and Inspired Gaming.",
+      body: "The estate modernises into premium, fully-licensed AGCs — sophisticated arcades with the latest cabinets from Light & Wonder, Novomatic, Blueprint and Inspired Gaming.",
     },
     {
       decade: "Today",
       title: "Three generations on",
-      body: "Five rooms across Chester, North Wales and Greater Manchester. Same family, same standards — modern premium gaming, regulated by the UK Gambling Commission.",
+      body: "Five arcades across Chester, North Wales and Greater Manchester. Same family, same standards — modern premium gaming, regulated by the UK Gambling Commission.",
     },
   ],
 };

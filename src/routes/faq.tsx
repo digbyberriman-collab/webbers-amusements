@@ -12,7 +12,7 @@ import {
 const faqs: { q: string; a: string }[] = [
   {
     q: "Do I need to be 18 to enter?",
-    a: `Yes. Every Webbers room is a licensed Adult Gaming Centre. Entry is strictly limited to those aged 18 and over, and we operate a ${siteConfig.compliance.idPolicy} policy across the estate — please bring photo ID if you're asked.`,
+    a: `Yes. Every Webbers arcade is a licensed Adult Gaming Centre. Entry is strictly limited to those aged 18 and over, and we operate a ${siteConfig.compliance.idPolicy} policy across the estate — please bring photo ID if you're asked.`,
   },
   {
     q: "What games do you have?",
@@ -28,7 +28,7 @@ const faqs: { q: string; a: string }[] = [
   },
   {
     q: "Where are your venues?",
-    a: "Five rooms in total: two in Chester (Frodsham Street and Northgate Street), plus Caernarfon, Rhyl and Walkden. Full addresses, phone numbers and opening hours are on the Venues page.",
+    a: "Five arcades in total: two in Chester (Frodsham Street and Northgate Street), plus Caernarfon, Rhyl and Walkden. Full addresses, phone numbers and opening hours are on the Venues page.",
   },
   {
     q: "What can I expect on a first visit?",
@@ -36,11 +36,11 @@ const faqs: { q: string; a: string }[] = [
   },
   {
     q: "Are the venues accessible?",
-    a: "Most of our rooms are at street level with step-free entry. If you have specific accessibility requirements — mobility, hearing, sensory — please call the venue directly before visiting and the team will talk through exactly what to expect. [CLIENT TO CONFIRM per-venue accessibility detail.]",
+    a: "Most of our arcades are at street level with step-free entry. If you have specific accessibility requirements — mobility, hearing, sensory — please call the venue directly before visiting and the team will talk through exactly what to expect. [CLIENT TO CONFIRM per-venue accessibility detail.]",
   },
   {
     q: "Can I host a birthday or small group visit?",
-    a: "Small groups are very welcome — just turn up, no formal booking system. If it's a birthday, let the team know on arrival and we'll make a fuss of you. We're not licensed for hosted private events with alcohol, but the room is yours to enjoy. [CLIENT TO CONFIRM group policy.]",
+    a: "Small groups are very welcome — just turn up, no formal booking system. If it's a birthday, let the team know on arrival and we'll make a fuss of you. We're not licensed for hosted private events with alcohol, but the arcade is yours to enjoy. [CLIENT TO CONFIRM group policy.]",
   },
   {
     q: "Do you serve food and drink?",
@@ -110,7 +110,7 @@ function FAQPage() {
             The <span className="italic text-brass">basics</span>, answered.
           </>
         }
-        intro="A few of the questions we hear most often — from first-time visitors, regulars, and anyone thinking about a quiet afternoon in a Webbers room."
+        intro="A few of the questions we hear most often — from first-time visitors, regulars, and anyone thinking about a quiet afternoon in a Webbers arcade."
       />
 
       <section className="px-6 py-[var(--section-y)] lg:px-10">
