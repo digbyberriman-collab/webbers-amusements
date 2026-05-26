@@ -161,7 +161,7 @@ function VenueDetailPage() {
   const telHref = `tel:${venue.phone.replace(/\s/g, "")}`;
   const directionsHref = `https://www.google.com/maps/search/?api=1&query=${venue.lat},${venue.lng}`;
   const facilityLookup = siteConfig.facilities.filter((f) =>
-    venue.facilities.includes(f.key),
+    venue.facilities?.includes(f.key),
   );
 
   return (
