@@ -433,8 +433,8 @@ function HomePage() {
               return (
                 <Link
                   key={venue.slug}
-                  to="/venues"
-                  hash={venue.slug}
+                  to="/venues/$slug"
+                  params={{ slug: venue.slug }}
                   className="group relative bg-ink p-8 transition-colors hover:bg-surface"
                 >
                   <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
