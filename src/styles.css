@@ -69,7 +69,7 @@
   /* Evening lounge — deep navy ink */
   --ink: oklch(0.17 0.018 235);
   --background: oklch(0.17 0.018 235);
-  --foreground: oklch(0.94 0.012 85);            /* warm cream */
+  --foreground: oklch(0.94 0.012 85); /* warm cream */
 
   --surface: oklch(0.22 0.022 235);
   --surface-2: oklch(0.27 0.025 235);
@@ -100,8 +100,8 @@
   --ring: oklch(0.78 0.085 78);
 
   /* The two heritage metals — used sparingly */
-  --brass: oklch(0.78 0.085 78);                 /* champagne brass */
-  --brass-deep: oklch(0.62 0.09 70);             /* antique brass */
+  --brass: oklch(0.78 0.085 78); /* champagne brass */
+  --brass-deep: oklch(0.62 0.09 70); /* antique brass */
 
   /* Single saturated accent — the WA monogram terracotta */
   --terracotta: oklch(0.6 0.13 36);
@@ -133,7 +133,10 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     font-family: var(--font-display);
     font-feature-settings: "ss01";
     letter-spacing: -0.01em;
@@ -242,36 +245,118 @@
 /* ===== Motion ===== */
 
 @keyframes rise {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .animate-rise {
   animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
-.delay-1 { animation-delay: 0.08s; }
-.delay-2 { animation-delay: 0.16s; }
-.delay-3 { animation-delay: 0.24s; }
-.delay-4 { animation-delay: 0.32s; }
+.delay-1 {
+  animation-delay: 0.08s;
+}
+.delay-2 {
+  animation-delay: 0.16s;
+}
+.delay-3 {
+  animation-delay: 0.24s;
+}
+.delay-4 {
+  animation-delay: 0.32s;
+}
 
 @keyframes fade-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 .animate-fade-in {
   animation: fade-in 0.6s ease-out both;
 }
 
 @keyframes scroll-cue {
-  0%, 100% { transform: translateY(0); opacity: 0.5; }
-  50%      { transform: translateY(6px); opacity: 1; }
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 1;
+  }
 }
 .animate-scroll-cue {
   animation: scroll-cue 2.6s ease-in-out infinite;
 }
 
+/* Slow drifting warm glow — the "fairground lights" of the final CTA, kept
+   deliberately soft and slow. No flashing, no bulbs. */
+.cta-glow::before {
+  content: "";
+  position: absolute;
+  inset: -40% -10%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      40% 50% at 25% 35%,
+      color-mix(in oklab, var(--color-brass) 30%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      35% 45% at 78% 62%,
+      color-mix(in oklab, var(--color-terracotta) 26%, transparent),
+      transparent 70%
+    );
+  filter: blur(40px);
+  opacity: 0.55;
+  animation: glow-drift 16s ease-in-out infinite alternate;
+}
+@keyframes glow-drift {
+  0% {
+    transform: translate3d(-3%, -2%, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(4%, 3%, 0) scale(1.08);
+  }
+}
+
+/* Soft continuous float — used on layered collage cards. */
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.animate-float-soft {
+  animation: float-soft 7s ease-in-out infinite;
+}
+
+/* Hide horizontal scrollbars on swipe/scroll rails without losing scroll. */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
