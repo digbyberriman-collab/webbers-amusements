@@ -4,10 +4,7 @@
 import placeholderVenue from "@/assets/placeholder-venue.svg";
 
 export type DayHours = { open: string; close: string } | { closed: true };
-export type WeeklyHours = Record<
-  "mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun",
-  DayHours
->;
+export type WeeklyHours = Record<"mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun", DayHours>;
 
 export interface VenuePhotos {
   hero: string;
@@ -157,12 +154,7 @@ export const siteConfig = {
     },
   },
   /** Premium gaming hardware partners — used as trust marks. */
-  partners: [
-    "Light & Wonder",
-    "Novomatic",
-    "Blueprint Gaming",
-    "Inspired Gaming",
-  ] as const,
+  partners: ["Light & Wonder", "Novomatic", "Blueprint Gaming", "Inspired Gaming"] as const,
   /** Operational pillars — used in trust / why-Webbers strips. */
   trustMarks: [
     {
@@ -323,8 +315,7 @@ export const siteConfig = {
       name: "Big Cat King Megaways",
       category: "Megaways",
       ways: "Up to 15,625 ways to win",
-      description:
-        "Fast-paced Megaways action — rule the reels with the Big Cat King.",
+      description: "Fast-paced Megaways action — rule the reels with the Big Cat King.",
       maxPrize: 500,
       isFeatured: true,
     },
@@ -439,6 +430,61 @@ export const siteConfig = {
       decade: "Today",
       title: "Three generations on",
       body: "Five arcades across Chester, North Wales and Greater Manchester. Same family, same standards — modern premium gaming, regulated by the UK Gambling Commission.",
+    },
+  ],
+  /** B2B partnership offer — landlords, councils and commercial partners.
+   *  Used in the home "Partnerships" section. CTA routes to /contact. */
+  partnerships: {
+    eyebrow: "Sites & partnerships",
+    title: "Bring a Webbers arcade to your high street.",
+    intro:
+      "We're a long-established, fully-licensed operator actively looking for the right units and the right towns. If you manage a high-street property, run a regeneration scheme, or want a dependable name in a leisure space, we'd like to talk.",
+    pillars: [
+      {
+        icon: "Building2",
+        title: "Landlords & agents",
+        body: "Reliable, long-lease tenants for high-street retail units. Covenant strength, tidy fit-outs and a venue that's looked after.",
+      },
+      {
+        icon: "Landmark",
+        title: "Councils & regeneration",
+        body: "A regulated, responsible operator that brings footfall, local jobs and a well-run frontage to town-centre schemes.",
+      },
+      {
+        icon: "Handshake",
+        title: "Commercial partners",
+        body: "Hardware suppliers, hospitality and local businesses — we keep long, straight relationships with people we work with.",
+      },
+      {
+        icon: "Map",
+        title: "New locations",
+        body: "Actively acquiring across the North-West and North Wales. If you know a unit that would suit, put it in front of us.",
+      },
+    ],
+  },
+  /** Placeholder testimonials — illustrative copy to be replaced with
+   *  verified reviews. Clearly flagged in the UI as samples. */
+  testimonials: [
+    {
+      quote:
+        "Spotless, calm and the staff actually know you. It's the only place I go — and they always put the kettle on.",
+      name: "[CLIENT TO CONFIRM]",
+      detail: "Regular · Chester, Frodsham Street",
+      kind: "visitor" as const,
+    },
+    {
+      quote:
+        "Properly run, friendly and never pushy. You can tell it's a family business that takes pride in the place.",
+      name: "[CLIENT TO CONFIRM]",
+      detail: "Visitor · Rhyl",
+      kind: "visitor" as const,
+    },
+    {
+      quote:
+        "A dependable, well-managed operator on the high street — exactly the kind of tenant a town centre wants.",
+      name: "[CLIENT TO CONFIRM]",
+      detail: "Commercial partner",
+      kind: "partner" as const,
     },
   ],
 };
