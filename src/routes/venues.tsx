@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { siteConfig, type Venue } from "@/config/site";
 import { PageHero } from "@/components/PageHero";
+import { Reveal } from "@/components/Reveal";
 import { todaysHours, weeklyHoursTable } from "@/lib/hours";
 
 export const Route = createFileRoute("/venues")({
@@ -213,7 +214,8 @@ function VenueSection({ venue, mapLeft }: VenueSectionProps) {
       className="scroll-mt-24 px-6 py-[var(--section-y)] lg:px-10"
     >
       <div className="mx-auto grid max-w-7xl items-start gap-12 lg:grid-cols-5 lg:gap-16">
-        <div
+        <Reveal
+          direction={mapLeft ? "left" : "right"}
           className={`${
             mapLeft ? "lg:order-1" : "lg:order-2"
           } overflow-hidden rounded-2xl ring-1 ring-white/10 lg:col-span-3`}
@@ -226,9 +228,11 @@ function VenueSection({ venue, mapLeft }: VenueSectionProps) {
               className="size-full grayscale-[60%] invert-[0.92] hue-rotate-180 contrast-[0.9]"
             />
           </div>
-        </div>
+        </Reveal>
 
-        <div
+        <Reveal
+          direction={mapLeft ? "right" : "left"}
+          delay={140}
           className={`${
             mapLeft ? "lg:order-2" : "lg:order-1"
           } space-y-8 lg:col-span-2`}
@@ -342,7 +346,7 @@ function VenueSection({ venue, mapLeft }: VenueSectionProps) {
               Call
             </a>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

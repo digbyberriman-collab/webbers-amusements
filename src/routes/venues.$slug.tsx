@@ -26,6 +26,8 @@ import {
 import type { LucideIcon } from "lucide-react";
 import { siteConfig, type Venue } from "@/config/site";
 import { todaysHours, weeklyHoursTable } from "@/lib/hours";
+import { Reveal } from "@/components/Reveal";
+import { useParallax } from "@/lib/useParallax";
 
 const FACILITY_ICONS: Record<string, LucideIcon> = {
   Wifi,
@@ -154,6 +156,7 @@ export const Route = createFileRoute("/venues/$slug")({
 function VenueDetailPage() {
   const { slug } = useParams({ from: "/venues/$slug" });
   const venue = findVenue(slug);
+  const heroParallaxRef = useParallax<HTMLImageElement>(0.15);
   if (!venue) return null;
 
   const hours = todaysHours(venue);
@@ -196,9 +199,10 @@ function VenueDetailPage() {
       <section className="relative overflow-hidden bg-ink">
         <div className="relative aspect-[21/9] min-h-[440px] w-full">
           <img
+            ref={heroParallaxRef}
             src={venue.photos.hero}
             alt={`${venue.name} — photography placeholder`}
-            className="absolute inset-0 size-full object-cover opacity-90"
+            className="absolute inset-0 size-[115%] object-cover opacity-90"
             width={1600}
             height={900}
           />
@@ -279,7 +283,7 @@ function VenueDetailPage() {
           ============================================================ */}
       <section className="px-6 py-[var(--section-y)] lg:px-10">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-12 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+          <Reveal direction="up" className="mb-12 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
             <div className="max-w-xl">
               <p className="eyebrow">Inside the room</p>
               <h2 className="mt-4 font-display text-4xl leading-tight text-foreground sm:text-5xl">
@@ -291,12 +295,14 @@ function VenueDetailPage() {
                 imagery in <code className="font-mono text-xs text-brass">siteConfig.venues</code>.
               </p>
             </div>
-          </div>
+          </Reveal>
 
           <div className="grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-4">
             {venue.photos.gallery.map((src, i) => (
-              <div
+              <Reveal
                 key={i}
+                direction={i % 2 === 0 ? "left" : "right"}
+                delay={i * 90}
                 className="overflow-hidden rounded-2xl bg-surface ring-1 ring-white/10"
               >
                 <div className="aspect-square w-full">
@@ -309,7 +315,7 @@ function VenueDetailPage() {
                     height={800}
                   />
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -320,7 +326,7 @@ function VenueDetailPage() {
           ============================================================ */}
       <section className="border-y border-white/5 bg-surface/30 px-6 py-[var(--section-y)] lg:px-10">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-14 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+          <Reveal direction="up" className="mb-14 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
             <div className="max-w-xl">
               <p className="eyebrow">Meet the team</p>
               <h2 className="mt-4 font-display text-4xl leading-tight text-foreground sm:text-5xl">
@@ -338,12 +344,15 @@ function VenueDetailPage() {
               About the family
               <ArrowRight className="size-4" aria-hidden />
             </Link>
-          </div>
+          </Reveal>
 
           <div className="grid gap-6 md:grid-cols-3">
             {venue.team.map((member, i) => (
-              <article
+              <Reveal
+                as="article"
                 key={`${member.role}-${i}`}
+                direction="up"
+                delay={i * 130}
                 className="lift rounded-2xl bg-ink p-7 ring-1 ring-white/5"
               >
                 <div className="mx-auto size-28 overflow-hidden rounded-full ring-1 ring-brass/30">
@@ -367,7 +376,7 @@ function VenueDetailPage() {
                     {member.bio}
                   </p>
                 )}
-              </article>
+              </Reveal>
             ))}
           </div>
 
@@ -383,7 +392,7 @@ function VenueDetailPage() {
           ============================================================ */}
       <section className="px-6 py-[var(--section-y)] lg:px-10">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-12 max-w-xl">
+          <Reveal direction="up" className="mb-12 max-w-xl">
             <p className="eyebrow">Facilities</p>
             <h2 className="mt-4 font-display text-4xl leading-tight text-foreground sm:text-5xl">
               What's in the room.
@@ -392,14 +401,16 @@ function VenueDetailPage() {
               The same standards run through every Webbers venue — here's
               what's on offer at {venue.city}.
             </p>
-          </div>
+          </Reveal>
 
           <div className="grid gap-px overflow-hidden rounded-2xl bg-white/5 sm:grid-cols-2">
-            {facilityLookup.map((facility) => {
+            {facilityLookup.map((facility, i) => {
               const Icon = FACILITY_ICONS[facility.icon] ?? Check;
               return (
-                <div
+                <Reveal
                   key={facility.key}
+                  direction={i % 2 === 0 ? "left" : "right"}
+                  delay={i * 60}
                   className="flex items-start gap-4 bg-ink p-6"
                 >
                   <span className="mt-0.5 grid size-10 shrink-0 place-items-center rounded-full bg-brass/10 text-brass">
@@ -410,7 +421,7 @@ function VenueDetailPage() {
                       {facility.label}
                     </p>
                   </div>
-                </div>
+                </Reveal>
               );
             })}
           </div>

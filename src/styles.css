@@ -263,6 +263,33 @@
   animation: scroll-cue 2.6s ease-in-out infinite;
 }
 
+/* Ken Burns — slow drift + scale, for cinematic hero photography */
+@keyframes ken-burns {
+  0%   { transform: scale(1.06) translate3d(0, 0, 0); }
+  50%  { transform: scale(1.14) translate3d(-1.2%, -0.8%, 0); }
+  100% { transform: scale(1.06) translate3d(0, 0, 0); }
+}
+.animate-ken-burns {
+  animation: ken-burns 38s ease-in-out infinite;
+  transform-origin: center;
+  will-change: transform;
+}
+
+/* Generic CSS-only reveal — for cases where the JSX wrapper is overkill.
+   Initial state on the element, .in-view added by an IntersectionObserver. */
+.reveal-css {
+  opacity: 0;
+  transform: translate3d(0, 36px, 0);
+  transition:
+    opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal-css.in-view {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

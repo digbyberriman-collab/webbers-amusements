@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Heart, ShieldCheck, Users } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { PageHero } from "@/components/PageHero";
+import { Reveal } from "@/components/Reveal";
 import founderImg from "@/assets/arthur-webber-senior.jpg";
 import dodgemsImg from "@/assets/webbers-dodgems-rhyl.jpg";
 
@@ -114,7 +115,7 @@ function AboutPage() {
           ============================================================ */}
       <section className="px-6 py-[var(--section-y)] lg:px-10">
         <div className="mx-auto grid max-w-7xl items-start gap-16 lg:grid-cols-2">
-          <div className="relative">
+          <Reveal direction="left" className="relative lg:sticky lg:top-28">
             <div className="overflow-hidden rounded-2xl ring-1 ring-white/10">
               <img
                 src={founderImg}
@@ -135,9 +136,9 @@ function AboutPage() {
                 in the family
               </p>
             </div>
-          </div>
+          </Reveal>
 
-          <div className="space-y-8">
+          <Reveal direction="right" delay={120} className="space-y-8">
             <p className="eyebrow">The founder</p>
             <h2 className="font-display text-4xl leading-tight text-balance text-foreground sm:text-5xl">
               It started with{" "}
@@ -172,7 +173,7 @@ function AboutPage() {
                 fully licensed by the {siteConfig.compliance.regulator}.
               </p>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -180,22 +181,24 @@ function AboutPage() {
           HERITAGE PHOTO — Webbers Super Dodgems, Rhyl
           ============================================================ */}
       <section className="border-t border-white/5 bg-ink px-6 pb-[var(--section-y)] lg:px-10">
-        <figure className="mx-auto max-w-6xl">
-          <div className="overflow-hidden rounded-2xl ring-1 ring-white/10">
-            <img
-              src={dodgemsImg}
-              alt="The original Webbers Super Dodgems ride on the seafront in Rhyl, North Wales."
-              loading="lazy"
-              className="img-cinematic aspect-[4/3] w-full object-cover sm:aspect-[16/9]"
-              width={2000}
-              height={1125}
-            />
-          </div>
-          <figcaption className="mt-5 flex flex-col gap-1 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-            <span className="text-brass">Archive — Rhyl seafront</span>
-            <span>The original Webbers Super Dodgems</span>
-          </figcaption>
-        </figure>
+        <Reveal as="article" direction="up" className="mx-auto max-w-6xl">
+          <figure>
+            <div className="overflow-hidden rounded-2xl ring-1 ring-white/10">
+              <img
+                src={dodgemsImg}
+                alt="The original Webbers Super Dodgems ride on the seafront in Rhyl, North Wales."
+                loading="lazy"
+                className="img-cinematic aspect-[4/3] w-full object-cover sm:aspect-[16/9]"
+                width={2000}
+                height={1125}
+              />
+            </div>
+            <figcaption className="mt-5 flex flex-col gap-1 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+              <span className="text-brass">Archive — Rhyl seafront</span>
+              <span>The original Webbers Super Dodgems</span>
+            </figcaption>
+          </figure>
+        </Reveal>
       </section>
 
       {/* ============================================================
@@ -210,8 +213,13 @@ function AboutPage() {
             </h2>
           </div>
           <div className="grid gap-px overflow-hidden rounded-2xl bg-white/5 md:grid-cols-3">
-            {values.map(({ icon: Icon, title, body }) => (
-              <div key={title} className="bg-ink p-10">
+            {values.map(({ icon: Icon, title, body }, i) => (
+              <Reveal
+                key={title}
+                direction="up"
+                delay={i * 110}
+                className="bg-ink p-10"
+              >
                 <Icon className="mb-6 size-5 text-brass" aria-hidden />
                 <h3 className="font-display text-2xl text-foreground">
                   {title}
@@ -219,7 +227,7 @@ function AboutPage() {
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                   {body}
                 </p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -242,8 +250,14 @@ function AboutPage() {
           </div>
 
           <ol className="relative space-y-14 border-l border-brass/30 pl-10">
-            {siteConfig.timeline.map((t) => (
-              <li key={t.decade} className="relative">
+            {siteConfig.timeline.map((t, i) => (
+              <Reveal
+                as="li"
+                key={t.decade}
+                direction={i % 2 === 0 ? "right" : "left"}
+                distance={48}
+                className="relative"
+              >
                 <span
                   aria-hidden
                   className="absolute -left-[2.85rem] top-1.5 grid size-5 place-items-center rounded-full bg-ink ring-1 ring-brass/60"
@@ -259,7 +273,7 @@ function AboutPage() {
                 <p className="mt-3 max-w-2xl leading-relaxed text-muted-foreground">
                   {t.body}
                 </p>
-              </li>
+              </Reveal>
             ))}
           </ol>
         </div>
@@ -277,9 +291,12 @@ function AboutPage() {
             </h2>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
-            {generations.map((gen) => (
-              <article
+            {generations.map((gen, i) => (
+              <Reveal
+                as="article"
                 key={gen.ordinal}
+                direction="up"
+                delay={i * 140}
                 className="lift rounded-2xl bg-ink p-8 ring-1 ring-white/5"
               >
                 <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-brass">
@@ -294,7 +311,7 @@ function AboutPage() {
                 <p className="mt-6 text-sm leading-relaxed text-muted-foreground">
                   {gen.body}
                 </p>
-              </article>
+              </Reveal>
             ))}
           </div>
         </div>

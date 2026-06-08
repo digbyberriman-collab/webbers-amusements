@@ -17,6 +17,8 @@ import rouletteImg from "@/assets/game-roulette.jpg";
 import jackpotImg from "@/assets/game-jackpot.jpg";
 import { siteConfig } from "@/config/site";
 import { todaysHours } from "@/lib/hours";
+import { Reveal } from "@/components/Reveal";
+import { useParallax } from "@/lib/useParallax";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -70,6 +72,9 @@ function HomePage() {
     .slice(0, 3);
   const featuredImgs = [slotsImg, jackpotImg, rouletteImg];
 
+  const heritageParallaxRef = useParallax<HTMLDivElement>(0.08);
+  const floorParallaxRef = useParallax<HTMLImageElement>(0.18);
+
   return (
     <>
       {/* ============================================================
@@ -80,7 +85,7 @@ function HomePage() {
           src={heroImg}
           alt=""
           aria-hidden
-          className="img-cinematic absolute inset-0 size-full object-cover opacity-55"
+          className="img-cinematic animate-ken-burns absolute inset-0 size-full object-cover opacity-55"
           width={1920}
           height={1080}
         />
@@ -143,10 +148,11 @@ function HomePage() {
       <section className="border-y border-white/5 bg-surface/40">
         <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-white/5 px-6 py-10 sm:grid-cols-4 lg:px-10">
           {siteConfig.trustMarks.map((mark, i) => (
-            <div
+            <Reveal
               key={mark.key}
+              direction="up"
+              delay={i * 100}
               className="px-4 sm:px-8"
-              style={{ animationDelay: `${i * 80}ms` }}
             >
               <p className="font-display text-sm leading-snug text-foreground">
                 {mark.label}
@@ -154,7 +160,7 @@ function HomePage() {
               <p className="mt-1 text-xs text-muted-foreground">
                 {mark.detail}
               </p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>
@@ -164,16 +170,18 @@ function HomePage() {
           ============================================================ */}
       <section className="px-6 py-[var(--section-y)] lg:px-10">
         <div className="mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2">
-          <div className="relative">
+          <Reveal direction="left" className="relative">
             <div className="overflow-hidden rounded-2xl ring-1 ring-white/10">
-              <img
-                src={heritageImg}
-                alt="A 1950s British seaside amusement arcade — fruit machines and penny falls."
-                loading="lazy"
-                className="img-cinematic aspect-[5/6] w-full object-cover sepia-[0.35]"
-                width={1280}
-                height={1536}
-              />
+              <div ref={heritageParallaxRef}>
+                <img
+                  src={heritageImg}
+                  alt="A 1950s British seaside amusement arcade — fruit machines and penny falls."
+                  loading="lazy"
+                  className="img-cinematic aspect-[5/6] w-full object-cover sepia-[0.35]"
+                  width={1280}
+                  height={1536}
+                />
+              </div>
             </div>
             <div className="absolute -bottom-6 -right-6 hidden rounded-2xl bg-brass p-7 text-ink shadow-2xl sm:block">
               <p className="font-display text-5xl font-bold leading-none">
@@ -185,8 +193,8 @@ function HomePage() {
                 in the family
               </p>
             </div>
-          </div>
-          <div className="space-y-8">
+          </Reveal>
+          <Reveal direction="right" delay={120} className="space-y-8">
             <p className="eyebrow">Our story</p>
             <h2 className="font-display text-4xl leading-tight text-balance text-foreground sm:text-5xl">
               It started with a confectionery counter in Rhyl.
@@ -213,7 +221,7 @@ function HomePage() {
               Read the full timeline
               <ArrowRight className="size-4" aria-hidden />
             </Link>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -222,17 +230,18 @@ function HomePage() {
           ============================================================ */}
       <section className="relative h-[75svh] min-h-[480px] overflow-hidden border-y border-white/5">
         <img
+          ref={floorParallaxRef}
           src={floorWideImg}
           alt="Inside a Webbers Adult Gaming Centre — low lighting, premium cabinets, calm atmosphere."
           loading="lazy"
-          className="img-cinematic absolute inset-0 size-full object-cover"
+          className="img-cinematic absolute inset-0 size-[115%] object-cover"
           width={1920}
           height={1080}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/40 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink to-transparent" />
         <div className="relative z-10 mx-auto flex h-full max-w-7xl items-end px-6 pb-20 lg:px-10">
-          <div className="max-w-xl space-y-5 animate-rise">
+          <Reveal direction="up" className="max-w-xl space-y-5">
             <p className="eyebrow">Step inside</p>
             <h2 className="font-display text-4xl leading-tight text-foreground sm:text-5xl">
               Adult Gaming Centres designed for the spin.
@@ -241,7 +250,7 @@ function HomePage() {
               Warm low light, plush carpet, and rows of the latest premium
               cabinets from the four most respected names in the industry.
             </p>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -250,21 +259,25 @@ function HomePage() {
           ============================================================ */}
       <section className="border-b border-white/5 bg-surface/30">
         <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10">
-          <p className="eyebrow text-center">Premium gaming partners</p>
-          <p className="mx-auto mt-3 max-w-2xl text-center text-sm text-muted-foreground">
-            We curate our floors with cabinets from the four most respected
-            names in modern gaming hardware.
-          </p>
+          <Reveal direction="up">
+            <p className="eyebrow text-center">Premium gaming partners</p>
+            <p className="mx-auto mt-3 max-w-2xl text-center text-sm text-muted-foreground">
+              We curate our floors with cabinets from the four most respected
+              names in modern gaming hardware.
+            </p>
+          </Reveal>
           <div className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-white/5 sm:grid-cols-4">
-            {siteConfig.partners.map((partner) => (
-              <div
+            {siteConfig.partners.map((partner, i) => (
+              <Reveal
                 key={partner}
+                direction="up"
+                delay={i * 90}
                 className="bg-ink px-6 py-10 text-center"
               >
                 <span className="font-display text-lg tracking-wide text-foreground/85">
                   {partner}
                 </span>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -275,7 +288,7 @@ function HomePage() {
           ============================================================ */}
       <section className="px-6 py-[var(--section-y)] lg:px-10">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-14 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+          <Reveal direction="up" className="mb-14 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
             <div className="max-w-xl">
               <p className="eyebrow">On the floor</p>
               <h2 className="mt-4 font-display text-4xl leading-tight text-foreground sm:text-5xl">
@@ -293,12 +306,15 @@ function HomePage() {
               View the full gaming floor
               <ArrowRight className="size-4" aria-hidden />
             </Link>
-          </div>
+          </Reveal>
 
           <div className="grid gap-6 md:grid-cols-3">
             {featuredGames.map((game, i) => (
-              <article
+              <Reveal
+                as="article"
                 key={game.id}
+                direction="up"
+                delay={i * 140}
                 className="lift group relative overflow-hidden rounded-2xl bg-surface ring-1 ring-white/5"
               >
                 <div className="relative aspect-[4/5] overflow-hidden">
@@ -340,7 +356,7 @@ function HomePage() {
                     )}
                   </div>
                 </div>
-              </article>
+              </Reveal>
             ))}
           </div>
 
@@ -356,12 +372,12 @@ function HomePage() {
           ============================================================ */}
       <section className="border-y border-white/5 bg-surface/30 px-6 py-[var(--section-y)] lg:px-10">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-14 max-w-2xl">
+          <Reveal direction="up" className="mb-14 max-w-2xl">
             <p className="eyebrow">Why Webbers</p>
             <h2 className="mt-4 font-display text-4xl leading-tight text-foreground sm:text-5xl">
               Modern gaming, the way it should feel.
             </h2>
-          </div>
+          </Reveal>
           <div className="grid gap-px overflow-hidden rounded-2xl bg-white/5 sm:grid-cols-2 lg:grid-cols-4">
             {[
               {
@@ -384,9 +400,11 @@ function HomePage() {
                 title: "Safe & regulated",
                 body: "UK Gambling Commission licensed, Bacta member, Think 25 ID policy. Built around safer gambling tools.",
               },
-            ].map(({ icon: Icon, title, body }) => (
-              <div
+            ].map(({ icon: Icon, title, body }, i) => (
+              <Reveal
                 key={title}
+                direction="up"
+                delay={i * 90}
                 className="bg-ink p-8 transition-colors hover:bg-surface"
               >
                 <Icon className="mb-6 size-5 text-brass" aria-hidden />
@@ -396,7 +414,7 @@ function HomePage() {
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                   {body}
                 </p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -407,7 +425,7 @@ function HomePage() {
           ============================================================ */}
       <section className="px-6 py-[var(--section-y)] lg:px-10">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-14 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+          <Reveal direction="up" className="mb-14 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
             <div className="max-w-xl">
               <p className="eyebrow">Visit us</p>
               <h2 className="mt-4 font-display text-4xl leading-tight text-foreground sm:text-5xl">
@@ -425,18 +443,23 @@ function HomePage() {
               All venue details
               <ArrowRight className="size-4" aria-hidden />
             </Link>
-          </div>
+          </Reveal>
 
           <div className="grid gap-px overflow-hidden rounded-2xl bg-white/5 sm:grid-cols-2 lg:grid-cols-3">
-            {siteConfig.venues.map((venue) => {
+            {siteConfig.venues.map((venue, i) => {
               const venueHours = todaysHours(venue);
               return (
-                <Link
+                <Reveal
                   key={venue.slug}
-                  to="/venues/$slug"
-                  params={{ slug: venue.slug }}
-                  className="group relative bg-ink p-8 transition-colors hover:bg-surface"
+                  direction="up"
+                  delay={i * 80}
+                  className="relative"
                 >
+                  <Link
+                    to="/venues/$slug"
+                    params={{ slug: venue.slug }}
+                    className="group relative block h-full bg-ink p-8 transition-colors hover:bg-surface"
+                  >
                   <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
                     {venue.region}
                   </p>
@@ -474,12 +497,17 @@ function HomePage() {
                       aria-hidden
                     />
                   </div>
-                </Link>
+                  </Link>
+                </Reveal>
               );
             })}
 
             {/* Fill card — visit CTA */}
-            <div className="flex flex-col justify-between bg-surface p-8">
+            <Reveal
+              direction="up"
+              delay={siteConfig.venues.length * 80}
+              className="flex flex-col justify-between bg-surface p-8"
+            >
               <div>
                 <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-brass">
                   Plan a visit
@@ -503,7 +531,7 @@ function HomePage() {
                   Get directions
                 </a>
               </div>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -512,7 +540,7 @@ function HomePage() {
           LEVER DETAIL — atmospheric break
           ============================================================ */}
       <section className="relative grid items-stretch overflow-hidden border-y border-white/5 md:grid-cols-2">
-        <div className="relative min-h-[420px]">
+        <Reveal direction="left" className="relative min-h-[420px]">
           <img
             src={leverImg}
             alt="A hand on a vintage slot machine lever — a detail from one of our heritage cabinets."
@@ -522,9 +550,9 @@ function HomePage() {
             height={1600}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-transparent to-ink md:bg-gradient-to-l" />
-        </div>
+        </Reveal>
         <div className="flex items-center bg-surface/40 px-6 py-24 md:px-16">
-          <div className="max-w-md space-y-6 animate-rise">
+          <Reveal direction="right" delay={140} className="max-w-md space-y-6">
             <p className="eyebrow">The pull</p>
             <h2 className="font-display text-4xl leading-tight text-foreground sm:text-5xl">
               The reels are digital. The feeling is the same.
@@ -534,7 +562,7 @@ function HomePage() {
               small moment before the spin is still the same. We've built
               Adult Gaming Centres that honour that.
             </p>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -559,9 +587,12 @@ function HomePage() {
             </Link>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
-            {siteConfig.promotions.map((promo) => (
-              <article
+            {siteConfig.promotions.map((promo, i) => (
+              <Reveal
+                as="article"
                 key={promo.id}
+                direction="up"
+                delay={i * 110}
                 className="lift rounded-2xl bg-surface p-8 ring-1 ring-white/5"
               >
                 <div className="mb-6 flex items-center justify-between">
@@ -582,7 +613,7 @@ function HomePage() {
                 <p className="mt-8 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
                   18+ · T&Cs apply · Speak to a member of the team in venue
                 </p>
-              </article>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -592,7 +623,7 @@ function HomePage() {
           FINAL VISIT CTA
           ============================================================ */}
       <section className="relative border-t border-white/5 bg-ink px-6 py-[var(--section-y)] lg:px-10">
-        <div className="mx-auto max-w-4xl text-center">
+        <Reveal direction="up" className="mx-auto max-w-4xl text-center">
           <Sparkles className="mx-auto size-6 text-brass" aria-hidden />
           <h2 className="mt-6 font-display text-4xl leading-tight text-balance text-foreground sm:text-6xl">
             Step inside. We've kept a seat for you.
@@ -622,7 +653,7 @@ function HomePage() {
               ? `Open now in Chester · ${hours.text}`
               : `Open today · ${hours.text}`}
           </p>
-        </div>
+        </Reveal>
       </section>
     </>
   );

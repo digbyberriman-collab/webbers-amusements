@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { ArrowRight, MapPin, ShieldCheck, Sparkles } from "lucide-react";
 import { siteConfig, type Game } from "@/config/site";
 import { PageHero } from "@/components/PageHero";
+import { Reveal } from "@/components/Reveal";
 
 import floorWideImg from "@/assets/floor-wide.jpg";
 import wildWestImg from "@/assets/games/wild-west-gold.jpg";
@@ -168,11 +169,14 @@ function GamesPage() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {filtered.map((game) => {
+            {filtered.map((game, i) => {
               const img = gameImage[game.id];
               return (
-                <article
+                <Reveal
+                  as="article"
                   key={game.id}
+                  direction="up"
+                  delay={(i % 6) * 100}
                   className="lift group relative flex flex-col overflow-hidden rounded-2xl bg-surface ring-1 ring-white/5"
                 >
                   <div className="relative aspect-[4/5] overflow-hidden">
@@ -227,7 +231,7 @@ function GamesPage() {
                   >
                     <span className="sr-only">Find a venue to play</span>
                   </Link>
-                </article>
+                </Reveal>
               );
             })}
           </div>
