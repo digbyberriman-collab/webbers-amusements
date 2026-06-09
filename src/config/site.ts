@@ -36,6 +36,8 @@ export interface Venue {
   lng: number;
   hours: WeeklyHours;
   primary?: boolean;
+  /** Marks the newest venue — surfaces a "JUST OPENED" chip across the site. */
+  isJustOpened?: boolean;
   /** One-line venue character used on cards. */
   character: string;
   /** Short evocative phrase used in the venue-page hero. */
@@ -209,6 +211,39 @@ export const siteConfig = {
   ] as Facility[],
   venues: [
     {
+      slug: "walkden",
+      name: "Webbers Walkden",
+      signage: "Webbers Amusements",
+      city: "Walkden",
+      region: "Greater Manchester",
+      address: ["35 Bolton Road"],
+      postcode: "M28 3AX",
+      phone: "0161 222 0282",
+      lat: 53.5232,
+      lng: -2.3973,
+      hours: standardHours,
+      isJustOpened: true,
+      character:
+        "Our newest Adult Gaming Centre — a generous floor on the high street, a few minutes' drive from the M60.",
+      tagline: "Our newest Adult Gaming Centre. Bolton Road, Walkden.",
+      photos: placeholderPhotos,
+      team: placeholderTeam,
+      facilities: [
+        "wifi",
+        "refreshments",
+        "cashier",
+        "atm",
+        "accessible",
+        "members",
+        "safer-gambling",
+        "parking",
+      ],
+      parkingNotes:
+        "On-street parking on Bolton Road and adjacent side streets. [CLIENT TO CONFIRM dedicated customer parking, if any.]",
+      transportNotes:
+        "Walkden rail station is a four-minute walk; M60 Junction 14 is approximately four minutes by car.",
+    },
+    {
       slug: "chester-frodsham",
       name: "Webbers Chester · Frodsham Street",
       signage: "Webbers Amusements",
@@ -334,38 +369,6 @@ export const siteConfig = {
       transportNotes:
         "Rhyl rail station is a seven-minute walk; bus services stop on the High Street directly outside.",
     },
-    {
-      slug: "walkden",
-      name: "Webbers Walkden",
-      signage: "Webbers Amusements",
-      city: "Walkden",
-      region: "Greater Manchester",
-      address: ["35 Bolton Road"],
-      postcode: "M28 3AX",
-      phone: "0161 222 0282",
-      lat: 53.5232,
-      lng: -2.3973,
-      hours: standardHours,
-      character:
-        "Our newest Adult Gaming Centre — a generous floor on the high street, a few minutes' drive from the M60.",
-      tagline: "A few minutes' drive from the M60.",
-      photos: placeholderPhotos,
-      team: placeholderTeam,
-      facilities: [
-        "wifi",
-        "refreshments",
-        "cashier",
-        "atm",
-        "accessible",
-        "members",
-        "safer-gambling",
-        "parking",
-      ],
-      parkingNotes:
-        "On-street parking on Bolton Road and adjacent side streets. [CLIENT TO CONFIRM dedicated customer parking, if any.]",
-      transportNotes:
-        "Walkden rail station is a four-minute walk; M60 Junction 14 is approximately four minutes by car.",
-    },
   ] as Venue[],
   games: [
     {
@@ -425,6 +428,16 @@ export const siteConfig = {
     },
   ] as Game[],
   promotions: [
+    {
+      id: "walkden-opening",
+      title: "Walkden opening — Bolton Road, M28",
+      description:
+        "Our newest Adult Gaming Centre is now open on Bolton Road in Walkden. Drop in any day and the team will show you around — a complimentary tea or coffee on your first visit, no booking needed.",
+      startsOn: "Now open",
+      endsOn: "",
+      venue: "walkden",
+      badge: "New venue",
+    },
     {
       id: "weekend-welcome",
       title: "The Weekend Welcome",

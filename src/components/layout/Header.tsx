@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, Menu, X, MapPin } from "lucide-react";
 import { Logo } from "@/components/Logo";
+import { JustOpenedChip } from "@/components/JustOpenedChip";
 import { siteConfig } from "@/config/site";
 
 type NavItem =
@@ -121,9 +122,12 @@ function VenuesNavItem() {
                   className="group flex items-baseline justify-between gap-4 px-5 py-3 transition-colors hover:bg-surface"
                 >
                   <div className="min-w-0">
-                    <p className="font-display text-base text-foreground transition-colors group-hover:text-brass">
-                      {venueLabel(v.city, v.slug)}
-                    </p>
+                    <div className="flex items-center gap-2">
+                      <p className="font-display text-base text-foreground transition-colors group-hover:text-brass">
+                        {venueLabel(v.city, v.slug)}
+                      </p>
+                      {v.isJustOpened && <JustOpenedChip size="sm" />}
+                    </div>
                     <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
                       {v.region}
                     </p>
@@ -319,9 +323,10 @@ export function Header() {
                           to="/venues/$slug"
                           params={{ slug: v.slug }}
                           onClick={() => setOpen(false)}
-                          className="block py-1.5 font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground transition-colors hover:text-brass"
+                          className="flex items-center gap-2 py-1.5 font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground transition-colors hover:text-brass"
                         >
                           {venueLabel(v.city, v.slug)}
+                          {v.isJustOpened && <JustOpenedChip size="sm" />}
                         </Link>
                       </li>
                     ))}

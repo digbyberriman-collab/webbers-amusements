@@ -9,6 +9,7 @@ import {
 import { siteConfig, type Venue } from "@/config/site";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
+import { JustOpenedChip } from "@/components/JustOpenedChip";
 import { todaysHours, weeklyHoursTable } from "@/lib/hours";
 
 export const Route = createFileRoute("/venues")({
@@ -146,9 +147,10 @@ function VenuesPage() {
             <a
               key={v.slug}
               href={`#${v.slug}`}
-              className="shrink-0 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:border-brass hover:text-brass"
+              className="inline-flex shrink-0 items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:border-brass hover:text-brass"
             >
               {tabLabel(v)}
+              {v.isJustOpened && <JustOpenedChip size="sm" />}
             </a>
           ))}
         </div>
@@ -238,9 +240,12 @@ function VenueSection({ venue, mapLeft }: VenueSectionProps) {
           } space-y-8 lg:col-span-2`}
         >
           <div>
-            <p className="eyebrow">
-              {venue.region} · {venue.signage}
-            </p>
+            <div className="flex flex-wrap items-center gap-3">
+              <p className="eyebrow">
+                {venue.region} · {venue.signage}
+              </p>
+              {venue.isJustOpened && <JustOpenedChip size="md" />}
+            </div>
             <h2 className="mt-4 font-display text-4xl leading-tight text-foreground sm:text-5xl">
               {venue.city}
               {venue.city === "Chester" && (

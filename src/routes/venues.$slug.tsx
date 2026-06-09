@@ -27,6 +27,7 @@ import type { LucideIcon } from "lucide-react";
 import { siteConfig, type Venue } from "@/config/site";
 import { todaysHours, weeklyHoursTable } from "@/lib/hours";
 import { Reveal } from "@/components/Reveal";
+import { JustOpenedChip } from "@/components/JustOpenedChip";
 import { useParallax } from "@/lib/useParallax";
 
 const FACILITY_ICONS: Record<string, LucideIcon> = {
@@ -212,9 +213,12 @@ function VenueDetailPage() {
           <div className="absolute inset-0 flex items-end">
             <div className="mx-auto w-full max-w-7xl px-6 pb-14 lg:px-10 lg:pb-20">
               <div className="max-w-2xl animate-rise">
-                <p className="eyebrow">
-                  {venue.region} · {venue.signage}
-                </p>
+                <div className="flex flex-wrap items-center gap-3">
+                  <p className="eyebrow">
+                    {venue.region} · {venue.signage}
+                  </p>
+                  {venue.isJustOpened && <JustOpenedChip size="md" />}
+                </div>
                 <h1 className="mt-5 font-display text-5xl leading-[1.04] text-balance text-foreground sm:text-6xl lg:text-7xl">
                   {venue.city}
                   {venue.city === "Chester" && (
@@ -277,6 +281,54 @@ function VenueDetailPage() {
           </div>
         </div>
       </section>
+
+      {/* ============================================================
+          OPENING OFFERS — only on the newest venue
+          ============================================================ */}
+      {venue.isJustOpened && (
+        <section className="border-b border-white/5 bg-terracotta/5 px-6 py-12 lg:px-10">
+          <Reveal direction="up" className="mx-auto max-w-6xl">
+            <div className="grid items-start gap-8 rounded-2xl bg-ink p-8 ring-1 ring-terracotta/20 sm:p-10 md:grid-cols-[auto_1fr]">
+              <JustOpenedChip size="md" />
+              <div className="space-y-5">
+                <h2 className="font-display text-2xl leading-tight text-foreground sm:text-3xl">
+                  Opening offers — drop in this week.
+                </h2>
+                <ul className="space-y-3 text-muted-foreground">
+                  <li className="flex items-start gap-3">
+                    <span aria-hidden className="mt-1.5 size-1.5 shrink-0 rounded-full bg-terracotta" />
+                    <span>
+                      <strong className="text-foreground">First visit?</strong>{" "}
+                      Complimentary tea or coffee on the house — just ask
+                      at the cashier when you arrive.
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span aria-hidden className="mt-1.5 size-1.5 shrink-0 rounded-full bg-terracotta" />
+                    <span>
+                      <strong className="text-foreground">Webbers Club sign-up.</strong>{" "}
+                      Members get birthday cards, early access to new
+                      cabinets and the occasional invitation. Register at
+                      the cashier in venue — takes a minute.
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span aria-hidden className="mt-1.5 size-1.5 shrink-0 rounded-full bg-terracotta" />
+                    <span>
+                      <strong className="text-foreground">Open seven days</strong>,{" "}
+                      9am — 10pm on weekdays. The team will show you
+                      around — no booking, no pressure.
+                    </span>
+                  </li>
+                </ul>
+                <p className="pt-2 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
+                  18+ · T&Cs apply · One per visit
+                </p>
+              </div>
+            </div>
+          </Reveal>
+        </section>
+      )}
 
       {/* ============================================================
           PHOTO GALLERY — 4-tile placeholder grid

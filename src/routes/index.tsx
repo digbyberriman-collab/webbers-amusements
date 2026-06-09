@@ -18,7 +18,12 @@ import jackpotImg from "@/assets/game-jackpot.jpg";
 import { siteConfig } from "@/config/site";
 import { todaysHours } from "@/lib/hours";
 import { Reveal } from "@/components/Reveal";
+import { JustOpenedChip } from "@/components/JustOpenedChip";
 import { useParallax } from "@/lib/useParallax";
+
+const flagshipVenue =
+  siteConfig.venues.find((v) => v.primary) ?? siteConfig.venues[0];
+const justOpenedVenue = siteConfig.venues.find((v) => v.isJustOpened);
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -48,7 +53,7 @@ export const Route = createFileRoute("/")({
           name: siteConfig.brand.name,
           description: siteConfig.brand.description,
           foundingDate: String(siteConfig.brand.foundedYear),
-          telephone: siteConfig.venues[0].phone,
+          telephone: flagshipVenue.phone,
           address: siteConfig.venues.map((v) => ({
             "@type": "PostalAddress",
             streetAddress: v.address.join(", "),
@@ -65,7 +70,8 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
-  const flagship = siteConfig.venues[0];
+  const flagship = flagshipVenue;
+  const walkden = justOpenedVenue;
   const hours = todaysHours(flagship);
   const featuredGames = siteConfig.games
     .filter((g) => g.isFeatured)
@@ -224,6 +230,76 @@ function HomePage() {
           </Reveal>
         </div>
       </section>
+
+      {/* ============================================================
+          WALKDEN — the newest venue, prominent strip
+          ============================================================ */}
+      {walkden && (
+        <section className="relative overflow-hidden border-y border-white/5 bg-ink">
+          <div
+            aria-hidden
+            className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,_rgba(196,158,90,0.18),_transparent_55%)]"
+          />
+          <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-6 py-20 lg:grid-cols-[3fr_2fr] lg:gap-16 lg:px-10 lg:py-28">
+            <Reveal direction="left" className="space-y-6">
+              <div className="flex items-center gap-3">
+                <JustOpenedChip size="md" />
+                <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
+                  {walkden.region}
+                </span>
+              </div>
+              <h2 className="font-display text-4xl leading-tight text-balance text-foreground sm:text-5xl lg:text-6xl">
+                {walkden.tagline ?? walkden.character}
+              </h2>
+              <p className="max-w-xl text-lg leading-relaxed text-foreground/85">
+                {walkden.character} A complimentary tea or coffee on
+                your first visit — drop in any day, the team will show
+                you around.
+              </p>
+              <div className="flex flex-wrap items-center gap-4 pt-2">
+                <Link
+                  to="/venues/$slug"
+                  params={{ slug: walkden.slug }}
+                  className="inline-flex items-center gap-2 rounded-full bg-brass px-7 py-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-ink transition-colors hover:bg-brass-deep"
+                >
+                  <MapPin className="size-4" aria-hidden />
+                  Visit Webbers Walkden
+                </Link>
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${walkden.lat},${walkden.lng}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/15 px-7 py-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground transition-colors hover:border-brass hover:text-brass"
+                >
+                  Get directions
+                  <ArrowRight className="size-3.5" aria-hidden />
+                </a>
+              </div>
+              <p className="pt-2 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
+                {walkden.address.join(", ")} · {walkden.postcode} ·{" "}
+                <a
+                  href={`tel:${walkden.phone.replace(/\s/g, "")}`}
+                  className="text-brass"
+                >
+                  {walkden.phone}
+                </a>
+              </p>
+            </Reveal>
+            <Reveal direction="right" delay={140} className="relative">
+              <div className="hairline-brass overflow-hidden rounded-2xl ring-1 ring-white/10">
+                <img
+                  src={walkden.photos.hero}
+                  alt={`Webbers Walkden — ${walkden.address.join(", ")}`}
+                  loading="lazy"
+                  className="img-cinematic aspect-[4/3] w-full object-cover"
+                  width={1280}
+                  height={960}
+                />
+              </div>
+            </Reveal>
+          </div>
+        </section>
+      )}
 
       {/* ============================================================
           CINEMATIC FLOOR BANNER
@@ -460,9 +536,12 @@ function HomePage() {
                     params={{ slug: venue.slug }}
                     className="group relative block h-full bg-ink p-8 transition-colors hover:bg-surface"
                   >
-                  <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
-                    {venue.region}
-                  </p>
+                  <div className="flex items-start justify-between gap-3">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
+                      {venue.region}
+                    </p>
+                    {venue.isJustOpened && <JustOpenedChip size="sm" />}
+                  </div>
                   <h3 className="mt-3 font-display text-2xl text-foreground transition-colors group-hover:text-brass">
                     {venue.city}
                     {venue.city === "Chester" && (

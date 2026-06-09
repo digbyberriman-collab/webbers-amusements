@@ -29,7 +29,8 @@ const baseEntries: SitemapEntry[] = [
 const venueEntries: SitemapEntry[] = siteConfig.venues.map((v) => ({
   path: `/venues/${v.slug}`,
   changefreq: "monthly",
-  priority: "0.9",
+  // Boost the newest venue so search engines pick it up first
+  priority: v.isJustOpened ? "1.0" : "0.8",
 }));
 
 const entries: SitemapEntry[] = [...baseEntries, ...venueEntries];

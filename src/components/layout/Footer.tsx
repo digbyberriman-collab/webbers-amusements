@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Instagram, Facebook, ShieldCheck } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { Logo } from "@/components/Logo";
+import { JustOpenedChip } from "@/components/JustOpenedChip";
 
 export function Footer() {
   return (
@@ -78,12 +79,15 @@ export function Footer() {
                     <Link
                       to="/venues/$slug"
                       params={{ slug: v.slug }}
-                      className="hover:text-brass"
+                      className="inline-flex items-center gap-2 hover:text-brass"
                     >
-                      {v.city}
-                      {v.city === "Chester"
-                        ? ` · ${v.address[0].split(" ")[1] ?? ""}`
-                        : ""}
+                      <span>
+                        {v.city}
+                        {v.city === "Chester"
+                          ? ` · ${v.address[0].split(" ")[1] ?? ""}`
+                          : ""}
+                      </span>
+                      {v.isJustOpened && <JustOpenedChip size="sm" />}
                     </Link>
                   </li>
                 ))}
