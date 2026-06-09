@@ -120,12 +120,19 @@ export const Route = createFileRoute("/venues/$slug")({
           type: "application/ld+json",
           children: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "LocalBusiness",
+            // AmusementCenter is the closest schema.org type for a UK AGC.
+            // We list LocalBusiness as a secondary @type so search engines
+            // that don't recognise AmusementCenter still match it.
+            "@type": ["AmusementCenter", "LocalBusiness"],
             "@id": `/venues/${venue.slug}`,
+            url: `/venues/${venue.slug}`,
             name: venue.name,
             description: venue.character,
             telephone: venue.phone,
             priceRange: "££",
+            isAccessibleForFree: true,
+            publicAccess: true,
+            image: venue.photos.hero,
             address: {
               "@type": "PostalAddress",
               streetAddress: venue.address.join(", "),
@@ -146,6 +153,33 @@ export const Route = createFileRoute("/venues/$slug")({
               name: siteConfig.brand.name,
               foundingDate: String(siteConfig.brand.foundedYear),
             },
+          }),
+        },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Home",
+                item: "/",
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Venues",
+                item: "/venues",
+              },
+              {
+                "@type": "ListItem",
+                position: 3,
+                name: venue.name,
+                item: `/venues/${venue.slug}`,
+              },
+            ],
           }),
         },
       ],

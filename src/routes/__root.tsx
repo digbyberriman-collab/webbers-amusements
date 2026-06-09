@@ -114,10 +114,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:description", content: DEFAULT_DESCRIPTION },
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "en_GB" },
+      { property: "og:image", content: "/og-default.svg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      {
+        property: "og:image:alt",
+        content: "Webbers Amusements — premium adult gaming, family-run since 1954",
+      },
 
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: DEFAULT_TITLE },
       { name: "twitter:description", content: DEFAULT_DESCRIPTION },
+      { name: "twitter:image", content: "/og-default.svg" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

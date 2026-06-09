@@ -4,6 +4,10 @@ import { siteConfig } from "@/config/site";
 
 const BASE_URL = "";
 
+// Build-time constant — fresh on every deploy, signals to crawlers that
+// the site has been touched recently.
+const LAST_MOD = new Date().toISOString().slice(0, 10);
+
 interface SitemapEntry {
   path: string;
   changefreq: "weekly" | "monthly" | "yearly";
@@ -46,6 +50,7 @@ export const Route = createFileRoute("/sitemap.xml")({
             [
               `  <url>`,
               `    <loc>${BASE_URL}${e.path}</loc>`,
+              `    <lastmod>${LAST_MOD}</lastmod>`,
               `    <changefreq>${e.changefreq}</changefreq>`,
               `    <priority>${e.priority}</priority>`,
               `  </url>`,
