@@ -10,12 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VenuesRouteImport } from './routes/venues'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SaferGamblingRouteImport } from './routes/safer-gambling'
 import { Route as PromotionsRouteImport } from './routes/promotions'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as NewsRouteImport } from './routes/news'
 import { Route as GamesRouteImport } from './routes/games'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CareersRouteImport } from './routes/careers'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as VenuesSlugRouteImport } from './routes/venues.$slug'
@@ -23,6 +28,11 @@ import { Route as VenuesSlugRouteImport } from './routes/venues.$slug'
 const VenuesRoute = VenuesRouteImport.update({
   id: '/venues',
   path: '/venues',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -40,6 +50,16 @@ const PromotionsRoute = PromotionsRouteImport.update({
   path: '/promotions',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewsRoute = NewsRouteImport.update({
+  id: '/news',
+  path: '/news',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GamesRoute = GamesRouteImport.update({
   id: '/games',
   path: '/games',
@@ -50,9 +70,19 @@ const FaqRoute = FaqRouteImport.update({
   path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CookiesRoute = CookiesRouteImport.update({
+  id: '/cookies',
+  path: '/cookies',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareersRoute = CareersRouteImport.update({
+  id: '/careers',
+  path: '/careers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -74,24 +104,34 @@ const VenuesSlugRoute = VenuesSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/faq': typeof FaqRoute
   '/games': typeof GamesRoute
+  '/news': typeof NewsRoute
+  '/privacy': typeof PrivacyRoute
   '/promotions': typeof PromotionsRoute
   '/safer-gambling': typeof SaferGamblingRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms': typeof TermsRoute
   '/venues': typeof VenuesRoute
   '/venues/$slug': typeof VenuesSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/faq': typeof FaqRoute
   '/games': typeof GamesRoute
+  '/news': typeof NewsRoute
+  '/privacy': typeof PrivacyRoute
   '/promotions': typeof PromotionsRoute
   '/safer-gambling': typeof SaferGamblingRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms': typeof TermsRoute
   '/venues': typeof VenuesRoute
   '/venues/$slug': typeof VenuesSlugRoute
 }
@@ -99,12 +139,17 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/faq': typeof FaqRoute
   '/games': typeof GamesRoute
+  '/news': typeof NewsRoute
+  '/privacy': typeof PrivacyRoute
   '/promotions': typeof PromotionsRoute
   '/safer-gambling': typeof SaferGamblingRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms': typeof TermsRoute
   '/venues': typeof VenuesRoute
   '/venues/$slug': typeof VenuesSlugRoute
 }
@@ -113,36 +158,51 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/careers'
     | '/contact'
+    | '/cookies'
     | '/faq'
     | '/games'
+    | '/news'
+    | '/privacy'
     | '/promotions'
     | '/safer-gambling'
     | '/sitemap.xml'
+    | '/terms'
     | '/venues'
     | '/venues/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
+    | '/careers'
     | '/contact'
+    | '/cookies'
     | '/faq'
     | '/games'
+    | '/news'
+    | '/privacy'
     | '/promotions'
     | '/safer-gambling'
     | '/sitemap.xml'
+    | '/terms'
     | '/venues'
     | '/venues/$slug'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/careers'
     | '/contact'
+    | '/cookies'
     | '/faq'
     | '/games'
+    | '/news'
+    | '/privacy'
     | '/promotions'
     | '/safer-gambling'
     | '/sitemap.xml'
+    | '/terms'
     | '/venues'
     | '/venues/$slug'
   fileRoutesById: FileRoutesById
@@ -150,12 +210,17 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  CareersRoute: typeof CareersRoute
   ContactRoute: typeof ContactRoute
+  CookiesRoute: typeof CookiesRoute
   FaqRoute: typeof FaqRoute
   GamesRoute: typeof GamesRoute
+  NewsRoute: typeof NewsRoute
+  PrivacyRoute: typeof PrivacyRoute
   PromotionsRoute: typeof PromotionsRoute
   SaferGamblingRoute: typeof SaferGamblingRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  TermsRoute: typeof TermsRoute
   VenuesRoute: typeof VenuesRoute
   VenuesSlugRoute: typeof VenuesSlugRoute
 }
@@ -174,6 +239,13 @@ declare module '@tanstack/react-router' {
       path: '/venues/$slug'
       fullPath: '/venues/$slug'
       preLoaderRoute: typeof VenuesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -197,6 +269,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PromotionsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/news': {
+      id: '/news'
+      path: '/news'
+      fullPath: '/news'
+      preLoaderRoute: typeof NewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/games': {
       id: '/games'
       path: '/games'
@@ -211,11 +297,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cookies': {
+      id: '/cookies'
+      path: '/cookies'
+      fullPath: '/cookies'
+      preLoaderRoute: typeof CookiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/careers': {
+      id: '/careers'
+      path: '/careers'
+      fullPath: '/careers'
+      preLoaderRoute: typeof CareersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -238,12 +338,17 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  CareersRoute: CareersRoute,
   ContactRoute: ContactRoute,
+  CookiesRoute: CookiesRoute,
   FaqRoute: FaqRoute,
   GamesRoute: GamesRoute,
+  NewsRoute: NewsRoute,
+  PrivacyRoute: PrivacyRoute,
   PromotionsRoute: PromotionsRoute,
   SaferGamblingRoute: SaferGamblingRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  TermsRoute: TermsRoute,
   VenuesRoute: VenuesRoute,
   VenuesSlugRoute: VenuesSlugRoute,
 }

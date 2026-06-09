@@ -188,6 +188,37 @@ export function Footer() {
               page, call the free national helpline, or speak to any member of
               our team in venue.
             </p>
+
+            {/* Legal / info links — the "trust pack" */}
+            <nav
+              aria-label="Legal and info"
+              className="flex flex-wrap items-center gap-x-6 gap-y-2 border-y border-white/5 py-4 text-[10px] font-medium uppercase tracking-[0.22em] text-muted-foreground"
+            >
+              <Link to="/privacy" className="hover:text-brass">
+                Privacy
+              </Link>
+              <span aria-hidden className="text-white/10">·</span>
+              <Link to="/cookies" className="hover:text-brass">
+                Cookies
+              </Link>
+              <span aria-hidden className="text-white/10">·</span>
+              <Link to="/terms" className="hover:text-brass">
+                Website terms
+              </Link>
+              <span aria-hidden className="text-white/10">·</span>
+              <Link to="/careers" className="hover:text-brass">
+                Careers
+              </Link>
+              <span aria-hidden className="text-white/10">·</span>
+              <Link to="/news" className="hover:text-brass">
+                News
+              </Link>
+              <span aria-hidden className="text-white/10">·</span>
+              <a href="/sitemap.xml" className="hover:text-brass">
+                Sitemap
+              </a>
+            </nav>
+
             <div className="flex flex-wrap items-center justify-between gap-4 text-[10px] uppercase tracking-[0.22em] text-muted-foreground/60">
               <span>
                 © {new Date().getFullYear()} {siteConfig.brand.parent}. All

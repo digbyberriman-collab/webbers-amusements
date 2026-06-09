@@ -17,8 +17,13 @@ const baseEntries: SitemapEntry[] = [
   { path: "/about", changefreq: "monthly", priority: "0.7" },
   { path: "/promotions", changefreq: "weekly", priority: "0.7" },
   { path: "/safer-gambling", changefreq: "monthly", priority: "0.7" },
+  { path: "/news", changefreq: "weekly", priority: "0.6" },
+  { path: "/careers", changefreq: "monthly", priority: "0.6" },
   { path: "/contact", changefreq: "monthly", priority: "0.6" },
   { path: "/faq", changefreq: "monthly", priority: "0.5" },
+  { path: "/privacy", changefreq: "yearly", priority: "0.3" },
+  { path: "/cookies", changefreq: "yearly", priority: "0.3" },
+  { path: "/terms", changefreq: "yearly", priority: "0.3" },
 ];
 
 const venueEntries: SitemapEntry[] = siteConfig.venues.map((v) => ({
