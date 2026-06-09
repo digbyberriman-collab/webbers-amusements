@@ -1,10 +1,17 @@
 import {
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
   type CSSProperties,
   type ReactNode,
 } from "react";
+
+// useLayoutEffect on the client, useEffect on the server (no-op).
+// Lets us check the element's position synchronously before paint
+// without warnings during SSR.
+const useIsoLayoutEffect =
+  typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 type Direction = "up" | "down" | "left" | "right" | "none";
 
@@ -45,10 +52,13 @@ export function Reveal({
   const ref = useRef<HTMLDivElement | null>(null);
   const [visible, setVisible] = useState(false);
 
-  useEffect(() => {
+  // Sync, pre-paint check — if the element is already in the viewport
+  // at mount (i.e. above the fold), reveal immediately so there's no
+  // flash of hidden content. Below-the-fold elements stay hidden and
+  // get observed by IntersectionObserver in the effect below.
+  useIsoLayoutEffect(() => {
     const node = ref.current;
     if (!node) return;
-
     if (
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -56,6 +66,16 @@ export function Reveal({
       setVisible(true);
       return;
     }
+    const rect = node.getBoundingClientRect();
+    const inView =
+      rect.top < window.innerHeight && rect.bottom > 0 && rect.height > 0;
+    if (inView) setVisible(true);
+  }, []);
+
+  useEffect(() => {
+    if (visible) return;
+    const node = ref.current;
+    if (!node) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -68,7 +88,7 @@ export function Reveal({
     );
     observer.observe(node);
     return () => observer.disconnect();
-  }, []);
+  }, [visible]);
 
   const style: CSSProperties = {
     opacity: visible ? 1 : 0,

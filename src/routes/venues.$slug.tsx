@@ -395,25 +395,46 @@ function VenueDetailPage() {
           </Reveal>
 
           <div className="grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-4">
-            {venue.photos.gallery.map((src, i) => (
-              <Reveal
-                key={i}
-                direction={i % 2 === 0 ? "left" : "right"}
-                delay={i * 90}
-                className="overflow-hidden rounded-2xl bg-surface ring-1 ring-white/10"
-              >
-                <div className="aspect-square w-full">
-                  <img
-                    src={src}
-                    alt={`${venue.city} venue — photography placeholder ${i + 1}`}
-                    loading="lazy"
-                    className="img-cinematic size-full object-cover"
-                    width={800}
-                    height={800}
-                  />
-                </div>
-              </Reveal>
-            ))}
+            {venue.photos.gallery.map((src, i) => {
+              // Vary tint, label and tile size per index so identical
+              // placeholders read as an intentional editorial mosaic
+              // rather than the same image four times.
+              const labels = ["Exterior", "Floor", "Cabinets", "Lounge"];
+              const tints = [
+                "bg-surface",
+                "bg-ink/80",
+                "bg-surface/60",
+                "bg-ink/70",
+              ];
+              const opacities = [
+                "opacity-95",
+                "opacity-80",
+                "opacity-90",
+                "opacity-75",
+              ];
+              return (
+                <Reveal
+                  key={i}
+                  direction={i % 2 === 0 ? "left" : "right"}
+                  delay={i * 90}
+                  className={`relative overflow-hidden rounded-2xl ring-1 ring-white/10 ${tints[i]}`}
+                >
+                  <div className="aspect-square w-full">
+                    <img
+                      src={src}
+                      alt={`${venue.city} venue — ${labels[i].toLowerCase()} placeholder`}
+                      loading="lazy"
+                      className={`img-cinematic size-full object-cover ${opacities[i]}`}
+                      width={800}
+                      height={800}
+                    />
+                  </div>
+                  <span className="absolute bottom-3 left-3 rounded-full bg-ink/70 px-2.5 py-1 font-mono text-[9px] font-semibold uppercase tracking-[0.22em] text-foreground/85 backdrop-blur-sm">
+                    {labels[i]}
+                  </span>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
