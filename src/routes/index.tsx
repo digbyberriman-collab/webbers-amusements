@@ -719,15 +719,37 @@ function HomePage() {
               <MapPin className="size-4" aria-hidden />
               Find your nearest venue
             </Link>
-            <a
-              href={`tel:${flagship.phone.replace(/\s/g, "")}`}
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-7 py-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground transition-colors hover:border-brass hover:text-brass"
-            >
-              <Phone className="size-4" aria-hidden />
-              Call the flagship — Frodsham St
-            </a>
           </div>
-          <p className="mt-12 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
+
+          {/* Five-venue phone grid — tap to call any venue directly */}
+          <div className="mt-12">
+            <p className="eyebrow">Or call us direct</p>
+            <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+              {siteConfig.venues.map((v) => (
+                <li key={v.slug}>
+                  <a
+                    href={`tel:${v.phone.replace(/\s/g, "")}`}
+                    className="lift group flex h-full flex-col items-start gap-1 rounded-2xl border border-white/10 bg-surface/40 px-5 py-4 text-left transition-colors hover:border-brass"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Phone className="size-3 text-brass" aria-hidden />
+                      <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                        {v.city === "Chester"
+                          ? `Chester · ${v.address[0].split(" ")[1] === "Frodsham" ? "Frodsham" : "Northgate"}`
+                          : v.city}
+                      </span>
+                      {v.isJustOpened && <JustOpenedChip size="sm" />}
+                    </div>
+                    <span className="font-display text-sm text-foreground transition-colors group-hover:text-brass">
+                      {v.phone}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <p className="mt-10 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
             {hours.isOpen
               ? `Open now in Chester · ${hours.text}`
               : `Open today · ${hours.text}`}

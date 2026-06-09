@@ -44,6 +44,32 @@ export function todaysHours(venue: Venue): {
   };
 }
 
+/**
+ * If the venue is open, how many minutes until it closes today?
+ * If closed (or closed for the day), returns null. Use for "closes in
+ * 2h 14m" countdown copy.
+ */
+export function minutesUntilClose(venue: Venue): number | null {
+  const now = new Date();
+  const key = dayKeys[now.getDay()];
+  const today: DayHours = venue.hours[key];
+  if ("closed" in today) return null;
+  const [ch, cm] = today.close.split(":").map(Number);
+  const close = ch === 0 ? 24 * 60 : ch * 60 + cm;
+  const minutes = now.getHours() * 60 + now.getMinutes();
+  const remaining = close - minutes;
+  return remaining > 0 ? remaining : null;
+}
+
+/** Format a minute count as e.g. "2h 14m" or "37m". */
+export function formatDuration(mins: number): string {
+  const h = Math.floor(mins / 60);
+  const m = mins % 60;
+  if (h === 0) return `${m}m`;
+  if (m === 0) return `${h}h`;
+  return `${h}h ${m}m`;
+}
+
 export function weeklyHoursTable(venue: Venue) {
   const order: (keyof WeeklyHours)[] = [
     "mon",

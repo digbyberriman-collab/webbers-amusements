@@ -25,7 +25,12 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { siteConfig, type Venue } from "@/config/site";
-import { todaysHours, weeklyHoursTable } from "@/lib/hours";
+import {
+  todaysHours,
+  weeklyHoursTable,
+  minutesUntilClose,
+  formatDuration,
+} from "@/lib/hours";
 import { Reveal } from "@/components/Reveal";
 import { JustOpenedChip } from "@/components/JustOpenedChip";
 import { useParallax } from "@/lib/useParallax";
@@ -196,6 +201,7 @@ function VenueDetailPage() {
 
   const hours = todaysHours(venue);
   const week = weeklyHoursTable(venue);
+  const remaining = minutesUntilClose(venue);
   const telHref = `tel:${venue.phone.replace(/\s/g, "")}`;
   const directionsHref = `https://www.google.com/maps/search/?api=1&query=${venue.lat},${venue.lng}`;
   const facilityLookup = siteConfig.facilities.filter((f) =>
@@ -282,6 +288,11 @@ function VenueDetailPage() {
                     />
                     <span className="font-mono uppercase tracking-[0.22em]">
                       {hours.isOpen ? "Open now" : "Closed"} · {hours.text}
+                      {hours.isOpen && remaining !== null && remaining <= 180 && (
+                        <span className="ml-2 text-brass">
+                          closes in {formatDuration(remaining)}
+                        </span>
+                      )}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
@@ -517,7 +528,10 @@ function VenueDetailPage() {
       {/* ============================================================
           GETTING HERE — map + travel notes
           ============================================================ */}
-      <section className="border-y border-white/5 bg-surface/30 px-6 py-[var(--section-y)] lg:px-10">
+      <section
+        id="getting-here"
+        className="scroll-mt-24 border-y border-white/5 bg-surface/30 px-6 py-[var(--section-y)] lg:px-10"
+      >
         <div className="mx-auto grid max-w-7xl items-start gap-12 lg:grid-cols-5 lg:gap-16">
           <div className="overflow-hidden rounded-2xl ring-1 ring-white/10 lg:col-span-3">
             <div className="aspect-[4/3] w-full bg-surface">
@@ -708,6 +722,50 @@ function VenueDetailPage() {
           </div>
         </div>
       </section>
+
+      {/* ============================================================
+          STICKY MOBILE ACTION BAR — Call · Directions · Hours
+          Only on mobile/tablet; desktops use the in-page CTAs.
+          ============================================================ */}
+      <div
+        aria-label="Quick actions"
+        className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-3 gap-px border-t border-white/10 bg-ink/95 backdrop-blur-xl lg:hidden"
+        style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+      >
+        <a
+          href={telHref}
+          className="flex flex-col items-center justify-center gap-1 bg-brass py-3 text-ink transition-colors hover:bg-brass-deep"
+        >
+          <Phone className="size-4" aria-hidden />
+          <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em]">
+            Call
+          </span>
+        </a>
+        <a
+          href={directionsHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex flex-col items-center justify-center gap-1 bg-surface py-3 text-foreground transition-colors hover:text-brass"
+        >
+          <MapPin className="size-4" aria-hidden />
+          <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em]">
+            Directions
+          </span>
+        </a>
+        <a
+          href="#getting-here"
+          className="flex flex-col items-center justify-center gap-1 bg-surface py-3 text-foreground transition-colors hover:text-brass"
+        >
+          <span aria-hidden className="font-mono text-[10px] tracking-[0.22em] text-brass">
+            {hours.isOpen ? "OPEN" : "CLOSED"}
+          </span>
+          <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em]">
+            Hours
+          </span>
+        </a>
+      </div>
+      {/* Spacer so the sticky bar doesn't cover the last section's CTAs */}
+      <div className="h-20 lg:hidden" aria-hidden />
     </>
   );
 }
