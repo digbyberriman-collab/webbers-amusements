@@ -270,6 +270,17 @@ function VenueDetailPage() {
                     <Phone className="size-3.5" aria-hidden />
                     Call venue
                   </a>
+                  {venue.slug === "chester-northgate" && (
+                    <a
+                      href={FACEBOOK_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground transition-colors hover:border-brass hover:text-brass"
+                    >
+                      <ExternalLink className="size-3.5" aria-hidden />
+                      Facebook
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
