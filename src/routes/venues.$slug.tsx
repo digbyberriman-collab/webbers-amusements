@@ -14,6 +14,7 @@ import {
   ChevronRight,
   Coffee,
   Ear,
+  ExternalLink,
   Landmark,
   MapPin,
   ParkingCircle,
@@ -26,6 +27,8 @@ import {
 import type { LucideIcon } from "lucide-react";
 import { siteConfig, type Venue } from "@/config/site";
 import { todaysHours, weeklyHoursTable } from "@/lib/hours";
+
+const FACEBOOK_URL = "https://www.facebook.com/profile.php?id=61589225037599#";
 
 const FACILITY_ICONS: Record<string, LucideIcon> = {
   Wifi,

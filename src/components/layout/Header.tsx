@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Menu, X, MapPin } from "lucide-react";
 import { Logo } from "@/components/Logo";
 
+const FACEBOOK_URL = "https://www.facebook.com/profile.php?id=61589225037599#";
+
 const nav = [
   { to: "/", label: "Home" },
   { to: "/about", label: "Our Story" },
