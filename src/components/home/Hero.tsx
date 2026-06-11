@@ -63,7 +63,7 @@ export function Hero() {
             className="mt-8 max-w-xl text-lg leading-relaxed text-foreground/85"
           >
             From the seaside arcades of 1950s North Wales to five premium adult gaming centres today
-            — three generations of the Webber family, running calm, well-kept arcades across
+            — four generations of the Webber family, running calm, well-kept arcades across
             Chester, North Wales and Greater Manchester.
           </motion.p>
           <motion.div variants={item} className="mt-10 flex flex-wrap items-center gap-4">

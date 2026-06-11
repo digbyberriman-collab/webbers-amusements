@@ -13,7 +13,7 @@ export const Route = createFileRoute("/about")({
       {
         name: "description",
         content:
-          "Three generations of the Webber family — from a 1954 confectionery counter in Rhyl to five premium adult gaming centres across Chester, North Wales and Greater Manchester. Licensed by the UK Gambling Commission.",
+          "Four generations of the Webber family — from a 1954 confectionery counter in Rhyl to five premium adult gaming centres across Chester, North Wales and Greater Manchester. Licensed by the UK Gambling Commission.",
       },
       {
         property: "og:title",
@@ -58,20 +58,26 @@ const generations = [
   {
     ordinal: "First generation",
     name: siteConfig.brand.founder,
-    period: "1954 — 1970s",
-    body: "Founded the business in Rhyl with a confectionery counter supplying Woolworths and the seaside trade. Moved the family onto the fairgrounds and into the first arcades along the North Wales coast.",
+    period: "1954 — 1960s",
+    body: "Founded the family business in Rhyl, North Wales — a confectionery manufacturer supplying the Woolworths High Street chain across the UK and the North Wales seaside trade.",
   },
   {
     ordinal: "Second generation",
-    name: "The next generation",
-    period: "1970s — 2000s",
-    body: "Took the family into rides, family entertainment centres and permanent high-street arcades — anchoring the long-standing Rhyl and Caernarfon arcades and opening the first venue in Chester.",
+    name: "Arthur and Michael Webber",
+    period: "1960s — 1990s",
+    body: "Arthur Senior's sons expanded onto the Rhyl seafront fairground — the dodgems, the famous wooden Figure of 8 roller coaster, children's rides — and opened three large family arcades on the Rhyl promenade: Webbers Fun City, Lucky Strike and the Black Cat. Further amusement arcades followed at Ffrith Beach and Central Beach in Prestatyn, with the small Caernarfon site opening in the 1980s.",
   },
   {
     ordinal: "Third generation",
-    name: "The third generation today",
-    period: "2010s — now",
-    body: "Modernised the estate into premium, fully-licensed Adult Gaming Centres. Five arcades across Chester, North Wales and Greater Manchester, running to the same family standards.",
+    name: "[CLIENT TO CONFIRM NAMES]",
+    period: "1990s — 2010s",
+    body: "Carried the family business into the modern era — opening the first Chester venue in the 2000s and beginning the work of modernising the estate into fully-licensed Adult Gaming Centres.",
+  },
+  {
+    ordinal: "Fourth generation",
+    name: "[CLIENT TO CONFIRM NAMES]",
+    period: "2010s — today",
+    body: "Running five Adult Gaming Centres across Chester, North Wales and Greater Manchester — premium cabinets from Light & Wonder, Novomatic, Blueprint and Inspired Gaming, the same family standards on the floor.",
   },
 ];
 
@@ -102,7 +108,7 @@ function AboutPage() {
         eyebrow="Our story"
         title={
           <>
-            Three generations. <span className="italic text-brass">One family.</span>
+            Four generations. <span className="italic text-brass">One family.</span>
           </>
         }
         intro={`A family business since ${siteConfig.brand.foundedYear} — from a confectionery counter in ${siteConfig.brand.origin} to five premium adult gaming centres across Chester, North Wales and Greater Manchester.`}
@@ -143,16 +149,17 @@ function AboutPage() {
             <div className="space-y-5 text-muted-foreground">
               <p>
                 In {siteConfig.brand.foundedYear}, {siteConfig.brand.founder} set up a confectionery
-                manufacturing business in {siteConfig.brand.origin}, supplying the Woolworths
-                counter and the North Wales seaside trade. A decade later the family moved onto the
-                seafront fairgrounds — building rides, running penny falls and looking after the
-                arcades that local children grew up in.
+                manufacturing business in {siteConfig.brand.origin}, supplying the Woolworths High
+                Street chain across the UK and the North Wales seaside trade.
               </p>
               <p>
-                Through the 1970s and 80s the family expanded into family entertainment centres, and
-                by the 1990s had opened permanent arcades in Rhyl and Caernarfon. In the 2000s the
-                business crossed the border into Chester, bringing the same standards to a cathedral
-                city.
+                A decade later his sons Arthur and Michael Webber expanded onto the Rhyl seafront
+                fairground — operating the dodgems, the famous wooden Figure of 8 roller coaster
+                and children's rides — and opening three large family amusement arcades on the Rhyl
+                promenade: Webbers Fun City, Lucky Strike and the Black Cat. Further arcades followed
+                at Ffrith Beach and Central Beach in Prestatyn, and the small Caernarfon site opened
+                in the 1980s — still operating today. The business crossed the border into Chester
+                in the 2000s.
               </p>
               <p>
                 Today the estate is modernised into premium, fully-licensed Adult Gaming Centres —
@@ -228,10 +235,10 @@ function AboutPage() {
           <div className="mb-14 max-w-2xl">
             <p className="eyebrow">The family</p>
             <h2 className="mt-4 font-display text-4xl leading-tight text-foreground sm:text-5xl">
-              Three generations of the Webber family.
+              Four generations of the Webber family.
             </h2>
           </div>
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {generations.map((gen) => (
               <article
                 key={gen.ordinal}
