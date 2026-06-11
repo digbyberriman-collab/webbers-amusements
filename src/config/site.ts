@@ -127,7 +127,7 @@ export const siteConfig = {
   brand: {
     name: "Webbers Amusements",
     short: "Webbers",
-    parent: "Webber Leisure",
+    parent: "Webber's Leisure Ltd",
     foundedYear: 1954,
     founder: "Arthur Webber Senior",
     origin: "Rhyl, North Wales",
@@ -135,10 +135,18 @@ export const siteConfig = {
     description:
       "A multi-generational family entertainment business — from 1950s seaside arcades to premium adult gaming centres across North Wales, Chester and Greater Manchester. Licensed by the UK Gambling Commission, longstanding Bacta member.",
     shortDescription:
-      "Three generations of British entertainment heritage — modern, premium adult gaming, in well-run arcades.",
+      "Four generations of British entertainment heritage — modern, premium adult gaming, in well-run arcades.",
+  },
+  /** Registered company office — required for regulated-operator display. */
+  registeredOffice: {
+    company: "Webber's Leisure Ltd",
+    address: ["78 High Street"],
+    city: "Rhyl",
+    postcode: "LL18 1UB",
   },
   compliance: {
-    licenceNumber: "[CLIENT TO CONFIRM LICENCE NUMBER]",
+    licenceNumber: "048400-N-326542-007",
+    licenceType: "Non-Remote — Gaming Machine General Adult Gaming Centre",
     helpline: "0808 8020 133",
     minAge: 18,
     maxSlotPrize: 500,
@@ -175,7 +183,7 @@ export const siteConfig = {
     {
       key: "family",
       label: "Family Run Since 1954",
-      detail: "Three generations of the Webber family",
+      detail: "Four generations of the Webber family",
     },
   ],
   /** Master facility checklist. Each venue ticks the keys it offers. */
@@ -206,9 +214,9 @@ export const siteConfig = {
       signage: "Webbers Amusements",
       city: "Chester",
       region: "Cheshire",
-      address: ["28A Frodsham Street"],
+      address: ["28 Frodsham Street"],
       postcode: "CH1 3JL",
-      phone: "01244 [CLIENT TO CONFIRM]",
+      phone: "01244 325544",
       lat: 53.1934,
       lng: -2.8893,
       hours: standardHours,
@@ -268,9 +276,9 @@ export const siteConfig = {
       signage: "Webbers Casino Slots",
       city: "Rhyl",
       region: "Denbighshire",
-      address: ["76 High Street"],
+      address: ["78 High Street"],
       postcode: "LL18 1UB",
-      phone: "01745 353251",
+      phone: "01745 353460",
       lat: 53.3201,
       lng: -3.4914,
       hours: standardHours,
@@ -299,11 +307,11 @@ export const siteConfig = {
       signage: "Webbers Amusements",
       city: "Walkden",
       region: "Greater Manchester",
-      address: ["35 Bolton Road"],
-      postcode: "M28 3AX",
+      address: ["Unit 152 Lady Harriet Walk"],
+      postcode: "M28 3ZH",
       phone: "0161 222 0282",
-      lat: 53.5232,
-      lng: -2.3973,
+      lat: 53.5247,
+      lng: -2.3968,
       hours: standardHours,
       character:
         "Our newest arcade — a generous floor on the high street, a few minutes' drive from the M60.",
@@ -399,22 +407,22 @@ export const siteConfig = {
     {
       decade: "1954",
       title: "Arthur Webber Senior begins",
-      body: "Arthur Webber Senior founds the family business in Rhyl, North Wales — manufacturing confectionery supplied to the Woolworths counter and the seaside trade.",
+      body: "Arthur Webber Senior founds the family business in Rhyl, North Wales — a confectionery manufacturer supplying the Woolworths High Street chain across the UK and the North Wales seaside trade.",
     },
     {
       decade: "1960s",
-      title: "Onto the seafront",
-      body: "The family moves into fairgrounds and seaside arcades along the North Wales coast — penny falls, classic AWP cabinets and a knack for keeping the arcades warm and well-run.",
+      title: "Onto the Rhyl seafront",
+      body: "A decade later the sons Arthur and Michael Webber expand onto the Rhyl seafront fairground — operating the dodgems, the famous wooden Figure of 8 roller coaster, and children's rides — and open three large family amusement arcades on the promenade: Webbers Fun City, Lucky Strike and the Black Cat.",
     },
     {
       decade: "1970s",
-      title: "Rides and family entertainment",
-      body: "Expansion into fairground rides and family entertainment centres — a generation of children grow up with a Webber-run amusement in their summer holidays.",
+      title: "Along the North Wales coast",
+      body: "The brand expands west along the coast — opening amusement arcades at Ffrith Beach and Central Beach in Prestatyn, a generation of children growing up with a Webber-run amusement in their summer holidays.",
     },
     {
-      decade: "1990s",
-      title: "Permanent arcades",
-      body: "Permanent amusement arcades open across North Wales, including the long-standing Rhyl and Caernarfon venues — anchoring the family on the high street.",
+      decade: "1980s",
+      title: "Caernarfon opens",
+      body: "The small Caernarfon site opens in the heart of the old town — prize bingo and amusements, a long-running family fixture still operating today.",
     },
     {
       decade: "2000s",
@@ -428,8 +436,8 @@ export const siteConfig = {
     },
     {
       decade: "Today",
-      title: "Three generations on",
-      body: "Five arcades across Chester, North Wales and Greater Manchester. Same family, same standards — modern premium gaming, regulated by the UK Gambling Commission.",
+      title: "Four generations on",
+      body: "Five Adult Gaming Centres across Chester, North Wales and Greater Manchester. Same family, same standards — modern premium gaming, regulated by the UK Gambling Commission.",
     },
   ],
   /** B2B partnership offer — landlords, councils and commercial partners.

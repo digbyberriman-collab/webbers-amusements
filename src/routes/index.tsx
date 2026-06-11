@@ -25,7 +25,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Three generations of British entertainment heritage — premium adult gaming centres in Chester, North Wales and Greater Manchester. Family-run since 1954. Licensed by the UK Gambling Commission. Strictly 18+.",
+          "Four generations of British entertainment heritage — premium adult gaming centres in Chester, North Wales and Greater Manchester. Family-run since 1954. Licensed by the UK Gambling Commission. Strictly 18+.",
       },
       {
         property: "og:title",
