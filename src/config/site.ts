@@ -157,8 +157,8 @@ export const siteConfig = {
   contact: {
     email: "hello@webbersamusements.co.uk", // [CLIENT TO CONFIRM EMAIL]
     socials: {
-      instagram: "#",
-      facebook: "#",
+      instagram: "https://www.instagram.com/webberscasinoslots",
+      facebook: "https://www.facebook.com/profile.php?id=61589225037599",
     },
   },
   /** Premium gaming hardware partners — used as trust marks. */
