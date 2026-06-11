@@ -132,7 +132,7 @@ export const siteConfig = {
   brand: {
     name: "Webbers Amusements",
     short: "Webbers",
-    parent: "Webber Leisure",
+    parent: "Webber's Leisure Ltd",
     foundedYear: 1954,
     founder: "Arthur Webber Senior",
     origin: "Rhyl, North Wales",
@@ -140,16 +140,23 @@ export const siteConfig = {
     description:
       "A multi-generational family entertainment business — from 1950s seaside arcades to premium Adult Gaming Centres across North Wales, Chester and Greater Manchester. Licensed by the UK Gambling Commission, longstanding Bacta member.",
     shortDescription:
-      "Three generations of British entertainment heritage — modern, premium adult gaming, in well-run Adult Gaming Centres.",
+      "Four generations of British entertainment heritage — modern, premium adult gaming, in well-run Adult Gaming Centres.",
   },
   compliance: {
-    licenceNumber: "[CLIENT TO CONFIRM LICENCE NUMBER]",
+    licenceNumber: "048400-N-326542-007",
+    licenceType: "Non-Remote — Gaming Machine General Adult Gaming Centre",
     helpline: "0808 8020 133",
     minAge: 18,
     maxSlotPrize: 500,
     regulator: "UK Gambling Commission",
     tradeBody: "Bacta",
     idPolicy: "Think 25",
+  },
+  registeredOffice: {
+    company: "Webber's Leisure Ltd",
+    address: ["78 High Street"],
+    city: "Rhyl",
+    postcode: "LL18 1UB",
   },
   contact: {
     email: "hello@webbersamusements.co.uk", // [CLIENT TO CONFIRM EMAIL]
@@ -185,7 +192,7 @@ export const siteConfig = {
     {
       key: "family",
       label: "Family Run Since 1954",
-      detail: "Three generations of the Webber family",
+      detail: "Four generations of the Webber family",
     },
   ],
   /** Master facility checklist. Each venue ticks the keys it offers. */
@@ -216,16 +223,16 @@ export const siteConfig = {
       signage: "Webbers Amusements",
       city: "Walkden",
       region: "Greater Manchester",
-      address: ["35 Bolton Road"],
-      postcode: "M28 3AX",
+      address: ["Unit 152 Lady Harriet Walk", "Ellesmere Shopping Centre"],
+      postcode: "M28 3ZH",
       phone: "0161 222 0282",
-      lat: 53.5232,
-      lng: -2.3973,
+      lat: 53.5247,
+      lng: -2.3968,
       hours: standardHours,
       isJustOpened: true,
       character:
-        "Our newest Adult Gaming Centre — a generous floor on the high street, a few minutes' drive from the M60.",
-      tagline: "Our newest Adult Gaming Centre. Bolton Road, Walkden.",
+        "Our newest Adult Gaming Centre — a generous floor inside the Ellesmere Shopping Centre, a few minutes' drive from the M60.",
+      tagline: "Our newest Adult Gaming Centre. Ellesmere Shopping Centre, Walkden.",
       photos: placeholderPhotos,
       team: placeholderTeam,
       facilities: [
@@ -239,7 +246,7 @@ export const siteConfig = {
         "parking",
       ],
       parkingNotes:
-        "On-street parking on Bolton Road and adjacent side streets. [CLIENT TO CONFIRM dedicated customer parking, if any.]",
+        "Customer parking at the Ellesmere Shopping Centre on Lady Harriet Walk. [CLIENT TO CONFIRM tariff details.]",
       transportNotes:
         "Walkden rail station is a four-minute walk; M60 Junction 14 is approximately four minutes by car.",
     },
@@ -249,9 +256,9 @@ export const siteConfig = {
       signage: "Webbers Amusements",
       city: "Chester",
       region: "Cheshire",
-      address: ["28A Frodsham Street"],
+      address: ["28 Frodsham Street"],
       postcode: "CH1 3JL",
-      phone: "01244 [CLIENT TO CONFIRM]",
+      phone: "01244 325544",
       lat: 53.1934,
       lng: -2.8893,
       hours: standardHours,
@@ -344,9 +351,9 @@ export const siteConfig = {
       signage: "Webbers Casino Slots",
       city: "Rhyl",
       region: "Denbighshire",
-      address: ["76 High Street"],
+      address: ["78 High Street"],
       postcode: "LL18 1UB",
-      phone: "01745 353251",
+      phone: "01745 353460",
       lat: 53.3201,
       lng: -3.4914,
       hours: standardHours,

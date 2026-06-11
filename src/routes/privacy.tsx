@@ -59,13 +59,18 @@ function PrivacyPage() {
           <div className="space-y-4">
             <h2 className="font-display text-2xl text-foreground">Who we are</h2>
             <p>
-              {siteConfig.brand.name} is operated by {siteConfig.brand.parent},
-              a UK company registered in{" "}
+              {siteConfig.brand.name} is operated by{" "}
+              {siteConfig.registeredOffice.company}, a UK company registered in{" "}
               <Placeholder>England and Wales</Placeholder> under company number{" "}
               <Placeholder>[CLIENT TO CONFIRM company number]</Placeholder>.
-              Our registered address is{" "}
-              <Placeholder>[CLIENT TO CONFIRM registered address]</Placeholder>.
-              For all data-protection enquiries please email{" "}
+              Our registered office is at{" "}
+              {siteConfig.registeredOffice.address.join(", ")},{" "}
+              {siteConfig.registeredOffice.city},{" "}
+              {siteConfig.registeredOffice.postcode}. We hold{" "}
+              {siteConfig.compliance.regulator} licence{" "}
+              {siteConfig.compliance.licenceNumber} (
+              {siteConfig.compliance.licenceType}). For all data-protection
+              enquiries please email{" "}
               <a
                 href={`mailto:${siteConfig.contact.email}`}
                 className="text-brass underline-offset-4 hover:underline"

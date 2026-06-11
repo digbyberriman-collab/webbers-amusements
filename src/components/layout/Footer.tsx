@@ -161,6 +161,9 @@ export function Footer() {
                   Licence {siteConfig.compliance.licenceNumber}
                 </span>
               </span>
+              <span className="normal-case tracking-normal text-muted-foreground/80">
+                {siteConfig.compliance.licenceType}
+              </span>
               <span>
                 Helpline{" "}
                 <a
@@ -230,6 +233,15 @@ export function Footer() {
               </span>
               <span>A family business · Since {siteConfig.brand.foundedYear}</span>
             </div>
+
+            <p className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground/60">
+              {siteConfig.registeredOffice.company} · Registered office{" "}
+              <span className="normal-case tracking-normal">
+                {siteConfig.registeredOffice.address.join(", ")},{" "}
+                {siteConfig.registeredOffice.city}{" "}
+                {siteConfig.registeredOffice.postcode}
+              </span>
+            </p>
           </div>
         </div>
       </div>
