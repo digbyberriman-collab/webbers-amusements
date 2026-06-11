@@ -18,7 +18,7 @@ export const Route = createFileRoute("/careers")({
       },
       {
         property: "og:description",
-        content: `Work with a family-run UK leisure business — five venues, three generations, calm hospitality.`,
+        content: `Work with a family-run UK leisure business — five venues, four generations, calm hospitality.`,
       },
       { property: "og:url", content: "/careers" },
     ],
@@ -36,7 +36,7 @@ const reasons = [
   {
     icon: Users,
     title: "A family business, properly",
-    body: "Three generations of the Webber family still run the company. Decisions are made by people who answer the phone, not a head-office number.",
+    body: "Four generations of the Webber family still run the company. Decisions are made by people who answer the phone, not a head-office number.",
   },
   {
     icon: MapPin,

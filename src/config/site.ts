@@ -478,22 +478,22 @@ export const siteConfig = {
     {
       decade: "1954",
       title: "Arthur Webber Senior begins",
-      body: "Arthur Webber Senior founds the family business in Rhyl, North Wales — manufacturing confectionery supplied to the Woolworths counter and the seaside trade.",
+      body: "Arthur Webber Senior founds the family business in Rhyl, North Wales — manufacturing confectionery supplied to the Woolworths High Street chain across the UK and the North Wales seaside trade.",
     },
     {
       decade: "1960s",
-      title: "Onto the seafront",
-      body: "The family moves into fairgrounds and seaside arcades along the North Wales coast — penny falls, classic AWP cabinets and a knack for keeping the arcades warm and well-run.",
+      title: "Onto the Rhyl seafront",
+      body: "Arthur Senior's sons Arthur and Michael Webber take the family onto the Rhyl seafront fairground — operating the dodgems, the famous wooden roller coaster Figure of 8 and a roster of children's rides — and open large family amusement arcades on the promenade: Webbers Fun City, Lucky Strike and the Black Cat.",
     },
     {
       decade: "1970s",
-      title: "Rides and family entertainment",
-      body: "Expansion into fairground rides and family entertainment centres — a generation of children grow up with a Webber-run amusement in their summer holidays.",
+      title: "Along the North Wales coast",
+      body: "The Webber brothers expand the arcade brand along the coast — opening permanent amusement arcades at Prestatyn's Ffrith Beach and Central Beach. A generation of families grow up with a Webber-run room in their summer holidays.",
     },
     {
-      decade: "1990s",
-      title: "Permanent arcades",
-      body: "Permanent amusement arcades open across North Wales, including the long-standing Rhyl and Caernarfon venues — anchoring the family on the high street.",
+      decade: "1980s",
+      title: "Caernarfon opens",
+      body: "A small Webbers venue opens in Caernarfon, running prize bingo and amusements in the heart of the old town — still operating today.",
     },
     {
       decade: "2000s",
@@ -507,7 +507,7 @@ export const siteConfig = {
     },
     {
       decade: "Today",
-      title: "Three generations on",
+      title: "Four generations on",
       body: "Five Adult Gaming Centres across Chester, North Wales and Greater Manchester. Same family, same standards — modern premium gaming, regulated by the UK Gambling Commission.",
     },
   ],

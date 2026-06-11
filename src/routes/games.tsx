@@ -261,7 +261,7 @@ function GamesPage() {
               roulette terminals for an evening with a slower rhythm.
             </p>
             <p className="text-muted-foreground">
-              Three generations of Webbers have run venues long enough to know
+              Four generations of Webbers have run venues long enough to know
               the difference between a floor that's busy and one that's good.
               This one's the second.
             </p>

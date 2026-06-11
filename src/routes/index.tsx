@@ -34,7 +34,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Three generations of British entertainment heritage — premium adult gaming centres in Chester, North Wales and Greater Manchester. Family-run since 1954. Licensed by the UK Gambling Commission. Strictly 18+.",
+          "Four generations of British entertainment heritage — premium Adult Gaming Centres in Chester, North Wales and Greater Manchester. Family-run since 1954. Licensed by the UK Gambling Commission. Strictly 18+.",
       },
       {
         property: "og:title",
@@ -107,9 +107,9 @@ function HomePage() {
             </h1>
             <p className="mt-8 max-w-xl text-lg leading-relaxed text-foreground/85">
               From the seaside arcades of 1950s North Wales to five premium
-              Adult Gaming Centres today — a family business, three generations
-              on, running calm and welcoming venues across Chester, North Wales
-              and Greater Manchester.
+              Adult Gaming Centres today — four generations of the Webber
+              family, running calm, well-kept venues across Chester, North
+              Wales and Greater Manchester.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <Link
@@ -208,13 +208,15 @@ function HomePage() {
             <div className="space-y-5 text-muted-foreground">
               <p>
                 In 1954, Arthur Webber Senior set up a confectionery
-                manufacturing business in Rhyl, supplying Woolworths and the
-                seaside trade. A decade later the family moved onto the
-                fairgrounds and into seaside arcades along the North Wales
-                coast.
+                manufacturing business in Rhyl, supplying the Woolworths High
+                Street chain across the UK and the North Wales seaside trade.
+                A decade later his sons Arthur and Michael Webber took the
+                family onto the Rhyl seafront — the dodgems, a wooden roller
+                coaster, and three large arcades on the promenade:
+                Webbers Fun City, Lucky Strike and the Black Cat.
               </p>
               <p>
-                Three generations on, the venues have changed — modern
+                Four generations on, the venues have changed — modern
                 cabinets, premium hardware, fully licensed Adult Gaming
                 Centres — but the way they run hasn't. Calm spaces, looked-after
                 rooms, a family name above the door.
