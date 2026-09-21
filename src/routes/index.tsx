@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { siteConfig } from "@/config/site";
+import { structuredPhone } from "@/lib/venue";
 import {
   Hero,
   TrustStrip,
@@ -44,7 +45,9 @@ export const Route = createFileRoute("/")({
           name: siteConfig.brand.name,
           description: siteConfig.brand.description,
           foundingDate: String(siteConfig.brand.foundedYear),
-          telephone: siteConfig.venues[0].phone,
+          telephone: structuredPhone(
+            siteConfig.venues.find((v) => v.primary) ?? siteConfig.venues[0],
+          ),
           address: siteConfig.venues.map((v) => ({
             "@type": "PostalAddress",
             streetAddress: v.address.join(", "),

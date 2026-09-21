@@ -2,12 +2,14 @@ import { Link, useHydrated } from "@tanstack/react-router";
 import { MapPin, Phone, Mail } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { todaysHours } from "@/lib/hours";
+import { telHref } from "@/lib/venue";
 import { Reveal } from "@/components/motion";
 
 export function FinalCta() {
   const flagship = siteConfig.venues.find((v) => v.primary) ?? siteConfig.venues[0];
   const hours = todaysHours(flagship);
   const hydrated = useHydrated();
+  const flagshipTel = telHref(flagship.phone);
 
   return (
     <section className="cta-glow relative overflow-hidden border-t border-white/5 bg-ink px-6 py-[var(--section-y)] lg:px-10">
@@ -38,13 +40,15 @@ export function FinalCta() {
             <Mail className="size-4" aria-hidden />
             Make an enquiry
           </Link>
-          <a
-            href={`tel:${flagship.phone.replace(/\s/g, "")}`}
-            className="inline-flex items-center gap-2 px-3 py-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground/80 transition-colors hover:text-brass"
-          >
-            <Phone className="size-4" aria-hidden />
-            Call the team
-          </a>
+          {flagshipTel && (
+            <a
+              href={flagshipTel}
+              className="inline-flex items-center gap-2 px-3 py-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground/80 transition-colors hover:text-brass"
+            >
+              <Phone className="size-4" aria-hidden />
+              Call the team
+            </a>
+          )}
         </Reveal>
 
         <p className="mt-12 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground">

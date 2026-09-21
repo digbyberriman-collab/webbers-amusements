@@ -21,6 +21,7 @@ import {
 import type { LucideIcon } from "lucide-react";
 import { siteConfig, type Venue } from "@/config/site";
 import { todaysHours, weeklyHoursTable } from "@/lib/hours";
+import { phoneDisplay, structuredPhone, telHref } from "@/lib/venue";
 
 const FACILITY_ICONS: Record<string, LucideIcon> = {
   Wifi,
@@ -114,7 +115,7 @@ export const Route = createFileRoute("/venues/$slug")({
             "@id": `/venues/${venue.slug}`,
             name: venue.name,
             description: venue.character,
-            telephone: venue.phone,
+            telephone: structuredPhone(venue),
             priceRange: "££",
             address: {
               "@type": "PostalAddress",
@@ -152,7 +153,7 @@ function VenueDetailPage() {
 
   const hours = todaysHours(venue);
   const week = weeklyHoursTable(venue);
-  const telHref = `tel:${venue.phone.replace(/\s/g, "")}`;
+  const phoneHref = telHref(venue.phone);
   const directionsHref = `https://www.google.com/maps/search/?api=1&query=${venue.lat},${venue.lng}`;
   const facilityLookup = siteConfig.facilities.filter((f) => venue.facilities?.includes(f.key));
 
@@ -245,13 +246,15 @@ function VenueDetailPage() {
                     <MapPin className="size-3.5" aria-hidden />
                     Get directions
                   </a>
-                  <a
-                    href={telHref}
-                    className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground transition-colors hover:border-brass hover:text-brass"
-                  >
-                    <Phone className="size-3.5" aria-hidden />
-                    Call venue
-                  </a>
+                  {phoneHref && (
+                    <a
+                      href={phoneHref}
+                      className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground transition-colors hover:border-brass hover:text-brass"
+                    >
+                      <Phone className="size-3.5" aria-hidden />
+                      Call venue
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
@@ -434,9 +437,13 @@ function VenueDetailPage() {
               </div>
               <div className="flex items-start gap-3">
                 <Phone className="mt-0.5 size-4 shrink-0 text-brass" aria-hidden />
-                <a href={telHref} className="link-underline text-sm">
-                  {venue.phone}
-                </a>
+                {phoneHref ? (
+                  <a href={phoneHref} className="link-underline text-sm">
+                    {venue.phone}
+                  </a>
+                ) : (
+                  <span className="text-sm text-muted-foreground">{phoneDisplay(venue.phone)}</span>
+                )}
               </div>
             </div>
 
@@ -487,13 +494,15 @@ function VenueDetailPage() {
                 <MapPin className="size-3.5" aria-hidden />
                 Get directions
               </a>
-              <a
-                href={telHref}
-                className="inline-flex items-center gap-2 rounded-full border border-white/15 px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground transition-colors hover:border-brass hover:text-brass"
-              >
-                <Phone className="size-3.5" aria-hidden />
-                Call venue
-              </a>
+              {phoneHref && (
+                <a
+                  href={phoneHref}
+                  className="inline-flex items-center gap-2 rounded-full border border-white/15 px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground transition-colors hover:border-brass hover:text-brass"
+                >
+                  <Phone className="size-3.5" aria-hidden />
+                  Call venue
+                </a>
+              )}
             </div>
           </div>
         </div>

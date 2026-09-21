@@ -6,6 +6,7 @@ import { z } from "zod";
 import { Phone, Mail, MapPin, Send } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { PageHero } from "@/components/PageHero";
+import { phoneDisplay, structuredPhone, telHref } from "@/lib/venue";
 
 // There is no backend to receive this form (no server route, no database —
 // see SITE_MAP.md). Rather than fake a "message received" confirmation, on
@@ -56,13 +57,20 @@ export const Route = createFileRoute("/contact")({
             "@type": "Organization",
             name: siteConfig.brand.name,
             email: siteConfig.contact.email,
-            contactPoint: siteConfig.venues.map((v) => ({
-              "@type": "ContactPoint",
-              telephone: v.phone,
-              contactType: "customer service",
-              areaServed: "GB",
-              availableLanguage: "English",
-            })),
+            contactPoint: siteConfig.venues
+              .map((v) => {
+                const telephone = structuredPhone(v);
+                return telephone
+                  ? {
+                      "@type": "ContactPoint",
+                      telephone,
+                      contactType: "customer service",
+                      areaServed: "GB",
+                      availableLanguage: "English",
+                    }
+                  : null;
+              })
+              .filter((v): v is NonNullable<typeof v> => v !== null),
           },
         }),
       },
@@ -121,13 +129,23 @@ function ContactPage() {
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                 {flagship.character}
               </p>
-              <a
-                href={`tel:${flagship.phone.replace(/\s/g, "")}`}
-                className="mt-6 inline-flex items-center gap-2 rounded-full bg-brass px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-ink transition-colors hover:bg-brass-deep"
-              >
-                <Phone className="size-3.5" aria-hidden />
-                Call {flagship.phone}
-              </a>
+              {telHref(flagship.phone) ? (
+                <a
+                  href={telHref(flagship.phone)}
+                  className="mt-6 inline-flex items-center gap-2 rounded-full bg-brass px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-ink transition-colors hover:bg-brass-deep"
+                >
+                  <Phone className="size-3.5" aria-hidden />
+                  Call {flagship.phone}
+                </a>
+              ) : (
+                <a
+                  href={`mailto:${siteConfig.contact.email}`}
+                  className="mt-6 inline-flex items-center gap-2 rounded-full bg-brass px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-ink transition-colors hover:bg-brass-deep"
+                >
+                  <Mail className="size-3.5" aria-hidden />
+                  Email the team
+                </a>
+              )}
             </div>
 
             <div>
@@ -160,13 +178,20 @@ function ContactPage() {
                           {venue.address.join(", ")}, {venue.postcode}
                         </address>
                       </div>
-                      <a
-                        href={`tel:${venue.phone.replace(/\s/g, "")}`}
-                        className="link-underline mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brass"
-                      >
-                        <Phone className="size-3.5" aria-hidden />
-                        {venue.phone}
-                      </a>
+                      {telHref(venue.phone) ? (
+                        <a
+                          href={telHref(venue.phone)}
+                          className="link-underline mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brass"
+                        >
+                          <Phone className="size-3.5" aria-hidden />
+                          {venue.phone}
+                        </a>
+                      ) : (
+                        <span className="mt-4 inline-flex items-center gap-2 text-sm text-muted-foreground">
+                          <Phone className="size-3.5" aria-hidden />
+                          {phoneDisplay(venue.phone)}
+                        </span>
+                      )}
                     </li>
                   );
                 })}

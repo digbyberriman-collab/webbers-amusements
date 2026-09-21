@@ -1,14 +1,9 @@
 import { createFileRoute, Link, useHydrated } from "@tanstack/react-router";
-import {
-  ArrowRight,
-  Clock,
-  MapPin,
-  Phone,
-  Users,
-} from "lucide-react";
+import { ArrowRight, Clock, MapPin, Phone, Users } from "lucide-react";
 import { siteConfig, type Venue } from "@/config/site";
 import { PageHero } from "@/components/PageHero";
 import { todaysHours, weeklyHoursTable } from "@/lib/hours";
+import { phoneDisplay, structuredPhone, telHref } from "@/lib/venue";
 
 export const Route = createFileRoute("/venues")({
   head: () => ({
@@ -41,7 +36,7 @@ export const Route = createFileRoute("/venues")({
             "@id": `/venues#${v.slug}`,
             name: v.name,
             description: v.character,
-            telephone: v.phone,
+            telephone: structuredPhone(v),
             address: {
               "@type": "PostalAddress",
               streetAddress: v.address.join(", "),
@@ -79,41 +74,32 @@ const dayNameMap: Record<string, string> = {
 };
 
 function openingHoursSpec(venue: Venue) {
-  return (Object.keys(dayNameMap) as Array<keyof typeof venue.hours>).map(
-    (k) => {
-      const h = venue.hours[k];
-      if ("closed" in h) {
-        return {
-          "@type": "OpeningHoursSpecification",
-          dayOfWeek: dayNameMap[k],
-          opens: "00:00",
-          closes: "00:00",
-        };
-      }
+  return (Object.keys(dayNameMap) as Array<keyof typeof venue.hours>).map((k) => {
+    const h = venue.hours[k];
+    if ("closed" in h) {
       return {
         "@type": "OpeningHoursSpecification",
         dayOfWeek: dayNameMap[k],
-        opens: h.open,
-        closes: h.close,
+        opens: "00:00",
+        closes: "00:00",
       };
-    },
-  );
+    }
+    return {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: dayNameMap[k],
+      opens: h.open,
+      closes: h.close,
+    };
+  });
 }
 
 function tabLabel(v: Venue) {
   if (v.city !== "Chester") return v.city;
-  return v.slug === "chester-frodsham"
-    ? "Chester · Frodsham St"
-    : "Chester · Northgate St";
+  return v.slug === "chester-frodsham" ? "Chester · Frodsham St" : "Chester · Northgate St";
 }
 
 function mapEmbedUrl(v: Venue) {
-  const bbox = [
-    v.lng - 0.01,
-    v.lat - 0.005,
-    v.lng + 0.01,
-    v.lat + 0.005,
-  ]
+  const bbox = [v.lng - 0.01, v.lat - 0.005, v.lng + 0.01, v.lat + 0.005]
     .map((n) => n.toFixed(5))
     .join("%2C");
   return `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${v.lat}%2C${v.lng}`;
@@ -126,8 +112,7 @@ function VenuesPage() {
         eyebrow="Find your arcade"
         title={
           <>
-            Five arcades.{" "}
-            <span className="italic text-brass">One family.</span>
+            Five arcades. <span className="italic text-brass">One family.</span>
           </>
         }
         intro="Two in Chester, one each in Caernarfon, Rhyl and Walkden — a footprint that runs from the North Wales coast across to Greater Manchester. Same family, same standards."
@@ -177,9 +162,8 @@ function VenuesPage() {
                 Bringing a group? Talk to us.
               </h2>
               <p className="mt-4 max-w-2xl text-muted-foreground">
-                For stag and hen visits, corporate evenings, charity nights
-                and private bookings, we'll set the arcade up around you.
-                Available across all five venues.
+                For stag and hen visits, corporate evenings, charity nights and private bookings,
+                we'll set the arcade up around you. Available across all five venues.
               </p>
             </div>
             <a
@@ -205,14 +189,11 @@ function VenueSection({ venue, mapLeft }: VenueSectionProps) {
   const hydrated = useHydrated();
   const hours = todaysHours(venue);
   const week = weeklyHoursTable(venue);
-  const telHref = `tel:${venue.phone.replace(/\s/g, "")}`;
+  const phoneHref = telHref(venue.phone);
   const directionsHref = `https://www.google.com/maps/search/?api=1&query=${venue.lat},${venue.lng}`;
 
   return (
-    <section
-      id={venue.slug}
-      className="scroll-mt-24 px-6 py-[var(--section-y)] lg:px-10"
-    >
+    <section id={venue.slug} className="scroll-mt-24 px-6 py-[var(--section-y)] lg:px-10">
       <div className="mx-auto grid max-w-7xl items-start gap-12 lg:grid-cols-5 lg:gap-16">
         <div
           className={`${
@@ -229,11 +210,7 @@ function VenueSection({ venue, mapLeft }: VenueSectionProps) {
           </div>
         </div>
 
-        <div
-          className={`${
-            mapLeft ? "lg:order-2" : "lg:order-1"
-          } space-y-8 lg:col-span-2`}
-        >
+        <div className={`${mapLeft ? "lg:order-2" : "lg:order-1"} space-y-8 lg:col-span-2`}>
           <div>
             <p className="eyebrow">
               {venue.region} · {venue.signage}
@@ -242,9 +219,7 @@ function VenueSection({ venue, mapLeft }: VenueSectionProps) {
               {venue.city}
               {venue.city === "Chester" && (
                 <span className="mt-2 block font-display text-xl italic text-brass">
-                  {venue.slug === "chester-frodsham"
-                    ? "Frodsham Street"
-                    : "Northgate Street"}
+                  {venue.slug === "chester-frodsham" ? "Frodsham Street" : "Northgate Street"}
                 </span>
               )}
             </h2>
@@ -265,10 +240,7 @@ function VenueSection({ venue, mapLeft }: VenueSectionProps) {
 
           <div className="space-y-4">
             <div className="flex items-start gap-3">
-              <MapPin
-                className="mt-0.5 size-4 shrink-0 text-brass"
-                aria-hidden
-              />
+              <MapPin className="mt-0.5 size-4 shrink-0 text-brass" aria-hidden />
               <address className="not-italic text-sm leading-relaxed text-foreground/90">
                 {venue.address.map((line) => (
                   <span key={line} className="block">
@@ -281,16 +253,14 @@ function VenueSection({ venue, mapLeft }: VenueSectionProps) {
               </address>
             </div>
             <div className="flex items-start gap-3">
-              <Phone
-                className="mt-0.5 size-4 shrink-0 text-brass"
-                aria-hidden
-              />
-              <a
-                href={telHref}
-                className="link-underline text-sm text-foreground/90"
-              >
-                {venue.phone}
-              </a>
+              <Phone className="mt-0.5 size-4 shrink-0 text-brass" aria-hidden />
+              {phoneHref ? (
+                <a href={phoneHref} className="link-underline text-sm text-foreground/90">
+                  {venue.phone}
+                </a>
+              ) : (
+                <span className="text-sm text-muted-foreground">{phoneDisplay(venue.phone)}</span>
+              )}
             </div>
           </div>
 
@@ -301,10 +271,7 @@ function VenueSection({ venue, mapLeft }: VenueSectionProps) {
             </div>
             <dl className="divide-y divide-white/5 rounded-xl border border-white/10 bg-surface/40 px-5 py-2 text-sm">
               {week.map((d) => (
-                <div
-                  key={d.key}
-                  className="flex items-center justify-between py-2.5"
-                >
+                <div key={d.key} className="flex items-center justify-between py-2.5">
                   <dt className="text-muted-foreground">{d.label}</dt>
                   <dd className="font-mono text-xs uppercase tracking-[0.18em] text-foreground/90">
                     {d.text}
@@ -335,13 +302,15 @@ function VenueSection({ venue, mapLeft }: VenueSectionProps) {
               <MapPin className="size-3.5" aria-hidden />
               Get directions
             </a>
-            <a
-              href={telHref}
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:border-brass hover:text-brass"
-            >
-              <Phone className="size-3.5" aria-hidden />
-              Call
-            </a>
+            {phoneHref && (
+              <a
+                href={phoneHref}
+                className="inline-flex items-center gap-2 rounded-full border border-white/10 px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:border-brass hover:text-brass"
+              >
+                <Phone className="size-3.5" aria-hidden />
+                Call
+              </a>
+            )}
           </div>
         </div>
       </div>
