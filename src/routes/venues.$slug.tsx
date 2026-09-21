@@ -1,9 +1,4 @@
-import {
-  createFileRoute,
-  Link,
-  notFound,
-  useParams,
-} from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useHydrated, useParams } from "@tanstack/react-router";
 import {
   Accessibility,
   ArrowLeft,
@@ -62,25 +57,23 @@ function mapEmbedUrl(v: Venue) {
 }
 
 function openingHoursSpec(venue: Venue) {
-  return (Object.keys(dayNameMap) as Array<keyof typeof venue.hours>).map(
-    (k) => {
-      const h = venue.hours[k];
-      if ("closed" in h) {
-        return {
-          "@type": "OpeningHoursSpecification",
-          dayOfWeek: dayNameMap[k],
-          opens: "00:00",
-          closes: "00:00",
-        };
-      }
+  return (Object.keys(dayNameMap) as Array<keyof typeof venue.hours>).map((k) => {
+    const h = venue.hours[k];
+    if ("closed" in h) {
       return {
         "@type": "OpeningHoursSpecification",
         dayOfWeek: dayNameMap[k],
-        opens: h.open,
-        closes: h.close,
+        opens: "00:00",
+        closes: "00:00",
       };
-    },
-  );
+    }
+    return {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: dayNameMap[k],
+      opens: h.open,
+      closes: h.close,
+    };
+  });
 }
 
 export const Route = createFileRoute("/venues/$slug")({
@@ -153,6 +146,7 @@ export const Route = createFileRoute("/venues/$slug")({
 
 function VenueDetailPage() {
   const { slug } = useParams({ from: "/venues/$slug" });
+  const hydrated = useHydrated();
   const venue = findVenue(slug);
   if (!venue) return null;
 
@@ -160,9 +154,7 @@ function VenueDetailPage() {
   const week = weeklyHoursTable(venue);
   const telHref = `tel:${venue.phone.replace(/\s/g, "")}`;
   const directionsHref = `https://www.google.com/maps/search/?api=1&query=${venue.lat},${venue.lng}`;
-  const facilityLookup = siteConfig.facilities.filter((f) =>
-    venue.facilities?.includes(f.key),
-  );
+  const facilityLookup = siteConfig.facilities.filter((f) => venue.facilities?.includes(f.key));
 
   return (
     <>
@@ -175,10 +167,7 @@ function VenueDetailPage() {
       >
         <ol className="mx-auto flex max-w-7xl items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
           <li>
-            <Link
-              to="/venues"
-              className="inline-flex items-center gap-1.5 hover:text-brass"
-            >
+            <Link to="/venues" className="inline-flex items-center gap-1.5 hover:text-brass">
               <ArrowLeft className="size-3" aria-hidden />
               Venues
             </Link>
@@ -215,16 +204,12 @@ function VenueDetailPage() {
                   {venue.city}
                   {venue.city === "Chester" && (
                     <span className="mt-2 block font-display text-2xl italic text-brass sm:text-3xl">
-                      {venue.slug === "chester-frodsham"
-                        ? "Frodsham Street"
-                        : "Northgate Street"}
+                      {venue.slug === "chester-frodsham" ? "Frodsham Street" : "Northgate Street"}
                     </span>
                   )}
                 </h1>
                 {venue.tagline && (
-                  <p className="mt-5 font-display text-xl italic text-brass/90">
-                    {venue.tagline}
-                  </p>
+                  <p className="mt-5 font-display text-xl italic text-brass/90">{venue.tagline}</p>
                 )}
                 <p className="mt-6 max-w-xl text-lg leading-relaxed text-foreground/85">
                   {venue.character}
@@ -235,11 +220,11 @@ function VenueDetailPage() {
                     <span
                       aria-hidden
                       className={`size-1.5 rounded-full ${
-                        hours.isOpen ? "bg-sage" : "bg-muted-foreground/40"
+                        hydrated && hours.isOpen ? "bg-sage" : "bg-muted-foreground/40"
                       }`}
                     />
                     <span className="font-mono uppercase tracking-[0.22em]">
-                      {hours.isOpen ? "Open now" : "Closed"} · {hours.text}
+                      {hydrated ? (hours.isOpen ? "Open now" : "Closed") : "Hours"} · {hours.text}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
@@ -286,19 +271,16 @@ function VenueDetailPage() {
                 A look around the {venue.city} floor.
               </h2>
               <p className="mt-4 text-muted-foreground">
-                Photography of the {venue.city} room — exterior, lounge,
-                cabinets and cashier. Replace these placeholders with real
-                imagery in <code className="font-mono text-xs text-brass">siteConfig.venues</code>.
+                Photography of the {venue.city} room — exterior, lounge, cabinets and cashier.
+                Replace these placeholders with real imagery in{" "}
+                <code className="font-mono text-xs text-brass">siteConfig.venues</code>.
               </p>
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-4">
             {venue.photos.gallery.map((src, i) => (
-              <div
-                key={i}
-                className="overflow-hidden rounded-2xl bg-surface ring-1 ring-white/10"
-              >
+              <div key={i} className="overflow-hidden rounded-2xl bg-surface ring-1 ring-white/10">
                 <div className="aspect-square w-full">
                   <img
                     src={src}
@@ -327,8 +309,8 @@ function VenueDetailPage() {
                 The room is the team.
               </h2>
               <p className="mt-4 text-muted-foreground">
-                Trained, certified and on the floor every day — the people
-                who keep the {venue.city} room calm, well-run and welcoming.
+                Trained, certified and on the floor every day — the people who keep the {venue.city}{" "}
+                room calm, well-run and welcoming.
               </p>
             </div>
             <Link
@@ -372,8 +354,8 @@ function VenueDetailPage() {
           </div>
 
           <p className="mt-10 text-center font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
-            Every team member is trained on safer-gambling tools, age
-            verification and the Bacta multi-operator self-exclusion scheme.
+            Every team member is trained on safer-gambling tools, age verification and the Bacta
+            multi-operator self-exclusion scheme.
           </p>
         </div>
       </section>
@@ -389,8 +371,8 @@ function VenueDetailPage() {
               What's in the room.
             </h2>
             <p className="mt-4 text-muted-foreground">
-              The same standards run through every Webbers venue — here's
-              what's on offer at {venue.city}.
+              The same standards run through every Webbers venue — here's what's on offer at{" "}
+              {venue.city}.
             </p>
           </div>
 
@@ -398,17 +380,12 @@ function VenueDetailPage() {
             {facilityLookup.map((facility) => {
               const Icon = FACILITY_ICONS[facility.icon] ?? Check;
               return (
-                <div
-                  key={facility.key}
-                  className="flex items-start gap-4 bg-ink p-6"
-                >
+                <div key={facility.key} className="flex items-start gap-4 bg-ink p-6">
                   <span className="mt-0.5 grid size-10 shrink-0 place-items-center rounded-full bg-brass/10 text-brass">
                     <Icon className="size-4" aria-hidden />
                   </span>
                   <div>
-                    <p className="font-display text-base text-foreground">
-                      {facility.label}
-                    </p>
+                    <p className="font-display text-base text-foreground">{facility.label}</p>
                   </div>
                 </div>
               );
@@ -443,10 +420,7 @@ function VenueDetailPage() {
 
             <div className="space-y-5">
               <div className="flex items-start gap-3">
-                <MapPin
-                  className="mt-0.5 size-4 shrink-0 text-brass"
-                  aria-hidden
-                />
+                <MapPin className="mt-0.5 size-4 shrink-0 text-brass" aria-hidden />
                 <address className="not-italic text-sm leading-relaxed text-foreground/90">
                   {venue.address.map((line) => (
                     <span key={line} className="block">
@@ -459,10 +433,7 @@ function VenueDetailPage() {
                 </address>
               </div>
               <div className="flex items-start gap-3">
-                <Phone
-                  className="mt-0.5 size-4 shrink-0 text-brass"
-                  aria-hidden
-                />
+                <Phone className="mt-0.5 size-4 shrink-0 text-brass" aria-hidden />
                 <a href={telHref} className="link-underline text-sm">
                   {venue.phone}
                 </a>
@@ -496,10 +467,7 @@ function VenueDetailPage() {
               </div>
               <dl className="divide-y divide-white/5 rounded-xl border border-white/10 bg-ink px-5 py-2 text-sm">
                 {week.map((d) => (
-                  <div
-                    key={d.key}
-                    className="flex items-center justify-between py-2.5"
-                  >
+                  <div key={d.key} className="flex items-center justify-between py-2.5">
                     <dt className="text-muted-foreground">{d.label}</dt>
                     <dd className="font-mono text-xs uppercase tracking-[0.18em] text-foreground/90">
                       {d.text}
@@ -546,9 +514,9 @@ function VenueDetailPage() {
                 The same premium library, every room.
               </h2>
               <p className="mt-4 max-w-2xl text-muted-foreground">
-                Cabinets from Light &amp; Wonder, Novomatic, Blueprint and
-                Inspired Gaming. Megaways, Cash Collect, classic reels and
-                electronic roulette — refreshed across the estate.
+                Cabinets from Light &amp; Wonder, Novomatic, Blueprint and Inspired Gaming.
+                Megaways, Cash Collect, classic reels and electronic roulette — refreshed across the
+                estate.
               </p>
             </div>
             <Link
@@ -590,15 +558,11 @@ function VenueDetailPage() {
                     {other.city}
                     {other.city === "Chester" && (
                       <span className="ml-2 text-sm text-muted-foreground">
-                        {other.slug === "chester-frodsham"
-                          ? "Frodsham St"
-                          : "Northgate St"}
+                        {other.slug === "chester-frodsham" ? "Frodsham St" : "Northgate St"}
                       </span>
                     )}
                   </h3>
-                  <p className="mt-3 text-xs text-muted-foreground">
-                    {other.postcode}
-                  </p>
+                  <p className="mt-3 text-xs text-muted-foreground">{other.postcode}</p>
                   <span className="mt-5 inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-brass">
                     View venue
                     <ArrowRight

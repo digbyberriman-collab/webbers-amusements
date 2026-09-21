@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useHydrated } from "@tanstack/react-router";
 import { ArrowRight, MapPin } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { todaysHours } from "@/lib/hours";
@@ -11,6 +11,7 @@ function chesterSuffix(addressLine: string): string | null {
 }
 
 export function WhatsOn() {
+  const hydrated = useHydrated();
   return (
     <section className="border-y border-white/5 bg-surface/30 px-6 py-[var(--section-y)] lg:px-10">
       <div className="mx-auto max-w-7xl">
@@ -52,16 +53,18 @@ export function WhatsOn() {
                     </p>
                     <span
                       className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-mono text-[9px] font-semibold uppercase tracking-[0.18em] ${
-                        hours.isOpen ? "bg-sage/15 text-sage" : "bg-white/5 text-muted-foreground"
+                        hydrated && hours.isOpen
+                          ? "bg-sage/15 text-sage"
+                          : "bg-white/5 text-muted-foreground"
                       }`}
                     >
                       <span
                         aria-hidden
                         className={`size-1.5 rounded-full ${
-                          hours.isOpen ? "bg-sage" : "bg-muted-foreground/50"
+                          hydrated && hours.isOpen ? "bg-sage" : "bg-muted-foreground/50"
                         }`}
                       />
-                      {hours.isOpen ? "Open now" : "Closed"}
+                      {hydrated ? (hours.isOpen ? "Open now" : "Closed") : "Hours"}
                     </span>
                   </div>
                   <h3 className="mt-3 font-display text-2xl text-foreground transition-colors group-hover:text-brass">

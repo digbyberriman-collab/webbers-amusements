@@ -1,12 +1,13 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useHydrated } from "@tanstack/react-router";
 import { MapPin, Phone, Mail } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { todaysHours } from "@/lib/hours";
 import { Reveal } from "@/components/motion";
 
 export function FinalCta() {
-  const flagship = siteConfig.venues[0];
+  const flagship = siteConfig.venues.find((v) => v.primary) ?? siteConfig.venues[0];
   const hours = todaysHours(flagship);
+  const hydrated = useHydrated();
 
   return (
     <section className="cta-glow relative overflow-hidden border-t border-white/5 bg-ink px-6 py-[var(--section-y)] lg:px-10">
@@ -47,8 +48,12 @@ export function FinalCta() {
         </Reveal>
 
         <p className="mt-12 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
-          {hours.isOpen ? `Open now in Chester · ${hours.text}` : `Chester today · ${hours.text}`} ·
-          Strictly 18+
+          {hydrated
+            ? hours.isOpen
+              ? `Open now in Chester · ${hours.text}`
+              : `Chester today · ${hours.text}`
+            : `Chester today · ${hours.text}`}{" "}
+          · Strictly 18+
         </p>
       </div>
     </section>
