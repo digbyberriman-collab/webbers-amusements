@@ -187,12 +187,14 @@
   color: var(--color-brass);
 }
 
-/* The brand monogram chip — terracotta WA, square seal */
+/* The brand monogram chip — terracotta WA, square seal.
+   Text is ink, not cream, for AA contrast (~3.5:1 on cream vs ~9:1 on ink)
+   in case this is ever used below large/bold text size. */
 .monogram-seal {
   display: inline-grid;
   place-items: center;
   background: var(--color-terracotta);
-  color: var(--color-foreground);
+  color: var(--color-ink);
   font-family: var(--font-display);
   font-weight: 700;
   letter-spacing: 0.02em;

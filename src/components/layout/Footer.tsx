@@ -20,14 +20,14 @@ export function Footer() {
               <a
                 href={siteConfig.contact.socials.instagram}
                 aria-label="Webbers on Instagram"
-                className="grid size-10 place-items-center rounded-full border border-white/10 text-muted-foreground transition-colors hover:border-brass hover:text-brass"
+                className="grid size-11 place-items-center rounded-full border border-white/10 text-muted-foreground transition-colors hover:border-brass hover:text-brass"
               >
                 <Instagram className="size-4" aria-hidden />
               </a>
               <a
                 href={siteConfig.contact.socials.facebook}
                 aria-label="Webbers on Facebook"
-                className="grid size-10 place-items-center rounded-full border border-white/10 text-muted-foreground transition-colors hover:border-brass hover:text-brass"
+                className="grid size-11 place-items-center rounded-full border border-white/10 text-muted-foreground transition-colors hover:border-brass hover:text-brass"
               >
                 <Facebook className="size-4" aria-hidden />
               </a>

@@ -35,7 +35,13 @@ export function PartnershipSection() {
                 <ArrowRight className="size-4" aria-hidden />
               </Link>
               <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.26em] text-muted-foreground">
-                Trade enquiries · {siteConfig.contact.email}
+                Trade enquiries ·{" "}
+                <a
+                  href={`mailto:${siteConfig.contact.email}`}
+                  className="link-underline text-brass"
+                >
+                  {siteConfig.contact.email}
+                </a>
               </p>
             </div>
           </Reveal>
