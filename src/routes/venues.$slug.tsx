@@ -21,7 +21,7 @@ import {
 import type { LucideIcon } from "lucide-react";
 import { siteConfig, type Venue } from "@/config/site";
 import { todaysHours, weeklyHoursTable } from "@/lib/hours";
-import { phoneDisplay, structuredPhone, telHref } from "@/lib/venue";
+import { chesterStreetLabel, phoneDisplay, structuredPhone, telHref } from "@/lib/venue";
 
 const FACILITY_ICONS: Record<string, LucideIcon> = {
   Wifi,
@@ -204,9 +204,9 @@ function VenueDetailPage() {
                 </p>
                 <h1 className="mt-5 font-display text-5xl leading-[1.04] text-balance text-foreground sm:text-6xl lg:text-7xl">
                   {venue.city}
-                  {venue.city === "Chester" && (
+                  {chesterStreetLabel(venue) && (
                     <span className="mt-2 block font-display text-2xl italic text-brass sm:text-3xl">
-                      {venue.slug === "chester-frodsham" ? "Frodsham Street" : "Northgate Street"}
+                      {chesterStreetLabel(venue)}
                     </span>
                   )}
                 </h1>
@@ -566,9 +566,9 @@ function VenueDetailPage() {
                   </p>
                   <h3 className="mt-3 font-display text-xl text-foreground transition-colors group-hover:text-brass">
                     {other.city}
-                    {other.city === "Chester" && (
+                    {chesterStreetLabel(other, { abbreviated: true }) && (
                       <span className="ml-2 text-sm text-muted-foreground">
-                        {other.slug === "chester-frodsham" ? "Frodsham St" : "Northgate St"}
+                        {chesterStreetLabel(other, { abbreviated: true })}
                       </span>
                     )}
                   </h3>

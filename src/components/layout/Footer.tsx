@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Instagram, Facebook, ShieldCheck } from "lucide-react";
 import { siteConfig } from "@/config/site";
+import { chesterStreetLabel } from "@/lib/venue";
 import { Logo } from "@/components/Logo";
 
 export function Footer() {
@@ -12,9 +13,8 @@ export function Footer() {
           <div className="lg:col-span-4">
             <Logo size={34} className="mb-6" />
             <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
-              {siteConfig.brand.shortDescription} Part of{" "}
-              {siteConfig.brand.parent}, a family business since{" "}
-              {siteConfig.brand.foundedYear}.
+              {siteConfig.brand.shortDescription} Part of {siteConfig.brand.parent}, a family
+              business since {siteConfig.brand.foundedYear}.
             </p>
             <div className="mt-8 flex gap-3">
               <a
@@ -75,15 +75,10 @@ export function Footer() {
               <ul className="mt-6 space-y-3 text-sm text-muted-foreground">
                 {siteConfig.venues.map((v) => (
                   <li key={v.slug}>
-                    <Link
-                      to="/venues/$slug"
-                      params={{ slug: v.slug }}
-                      className="hover:text-brass"
-                    >
+                    <Link to="/venues/$slug" params={{ slug: v.slug }} className="hover:text-brass">
                       {v.city}
-                      {v.city === "Chester"
-                        ? ` · ${v.address[0].split(" ")[1] ?? ""}`
-                        : ""}
+                      {chesterStreetLabel(v, { abbreviated: true }) &&
+                        ` · ${chesterStreetLabel(v, { abbreviated: true })}`}
                     </Link>
                   </li>
                 ))}
@@ -137,12 +132,8 @@ export function Footer() {
           {siteConfig.trustMarks.map((mark) => (
             <div key={mark.key} className="bg-ink p-6">
               <ShieldCheck className="mb-3 size-4 text-brass" aria-hidden />
-              <p className="font-display text-sm leading-snug text-foreground">
-                {mark.label}
-              </p>
-              <p className="mt-1.5 text-xs text-muted-foreground">
-                {mark.detail}
-              </p>
+              <p className="font-display text-sm leading-snug text-foreground">{mark.label}</p>
+              <p className="mt-1.5 text-xs text-muted-foreground">{mark.detail}</p>
             </div>
           ))}
         </div>
@@ -171,27 +162,19 @@ export function Footer() {
               <span>{siteConfig.compliance.idPolicy} ID policy</span>
             </div>
             <p className="max-w-4xl text-xs leading-relaxed text-muted-foreground">
-              Webbers Amusements is licensed and regulated by the{" "}
-              {siteConfig.compliance.regulator}. Entry to all venues is
-              strictly limited to those aged 18 and over — we operate a{" "}
-              {siteConfig.compliance.idPolicy} policy and ID checks are
-              standard. The maximum slot prize on an Adult Gaming Centre
-              cabinet is £{siteConfig.compliance.maxSlotPrize}. If you're
-              concerned about your gambling or someone else's, please visit
-              our{" "}
-              <Link
-                to="/safer-gambling"
-                className="text-brass underline-offset-4 hover:underline"
-              >
+              Webbers Amusements is licensed and regulated by the {siteConfig.compliance.regulator}.
+              Entry to all venues is strictly limited to those aged 18 and over — we operate a{" "}
+              {siteConfig.compliance.idPolicy} policy and ID checks are standard. The maximum slot
+              prize on an Adult Gaming Centre cabinet is £{siteConfig.compliance.maxSlotPrize}. If
+              you're concerned about your gambling or someone else's, please visit our{" "}
+              <Link to="/safer-gambling" className="text-brass underline-offset-4 hover:underline">
                 Safer Gambling
               </Link>{" "}
-              page, call the free national helpline, or speak to any member of
-              our team in venue.
+              page, call the free national helpline, or speak to any member of our team in venue.
             </p>
             <div className="flex flex-wrap items-center justify-between gap-4 text-[10px] uppercase tracking-[0.22em] text-muted-foreground/60">
               <span>
-                © {new Date().getFullYear()} {siteConfig.brand.parent}. All
-                rights reserved.
+                © {new Date().getFullYear()} {siteConfig.brand.parent}. All rights reserved.
               </span>
               <span>A family business · Since {siteConfig.brand.foundedYear}</span>
             </div>

@@ -2,13 +2,8 @@ import { Link, useHydrated } from "@tanstack/react-router";
 import { ArrowRight, MapPin } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { todaysHours } from "@/lib/hours";
+import { chesterStreetLabel } from "@/lib/venue";
 import { Reveal } from "@/components/motion";
-
-function chesterSuffix(addressLine: string): string | null {
-  if (addressLine.includes("Frodsham")) return "Frodsham St";
-  if (addressLine.includes("Northgate")) return "Northgate St";
-  return null;
-}
 
 export function WhatsOn() {
   const hydrated = useHydrated();
@@ -39,7 +34,7 @@ export function WhatsOn() {
         <div className="grid gap-px overflow-hidden rounded-2xl bg-white/5 sm:grid-cols-2 lg:grid-cols-3">
           {siteConfig.venues.map((venue, i) => {
             const hours = todaysHours(venue);
-            const suffix = chesterSuffix(venue.address[0]);
+            const suffix = chesterStreetLabel(venue, { abbreviated: true });
             return (
               <Reveal key={venue.slug} delay={Math.min(i * 0.06, 0.3)}>
                 <Link

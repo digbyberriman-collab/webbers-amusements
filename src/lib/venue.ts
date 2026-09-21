@@ -23,3 +23,20 @@ export function phoneDisplay(phone: string): string {
 export function structuredPhone(venue: Pick<Venue, "phone">) {
   return hasConfirmedPhone(venue.phone) ? venue.phone : undefined;
 }
+
+/**
+ * The two Chester venues share a city name, so UI copy distinguishes them
+ * by street. This was previously reimplemented independently in five
+ * files with three different, inconsistent output formats — this is the
+ * single source of truth for that label.
+ */
+export function chesterStreetLabel(
+  venue: Pick<Venue, "slug" | "city">,
+  { abbreviated = false }: { abbreviated?: boolean } = {},
+): string | null {
+  if (venue.city !== "Chester") return null;
+  if (venue.slug === "chester-frodsham") {
+    return abbreviated ? "Frodsham St" : "Frodsham Street";
+  }
+  return abbreviated ? "Northgate St" : "Northgate Street";
+}

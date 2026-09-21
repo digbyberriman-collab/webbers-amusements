@@ -6,7 +6,7 @@ import { z } from "zod";
 import { Phone, Mail, MapPin, Send } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { PageHero } from "@/components/PageHero";
-import { phoneDisplay, structuredPhone, telHref } from "@/lib/venue";
+import { chesterStreetLabel, phoneDisplay, structuredPhone, telHref } from "@/lib/venue";
 
 // There is no backend to receive this form (no server route, no database —
 // see SITE_MAP.md). Rather than fake a "message received" confirmation, on
@@ -79,12 +79,6 @@ export const Route = createFileRoute("/contact")({
   component: ContactPage,
 });
 
-function chesterStreet(addressLine: string): string {
-  if (addressLine.includes("Frodsham")) return "Frodsham Street";
-  if (addressLine.includes("Northgate")) return "Northgate Street";
-  return "";
-}
-
 function ContactPage() {
   const flagship = siteConfig.venues.find((v) => v.primary) ?? siteConfig.venues[0];
   const [sent, setSent] = useState(false);
@@ -155,7 +149,7 @@ function ContactPage() {
               </h2>
               <ul className="mt-6 space-y-3">
                 {siteConfig.venues.map((venue) => {
-                  const chesterSuffix = chesterStreet(venue.address[0]);
+                  const chesterSuffix = chesterStreetLabel(venue);
                   return (
                     <li
                       key={venue.slug}

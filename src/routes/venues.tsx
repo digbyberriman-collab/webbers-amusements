@@ -3,7 +3,7 @@ import { ArrowRight, Clock, MapPin, Phone, Users } from "lucide-react";
 import { siteConfig, type Venue } from "@/config/site";
 import { PageHero } from "@/components/PageHero";
 import { todaysHours, weeklyHoursTable } from "@/lib/hours";
-import { phoneDisplay, structuredPhone, telHref } from "@/lib/venue";
+import { chesterStreetLabel, phoneDisplay, structuredPhone, telHref } from "@/lib/venue";
 
 export const Route = createFileRoute("/venues")({
   head: () => ({
@@ -94,8 +94,8 @@ function openingHoursSpec(venue: Venue) {
 }
 
 function tabLabel(v: Venue) {
-  if (v.city !== "Chester") return v.city;
-  return v.slug === "chester-frodsham" ? "Chester · Frodsham St" : "Chester · Northgate St";
+  const street = chesterStreetLabel(v, { abbreviated: true });
+  return street ? `Chester · ${street}` : v.city;
 }
 
 function mapEmbedUrl(v: Venue) {
@@ -217,9 +217,9 @@ function VenueSection({ venue, mapLeft }: VenueSectionProps) {
             </p>
             <h2 className="mt-4 font-display text-4xl leading-tight text-foreground sm:text-5xl">
               {venue.city}
-              {venue.city === "Chester" && (
+              {chesterStreetLabel(venue) && (
                 <span className="mt-2 block font-display text-xl italic text-brass">
-                  {venue.slug === "chester-frodsham" ? "Frodsham Street" : "Northgate Street"}
+                  {chesterStreetLabel(venue)}
                 </span>
               )}
             </h2>
