@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Menu, X, MapPin } from "lucide-react";
 import { Logo } from "@/components/Logo";
+import { useFocusTrap } from "@/hooks/use-focus-trap";
 
 const nav = [
   { to: "/", label: "Home" },
@@ -17,6 +18,7 @@ const nav = [
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -42,13 +44,20 @@ export function Header() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
+  useFocusTrap(overlayRef, open);
+
+  // The nav bar duplicates the overlay's links, so remove it from the tab
+  // order (and hide it from assistive tech) while the overlay covers it.
+  useEffect(() => {
+    document.getElementById("main")?.toggleAttribute("inert", open);
+  }, [open]);
+
   return (
     <>
       <header
+        inert={open}
         className={`fixed top-0 z-50 w-full transition-all duration-500 ${
-          scrolled
-            ? "glass border-b border-white/5"
-            : "bg-gradient-to-b from-ink/60 to-transparent"
+          scrolled ? "glass border-b border-white/5" : "bg-gradient-to-b from-ink/60 to-transparent"
         }`}
       >
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-10">
@@ -71,10 +80,7 @@ export function Header() {
           </Link>
 
           {/* Desktop nav */}
-          <nav
-            aria-label="Primary"
-            className="hidden items-center gap-8 lg:flex"
-          >
+          <nav aria-label="Primary" className="hidden items-center gap-8 lg:flex">
             {nav.slice(0, 6).map((item) => (
               <Link
                 key={item.to}
@@ -124,10 +130,12 @@ export function Header() {
 
       {/* Overlay menu — quiet, editorial, no flashing bulbs */}
       <div
+        ref={overlayRef}
         id="main-menu-overlay"
         role="dialog"
         aria-modal="true"
         aria-label="Main menu"
+        inert={!open}
         className={`fixed inset-0 z-[60] transition-opacity duration-500 ${
           open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}

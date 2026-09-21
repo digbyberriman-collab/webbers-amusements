@@ -1,18 +1,31 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ShieldAlert } from "lucide-react";
 import { Logo } from "@/components/Logo";
+import { useFocusTrap } from "@/hooks/use-focus-trap";
 
 const STORAGE_KEY = "webbers:age-confirmed";
+/** id of the SiteShell wrapper made `inert` while this dialog is open. */
+const SITE_CONTENT_ID = "site-content";
 
 export function AgeGate() {
   const [open, setOpen] = useState(false);
   const [declined, setDeclined] = useState(false);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     const confirmed = window.localStorage.getItem(STORAGE_KEY);
-    if (!confirmed) setOpen(true);
+    if (confirmed !== "yes") setOpen(true);
   }, []);
+
+  useFocusTrap(dialogRef, open);
+
+  useEffect(() => {
+    const siteContent = document.getElementById(SITE_CONTENT_ID);
+    if (!siteContent) return;
+    siteContent.toggleAttribute("inert", open);
+    return () => siteContent.removeAttribute("inert");
+  }, [open]);
 
   if (!open) return null;
 
@@ -24,26 +37,20 @@ export function AgeGate() {
   if (declined) {
     return (
       <div
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="age-gate-decline-title"
         className="fixed inset-0 z-[100] grid place-items-center bg-ink p-6"
       >
         <div className="max-w-md text-center animate-rise">
-          <ShieldAlert
-            className="mx-auto mb-6 size-10 text-danger"
-            aria-hidden
-          />
-          <h2
-            id="age-gate-decline-title"
-            className="mb-4 font-display text-3xl text-foreground"
-          >
+          <ShieldAlert className="mx-auto mb-6 size-10 text-danger" aria-hidden />
+          <h2 id="age-gate-decline-title" className="mb-4 font-display text-3xl text-foreground">
             You must be 18 or over.
           </h2>
           <p className="mb-8 leading-relaxed text-muted-foreground">
-            Webbers Amusements is a licensed adult gaming centre. If you're
-            worried about gambling — yours or someone else's — free,
-            confidential support is available.
+            Webbers Amusements is a licensed adult gaming centre. If you're worried about gambling —
+            yours or someone else's — free, confidential support is available.
           </p>
           <div className="flex flex-col gap-3">
             <a
@@ -68,6 +75,7 @@ export function AgeGate() {
 
   return (
     <div
+      ref={dialogRef}
       role="dialog"
       aria-modal="true"
       aria-labelledby="age-gate-title"
@@ -83,8 +91,8 @@ export function AgeGate() {
           Are you 18 or over?
         </h2>
         <p className="mb-8 text-balance text-muted-foreground">
-          You must be 18 or over to enter the Webbers Amusements website. By
-          continuing you confirm you meet our age requirement.
+          You must be 18 or over to enter the Webbers Amusements website. By continuing you confirm
+          you meet our age requirement.
         </p>
         <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-center">
           <button

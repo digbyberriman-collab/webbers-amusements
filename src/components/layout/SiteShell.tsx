@@ -13,12 +13,16 @@ export function SiteShell({ children }: { children: ReactNode }) {
     <MotionConfig reducedMotion="user">
       <div className="grain-overlay" aria-hidden />
       <AgeGate />
-      <Header />
-      <main id="main" className="min-h-dvh">
-        {children}
-      </main>
-      <SaferGamblingStrip />
-      <Footer />
+      {/* Made `inert` by AgeGate while the 18+ dialog is open, so a keyboard
+          or screen-reader user can't reach the site behind it. */}
+      <div id="site-content">
+        <Header />
+        <main id="main" className="min-h-dvh">
+          {children}
+        </main>
+        <SaferGamblingStrip />
+        <Footer />
+      </div>
     </MotionConfig>
   );
 }
