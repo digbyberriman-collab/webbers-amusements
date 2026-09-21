@@ -138,8 +138,9 @@ function FAQPage() {
               We're happy to talk it through.
             </h2>
             <p className="mt-4 text-muted-foreground">
-              The team can be reached on the venue phones or via the message
-              form — both routes go to a real person.
+              The venue phones are the quickest way to reach a real person. The message form on our
+              contact page opens a message in your own email app, ready to send straight to the
+              team.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link
