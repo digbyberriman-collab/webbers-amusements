@@ -115,6 +115,39 @@ Suggested fix: Remove, or wire `zod`+`@hookform/resolvers` into the contact form
 
 ---
 
+## NEW FINDING (discovered during Phase 5 execution, not by the original 9 sub-agents)
+
+### BUILD — `bun run preview` is broken for this Cloudflare Worker setup
+Severity: Medium
+Location: `package.json` ("preview" script); `vite.config.ts`
+Found by: orchestrator, while verifying the new README's documented commands actually work
+
+Description:
+`bun run preview` runs plain `vite preview`, which expects a Node server entry at
+`dist/server/server.js`. This project's actual build output (via `@cloudflare/vite-plugin`
++ TanStack Start's `tanstackStart.server.entry: "server"` config) produces
+`dist/server/index.js` instead, so `vite preview` fails immediately with
+`ERR_MODULE_NOT_FOUND`. A `dist/server/wrangler.json` is generated correctly with the
+right `main`, but a quick `wrangler dev` attempt against it hit an unrelated config-path
+conflict with a stale `.wrangler/deploy/config.json` in this environment, not chased
+further as out of scope for this pass.
+
+Impact:
+Nobody can currently preview a production build of this app locally via the documented
+convention (`bun run preview`) — it simply errors. `bun run dev` still works and, since
+`@cloudflare/vite-plugin` runs it through the real Workers runtime, is the accurate way
+to exercise SSR behaviour locally, so this isn't a functional blocker for development —
+but the `preview` script is misleading as shipped.
+
+Suggested fix:
+Either fix the script to point at the correct entry (e.g.
+`wrangler dev --config dist/server/wrangler.json` from the repo root, once the config-path
+conflict is resolved), or remove the `preview` script from `package.json` and document
+`bun run dev` as the supported way to check a near-production build locally, to avoid
+someone hitting this dead end. Deferred — noted in the new README rather than fixed here.
+
+---
+
 ## MEDIUM
 
 ### CROSS-CUTTING — Chester street-suffix formatting reimplemented 5–7 times with 3 inconsistent output formats
