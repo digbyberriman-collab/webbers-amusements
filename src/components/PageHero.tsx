@@ -8,6 +8,11 @@ interface PageHeroProps {
   /** Background image (subtle, overlaid). Optional. */
   image?: string;
   imageAlt?: string;
+  /** Intrinsic dimensions of `image`, for correct aspect-ratio hints —
+   *  doesn't affect layout here since the image is absolutely positioned,
+   *  but still worth getting right for browser decode/preload behaviour. */
+  imageWidth?: number;
+  imageHeight?: number;
   /** Text alignment. Defaults to left for editorial feel. */
   align?: "left" | "center";
 }
@@ -19,6 +24,8 @@ export function PageHero({
   children,
   image,
   imageAlt = "",
+  imageWidth = 1920,
+  imageHeight = 1080,
   align = "left",
 }: PageHeroProps) {
   return (
@@ -31,6 +38,9 @@ export function PageHero({
             aria-hidden={imageAlt ? undefined : true}
             className="img-cinematic absolute inset-0 size-full object-cover opacity-25"
             loading="eager"
+            fetchPriority="high"
+            width={imageWidth}
+            height={imageHeight}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/40" />
           <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink to-transparent" />

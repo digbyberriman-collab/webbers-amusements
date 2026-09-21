@@ -189,6 +189,7 @@ function VenueDetailPage() {
             src={venue.photos.hero}
             alt={`${venue.name} — photography placeholder`}
             className="absolute inset-0 size-full object-cover opacity-90"
+            fetchPriority="high"
             width={1600}
             height={900}
           />
