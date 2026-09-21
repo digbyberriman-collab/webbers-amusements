@@ -1,5 +1,7 @@
 // Single source of truth for Webbers content.
-// All venue addresses, phones and games verified against the client's current site.
+// Venue addresses, phones and games verified against the client's current site,
+// except fields explicitly marked [CLIENT TO CONFIRM] below (see the
+// chester-frodsham phone, compliance.licenceNumber and contact.email).
 
 import placeholderVenue from "@/assets/placeholder-venue.svg";
 
@@ -215,6 +217,25 @@ export const siteConfig = {
       primary: true,
       character:
         "Our flagship arcade, two minutes from the Eastgate Clock — calm, well-lit, with the full modern floor.",
+      tagline: "Two minutes from the Eastgate Clock.",
+      photos: placeholderPhotos,
+      team: placeholderTeam,
+      facilities: [
+        "wifi",
+        "refreshments",
+        "cashier",
+        "atm",
+        "accessible",
+        "hearing-loop",
+        "members",
+        "safer-gambling",
+        "parking",
+        "transport",
+      ],
+      parkingNotes:
+        "Several city-centre car parks within a few minutes' walk. [CLIENT TO CONFIRM preferred recommendation.]",
+      transportNotes:
+        "Chester rail station is a short walk; frequent bus services stop nearby on the city's main routes.",
     },
     {
       slug: "chester-northgate",
@@ -230,6 +251,22 @@ export const siteConfig = {
       hours: standardHours,
       character:
         "A boutique slots arcade a short walk from the Cathedral Quarter — curated cabinets, quieter pace.",
+      tagline: "A short walk from the Cathedral Quarter.",
+      photos: placeholderPhotos,
+      team: placeholderTeam,
+      facilities: [
+        "wifi",
+        "refreshments",
+        "cashier",
+        "accessible",
+        "members",
+        "safer-gambling",
+        "transport",
+      ],
+      parkingNotes:
+        "Several city-centre car parks within a few minutes' walk. [CLIENT TO CONFIRM preferred recommendation.]",
+      transportNotes:
+        "Chester rail station is a short walk; frequent bus services stop nearby on the city's main routes.",
     },
     {
       slug: "caernarfon",
@@ -307,8 +344,25 @@ export const siteConfig = {
       hours: standardHours,
       character:
         "Our newest arcade — a generous floor on the high street, a few minutes' drive from the M60.",
+      tagline: "A few minutes' drive from the M60.",
+      photos: placeholderPhotos,
+      team: placeholderTeam,
+      facilities: [
+        "wifi",
+        "refreshments",
+        "cashier",
+        "atm",
+        "accessible",
+        "members",
+        "safer-gambling",
+        "parking",
+        "transport",
+      ],
+      parkingNotes:
+        "On-street parking and a nearby retail car park. [CLIENT TO CONFIRM preferred recommendation.]",
+      transportNotes: "Walkden tram/rail interchange and bus services are a short walk away.",
     },
-  ] as Venue[],
+  ] satisfies Venue[],
   games: [
     {
       id: "big-cat-king-megaways",
