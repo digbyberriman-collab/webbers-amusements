@@ -138,6 +138,10 @@ export const siteConfig = {
       "A multi-generational family entertainment business — from 1950s seaside arcades to premium adult gaming centres across North Wales, Chester and Greater Manchester. Licensed by the UK Gambling Commission, longstanding Bacta member.",
     shortDescription:
       "Three generations of British entertainment heritage — modern, premium adult gaming, in well-run arcades.",
+    /** Production origin, no trailing slash. Used to build absolute URLs
+     *  (e.g. the sitemap) where a relative path won't do. No custom domain
+     *  is wired up in wrangler.jsonc yet — confirm the real one before launch. */
+    url: "https://www.webbersamusements.co.uk", // [CLIENT TO CONFIRM production domain]
   },
   compliance: {
     licenceNumber: "[CLIENT TO CONFIRM LICENCE NUMBER]",
